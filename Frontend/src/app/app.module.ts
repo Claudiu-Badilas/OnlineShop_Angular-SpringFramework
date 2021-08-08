@@ -1,3 +1,4 @@
+import { NotificationModule } from './shared/Notification/notification.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,6 +26,8 @@ import { UserService } from './services/user.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { DropdownDirective } from './shared/dropdown/dropdown.directive';
 import { AuthenticationGuard } from './guard/authentication.guard';
+import { SharedModule } from './shared/shared.module';
+import { NotificationService } from './services/notification.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,6 @@ import { AuthenticationGuard } from './guard/authentication.guard';
     ProductListComponent,
     SignInComponent,
     TopBarComponent,
-    DropdownDirective,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,8 @@ import { AuthenticationGuard } from './guard/authentication.guard';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule,
+    NotificationModule,
     StoreModule.forRoot({}, {}),
   ],
   providers: [
@@ -58,6 +62,7 @@ import { AuthenticationGuard } from './guard/authentication.guard';
     OrderProductService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthenticationGuard,
+    NotificationService,
   ],
   bootstrap: [AppComponent],
 })
