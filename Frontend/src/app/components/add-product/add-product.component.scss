@@ -1,0 +1,72 @@
+.dropbtn {
+  background-color: white;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+input.ng-invalid.ng-touched {
+  border-top: 1px solid red;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.home {
+  size: 40px;
+  font-family: Nonito Black;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover {
+  background-color: #3e8e41;
+}
+
+.btn-save {
+  width: 180px;
+  height: 50px;
+  border-radius: 15px 0px 15px 0px;
+  background-color: lightseagreen;
+  font-family: Montserrat SemiBold;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.btn-save:hover {
+  background-color: #fddd07;
+  color: black;
+}
+
+.title {
+  font-family: "Montserrat Black";
+  font-size: 40px;
+  text-align: center;
+  color: #333;
+}

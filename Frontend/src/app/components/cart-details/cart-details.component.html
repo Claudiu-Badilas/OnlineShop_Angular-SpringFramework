@@ -1,0 +1,67 @@
+<div class="container" style="font-family: 'Montserrat SemiBold'">
+
+  <div class="container-fluid">
+    <div *ngIf="cartItems.length >0">
+      <table class="table table-bordered">
+        <thead style="background: #212f49;color:white">
+          <tr>
+            <th width="20%">Product Image</th>
+            <th width="50%">Product Detail</th>
+            <th width="30%">Cart Detail</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let item of cartItems" style="border-bottom: 3px solid  white; padding-bottom:10px">
+          <td>
+            <img class="img-responsive" src="{{ item.image }}" width="150px" />
+          </td>
+          <td class="text-center">
+            <p>{{ item.name }}</p>
+            <p>{{ item.price | currency: 'USD' }}</p>
+          </td>
+          <td>
+            <div>
+              <label>Quantity:</label>
+              <div class="row" style="padding-left:15px">
+                <span>
+                  <button (click)="decrementQuantity(item)" class="btn btn-decrement fa fa-minus"></button>
+                </span>
+                <span style="padding-left:40px; padding-right: 40px">{{item.quantity}}</span>
+                <span>
+                  <button (click)="incrementQuantity(item)" class="btn btn-increment fa fa-plus"></button>
+                </span>
+                <span style="padding-left:35px">
+                  <button (click)="remove(item)" class="btn btn-remove">REMOVE</button>
+                </span>
+              </div>
+            </div>
+
+            <p class="">Subtotal: {{ item.quantity * item.price | currency: 'USD' }}</p>
+          </td>
+          <br>
+        </tr>
+        <tr>
+          <td colspan="2"></td>
+          <td style="font-weight: bold">
+            <p>Total Quantity: {{ totalQuantity }}</p>
+            <p *ngIf="totalPrice <= 100">Shipping: 15$</p>
+            <p *ngIf="totalPrice > 100">Shipping: FREE</p>
+            <p>Total Price: {{ totalPrice | currency: 'USD' }}</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="cartItems.length === 0" class="text-center">
+      <p style="font-family:'Montserrat SemiBold'; font-size: 30px">Your cart is empty!</p>
+      <p style="font-family:'Montserrat SemiBold'; font-size: 30px">Go fill with some <a
+          routerLink="/productsCategory/1" style="color: #ff3c00;">products!</a></p>
+    </div>
+  </div>
+</div>
+<form (ngSubmit)="createOrder()" [formGroup]="orderForm">
+
+  <div *ngIf="cartItems.length >0" class="container">
+    <div class="text-center">
+      <button class="btn btn-place-order" type="submit">PLACE ORDER</button>
+    </div>
+  </div>
+</form>

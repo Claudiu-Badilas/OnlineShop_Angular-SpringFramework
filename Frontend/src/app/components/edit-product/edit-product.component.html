@@ -1,0 +1,60 @@
+<div class="text-center">
+  <p class="title">EDIT A PRODUCT!</p>
+</div>
+
+<div class="container">
+
+  <form (ngSubmit)="editProduct(product.category.id)" [formGroup]="productForm">
+
+    <div class="container">
+      <div class="text-center">
+        <h3 [hidden]="!showMessage"
+          [ngStyle]="{backgroundColor: validMessage ==='Product successfully updated!' ? '#1dced1' : 'red'}"
+          style="border-radius: 4px; color: white">{{validMessage}}</h3>
+        <br>
+      </div>
+    </div>
+
+
+    <!-- <div class="form-group" hidden>
+      <label>Id*</label>
+      <input [(ngModel)]="product.id" class="form-control" formControlName="id" required type="text">
+    </div> -->
+
+    <div class="row">
+      <div class="col-sm-6">
+
+        <div class="form-group">
+          <label>Name*</label>
+          <input [(ngModel)]="product.name" class="form-control" formControlName="name" required type="text">
+        </div>
+
+        <div class="form-group">
+          <label>Price*</label>
+          <input [(ngModel)]="product.price" class="form-control" formControlName="price" required type="number">
+        </div>
+
+        <div class="form-group">
+          <label>Description*</label>
+          <textarea [(ngModel)]="product.description" class="form-control" formControlName="description" required
+            style="height: 130px" type="text"></textarea>
+        </div>
+      </div>
+      <div class="form-group col-sm-6">
+        <div class="image-upload">
+          <img class="img-responsive" [src]="product.image" alt="" style="max-width:300px;max-height:300px" />
+          <input (change)="onFileSelected($event)" [(ngModel)]="product.image" type="file" />
+        </div>
+      </div>
+    </div>
+
+    <!--    <div hidden class="form-group">-->
+    <!--      <label>Category Type*</label>-->
+    <!--      <input type="text" class="form-control" required [(ngModel)]="product.category"-->
+    <!--             formControlName="category">-->
+    <!--    </div>-->
+    <div class="text-center">
+      <button class="btn btn-update" type="submit">Update Product</button>
+    </div>
+  </form>
+</div>

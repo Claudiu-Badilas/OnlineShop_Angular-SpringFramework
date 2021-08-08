@@ -1,0 +1,64 @@
+.btn-cart {
+  width: 150px;
+  height: 50px;
+  border-radius: 15px 0px 15px 0px;
+  background-color: #ff3c00;
+  font-family: Montserrat SemiBold;
+  font-size: 13px;
+  color: #ffffff;
+  margin-top: -113px;
+}
+
+.btn-cart:hover {
+  background-color: #fddd07;
+  color: black;
+}
+
+.image {
+  width: 400px;
+  height: 300px;
+  border-radius: 15px 0px 0px 15px;
+  margin-top: -245px;
+}
+
+.btn-back {
+  width: 180px;
+  height: 50px;
+  border-radius: 15px 0px 15px 0px;
+  background-color: lightseagreen;
+  font-family: Montserrat SemiBold;
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.btn-back:hover {
+  background-color: #fddd07;
+  color: black;
+}
+
+.main-content {
+  background-color: white;
+  box-shadow: 1px 1px 10px 1px;
+  color: #f2e8df;
+  border-bottom: 1px solid #fcf8f7;
+  border-radius: 15px;
+  width: 1200px;
+  height: 300px;
+}
+
+p {
+  margin-top: 10px;
+  padding-left: 450px;
+  font-family: 'Montserrat SemiBold';
+  color: #212f49
+}
+
+.product-title-price {
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+.description {
+
+  font-size: 15px;
+}

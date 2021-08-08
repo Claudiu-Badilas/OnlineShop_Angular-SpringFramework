@@ -1,0 +1,22 @@
+<div class="nav-bar">
+  <div class="container">
+    <div class="row">
+      <img class="img-responsive logo col-md-2" alt="logo" src="/assets/images/logo.jpg">
+      <p class="col-md-1" routerLink="/productsCategory/1">HOME</p>
+      <ul class="nav navbar-nav">
+        <li class="dropdown" appDropdown>
+          <p class="dropdown-toggle">PRODUCTS <span class="caret"></span></p>
+          <ul class="dropdown-menu dropdown-content">
+            <li *ngFor="let category of categories"><a
+                [routerLink]="['/productsCategory/',category.id]">{{category.name}}</a></li>
+          </ul>
+        </li>
+      </ul>
+      <p class="col-md-1" routerLink="/orders/2">ORDERS</p>
+      <p class="col-md-1" routerLink="/">CONTACTS</p>
+      <p class="col-md-2" routerLink="/cart-details">MY CART({{totalQuantity}})</p>
+      <button class="btn-login" routerLink="/login">LOGIN</button>
+      <button class="btn-register" routerLink="/sign-in">REGISTER</button>
+    </div>
+  </div>
+</div>

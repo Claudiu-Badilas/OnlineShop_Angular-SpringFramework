@@ -1,0 +1,72 @@
+<div class="container">
+  <button class="btn btn-danger" (click)="cleanTrashOrders()">CLEAN ORDERS</button>
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div *ngIf="orders.length > 0">
+        <div *ngFor="let tempOrder of orders" class="container" style="
+               margin-bottom: 30px;
+               margin-top: 30px;
+               width:1200px;
+               border-radius: 15px;
+               background-color: white;
+               box-shadow:1px 1px 20px 1px;
+               color:#f2e8df;border: 1px solid #ffe1d9;">
+          <div *ngIf="tempOrder.products.length !== 0">
+            <div class="" style="margin-top:20px">
+              <div class="text-left" style="font-family: 'Montserrat SemiBold';
+              font-size: 17px;
+              color: #212f49;">
+                <p>Order nr: #{{tempOrder.id}}</p>
+                <p>Order placed on: {{tempOrder.date}} </p>
+                <p>Status: {{tempOrder.status}}</p>
+                <button (click)="deleteOrder(tempOrder)" class="btn btn-danger">DELETE</button>
+                <hr>
+                <table class="table table-bordered">
+                  <thead style="background: #f2e8df;color:black">
+                    <tr>
+                      <th width="20%">Product Image</th>
+                      <th width="50%">Product Detail</th>
+                      <th width="30%">Price Detail</th>
+                    </tr>
+                  </thead>
+
+                  <tr *ngFor="let tempCartItem of tempOrder.products"
+                    style="border-bottom: 3px solid  #f2e8df; padding-bottom:10px">
+                    <td>
+                      <img class="img-responsive" src="{{ tempCartItem.image }}" width="100px" />
+                    </td>
+                    <td class="text-center">
+                      <p>{{ tempCartItem.name }}</p>
+                    </td>
+                    <td class="text-center">
+                      <p>{{ tempCartItem.price | currency: 'USD' }}</p>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2"></td>
+                    <td style="text-align: center; font-weight: bold"><br>
+                      <p>Subtotal: {{tempOrder.totalPrice | currency:'USD'}}</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="orders.length === 0">
+  <p style="font-family:'Montserrat SemiBold';
+              font-size: 30px;
+              text-align: center;">Your order list is empty!</p>
+  <p style="font-family:'Nunito Regular';
+              font-size:30px;
+              text-align: center;">Go fill with some <a routerLink="/productsCategory/1"
+      style="color: #ff3c00; font-family: 'Nunito ExtraBold'">products!</a>
+  </p>
+</div>
