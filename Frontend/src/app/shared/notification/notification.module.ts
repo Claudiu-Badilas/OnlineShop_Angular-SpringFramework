@@ -5,18 +5,18 @@ const customNotifierOptions: NotifierOptions = {
   position: {
     horizontal: {
       position: 'left',
-      distance: 150,
+      distance: 12,
     },
     vertical: {
       position: 'top',
-      distance: 12,
+      distance: 10,
       gap: 10,
     },
   },
   theme: 'material',
   behaviour: {
     autoHide: 5000,
-    onClick: 'hide',
+    onClick: false,
     onMouseover: 'pauseAutoHide',
     showDismissButton: true,
     stacking: 4,

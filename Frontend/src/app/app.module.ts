@@ -17,7 +17,6 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
 import { ProductService } from './services/product.service';
 import { CategoryService } from './services/category.service';
 import { OrderProductService } from './services/orderProduct.service';
@@ -26,8 +25,8 @@ import { UserService } from './services/user.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { DropdownDirective } from './shared/dropdown/dropdown.directive';
 import { AuthenticationGuard } from './guard/authentication.guard';
-import { SharedModule } from './shared/shared.module';
 import { NotificationService } from './services/notification.service';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -40,8 +39,9 @@ import { NotificationService } from './services/notification.service';
     OrderListComponent,
     ProductDetailsComponent,
     ProductListComponent,
-    SignInComponent,
+    RegisterComponent,
     TopBarComponent,
+    DropdownDirective,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +49,6 @@ import { NotificationService } from './services/notification.service';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule,
     NotificationModule,
     StoreModule.forRoot({}, {}),
   ],

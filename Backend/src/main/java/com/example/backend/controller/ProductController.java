@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.exception.ExceptionHandling;
+import com.example.backend.exception.model.ProductNotFoundException;
 import com.example.backend.model.Product;
 import com.example.backend.service.implementation.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class ProductController extends ExceptionHandling {
         return new ResponseEntity<>(products, OK);
     }
 
-    @GetMapping("/products-category/{id}")
-    public ResponseEntity<List<Product>> getProductsById(@PathVariable Long id) {
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<Product>> getProductsById(@PathVariable Long id) throws ProductNotFoundException {
         List<Product> products = productService.getProductsById(id);
         return new ResponseEntity<>(products,OK);
     }
@@ -40,7 +41,7 @@ public class ProductController extends ExceptionHandling {
                 .orElseThrow(() -> new RuntimeException("Product not found!")));
     }
 
-    @PostMapping("/add")
+    @PostMapping("/save")
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)

@@ -6,6 +6,8 @@ import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/cart-item';
 import { Product } from '../../models/product';
 import { CategoryService } from '../../services/category.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Role } from 'src/app/shared/enum/role.enum';
 
 @Component({
   selector: 'app-product-list',
@@ -23,16 +25,17 @@ export class ProductListComponent implements OnInit {
     private productService: ProductService,
     private route: ActivatedRoute,
     private cartService: CartService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
-    // this.route.paramMap.subscribe(() => {
-    //   this.getProductsByCategoryType();
-    // });
-    // this.route.paramMap.subscribe(() => {
-    //   this.getCategories();
-    // });
+    this.route.paramMap.subscribe(() => {
+      this.getProductsByCategoryType();
+    });
+    this.route.paramMap.subscribe(() => {
+      this.getCategories();
+    });
   }
 
   getProductsByCategoryType() {
@@ -84,5 +87,26 @@ export class ProductListComponent implements OnInit {
       },
       () => console.log('Categories successfully found!')
     );
+  }
+
+  public get isAdmin(): boolean {
+    return this.getUserRole() === Role.ADMIN;
+  }
+
+  private getUserRole(): string {
+    return this.authenticationService.getUserFromLocalCache().role;
+  }
+
+  public searchUsers(searchTerm: string): void {
+    const results: Product[] = [];
+    for (const prod of this.products) {
+      if (prod.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) {
+        results.push(prod);
+      }
+    }
+    // this.product = results;
+    // if (results.length === 0 || !searchTerm) {
+    //   this.users = this.userService.getUsersFromLocalCache();
+    // }
   }
 }

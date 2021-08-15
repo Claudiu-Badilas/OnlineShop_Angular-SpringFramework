@@ -5,7 +5,6 @@ import {
   HttpResponse,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 

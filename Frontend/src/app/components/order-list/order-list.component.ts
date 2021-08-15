@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order } from 'src/app/models/order';
+import { User } from 'src/app/models/user';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { OrderService } from '../../services/order.service';
 import { OrderProductService } from '../../services/orderProduct.service';
@@ -18,15 +20,17 @@ export class OrderListComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private route: ActivatedRoute,
-    private orderProductService: OrderProductService
+    private orderProductService: OrderProductService,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
-    // this.getOrders(this.route.snapshot.params.id);
+    this.getOrders();
   }
 
-  getOrders(id: number) {
-    this.orderService.getOrdersByUserId(id).subscribe(
+  getOrders() {
+    let user: any = this.authenticationService.getUserFromLocalCache;
+    this.orderService.getOrdersByUserId(4).subscribe(
       (data) => {
         this.orders = data;
       },

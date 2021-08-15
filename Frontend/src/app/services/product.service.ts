@@ -14,32 +14,32 @@ export class ProductService {
   constructor(private httpClient: HttpClient) {}
 
   getProducts() {
-    return this.httpClient.get(`/server/api/products`);
+    return this.httpClient.get(`/server/product/products`);
   }
 
   getProductById(id: number) {
-    return this.httpClient.get(`/server/api/products/${id}`);
+    return this.httpClient.get(`/server/product/${id}`);
   }
 
   getProductsByCategory(id: number) {
-    return this.httpClient.get(`/server/api/productsByCategory/${id}`);
+    return this.httpClient.get(`/server/product/category/${id}`);
   }
 
   createProduct(product: Product) {
     let body = JSON.stringify(product);
-    return this.httpClient.post(`/server/api/saveProduct`, body, httpOption);
+    return this.httpClient.post(`/server/product/save`, body, httpOption);
   }
 
   updateProduct(id: number, product: Product) {
     let body = JSON.stringify(product);
     return this.httpClient.put(
-      `/server/api/updateProduct/${id}`,
+      `/server/product/update/${id}`,
       body,
       httpOption
     );
   }
 
   deleteProduct(id: number) {
-    return this.httpClient.delete(`/server/api/deleteProductById/${id}`);
+    return this.httpClient.delete(`/server/product/delete/${id}`);
   }
 }

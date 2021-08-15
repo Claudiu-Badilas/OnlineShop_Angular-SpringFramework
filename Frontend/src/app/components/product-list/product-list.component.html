@@ -1,43 +1,74 @@
 <div class="container">
-  <p class="title">Without diets, feel easier with Oats!</p>
-  <br>
-  <div class="col-md-12 text-right">
+  <div [hidden]="!isAdmin" class="col-md-12 text-right">
     <button class="btn-add" routerLink="/saveProduct">ADD PRODUCT</button>
-  </div><br>
+  </div>
+  <br />
 
-  <div class="text-center">
-    <div class="alert alert-danger position-absolut" [hidden]="!showStatus">
-      <p>{{status}}</p>
-    </div><br>
-  </div><br><br>
+  <form class="form-inline my-2 my-lg-0 justify-content-center">
+    <input
+      name="searchTerm"
+      #searchInput="ngModel"
+      class="form-control mr-sm-2"
+      ngModel
+      (ngModelChange)="searchUsers(searchInput.value)"
+      type="search"
+      placeholder="Search users..."
+    />
+  </form>
 
-  <div class="outer-box">
+  <div class="form-inline my-2 my-lg-0 justify-content-center">
     <table>
-        <tr>
-          <th *ngFor="let category of categories" class="text-center" style="padding: 0 40px 0 40px">
-            <p class="category-list" [routerLink]="['/productsCategory/',category.id]" routerLinkActive="active-link">
-              {{category.name}}</p>
-          </th>
-        </tr>
+      <tr>
+        <th
+          *ngFor="let category of categories"
+          class="text-center"
+          style="padding: 0 40px 0 40px"
+        >
+          <p
+            class="category-list"
+            [routerLink]="['/products/category/', category.id]"
+            routerLinkActive="active-link"
+          >
+            {{ category.name }}
+          </p>
+        </th>
+      </tr>
     </table>
-  </div><br><br><br><br>
+  </div>
+  <br /><br /><br /><br />
 
   <div class="row">
     <div *ngFor="let product of products" class="product-box col-md-3">
-      <div class="container-img">
+      <div class="">
         <a [routerLink]="['/product/', product.id]">
-          <img class="image-pic" [src]="product.image"></a>
-        <button (click)="deleteProduct(product.id)" [routerLink]="['/productsCategory/', product.category.id]"
-          class="btn-delete">X</button>
+          <img class="image-pic" [src]="product.image"
+        /></a>
+        <button
+          [hidden]="!isAdmin"
+          (click)="deleteProduct(product.id)"
+          [routerLink]="['/products/category/', product.category.id]"
+          class="btn-delete"
+        >
+          <i class="fa fa-trash"></i>
+        </button>
       </div>
-      <div class="text-left"><br>
-        <p class="product-title">{{product.name}}</p>
-        <p class="product-price">{{product.price | currency:'USD'}} </p>
+      <div class="text-left">
+        <br />
+        <p class="product-title">{{ product.name }}</p>
+        <p class="product-price">{{ product.price | currency: "USD" }}</p>
       </div>
 
       <div class="row">
-        <button [routerLink]="['/updateProduct/', product.id]" class="btn-edit">EDIT</button>
-        <button (click)="addToCart(product)" class="btn-cart">ADD TO CART</button>
+        <button
+          [hidden]="!isAdmin"
+          [routerLink]="['/updateProduct/', product.id]"
+          class="btn-edit"
+        >
+          EDIT
+        </button>
+        <button (click)="addToCart(product)" class="btn-cart">
+          ADD TO CART
+        </button>
       </div>
     </div>
   </div>

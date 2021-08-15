@@ -1,50 +1,49 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+
 import { User } from 'src/app/models/user';
-import { HeaderType } from 'src/app/shared/enum/header-type.enum';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
-export class LogInComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit {
   public showLoading: boolean;
   private subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
-    private notificationService: NotificationService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
     if (this.authenticationService.isUserLoggedIn()) {
-      this.router.navigateByUrl('/products/category/1');
-    } else {
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('products/category/1');
     }
   }
 
-  public onLogin(user: User): void {
+  public onRegister(user: User): void {
     this.showLoading = true;
     this.subscriptions.push(
-      this.authenticationService.login(user).subscribe(
-        (response: HttpResponse<User>) => {
-          const token = response.headers.get(HeaderType.JWT_TOKEN);
-          this.authenticationService.saveToken(token);
-          this.authenticationService.addUserToLocalCache(response.body);
-          this.router.navigateByUrl('/products/category/1');
-          window.location.reload();
+      this.authenticationService.register(user).subscribe(
+        (response: User) => {
           this.showLoading = false;
+          this.sendNotification(
+            NotificationType.SUCCESS,
+            `Hi ${response.firstName}, you have successfully created an account !`
+          );
+
+          this.router.navigateByUrl('login');
         },
         (errorResponse: HttpErrorResponse) => {
-          this.sendErrorNotification(
+          this.sendNotification(
             NotificationType.ERROR,
             errorResponse.error.message
           );
@@ -54,7 +53,7 @@ export class LogInComponent implements OnInit, OnDestroy {
     );
   }
 
-  private sendErrorNotification(
+  private sendNotification(
     notificationType: NotificationType,
     message: string
   ): void {

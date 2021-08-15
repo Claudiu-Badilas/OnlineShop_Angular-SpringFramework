@@ -1,22 +1,63 @@
 <div class="nav-bar">
   <div class="container">
     <div class="row">
-      <img class="img-responsive logo col-md-2" alt="logo" src="/assets/images/logo.jpg">
-      <p class="col-md-1" routerLink="/productsCategory/1">HOME</p>
-      <ul class="nav navbar-nav">
+      <img
+        class="img-responsive logo col-md-2"
+        routerLink="/products/category/1"
+        alt="logo"
+        src="/assets/images/logo.jpg"
+      />
+      <ul class="nav navbar-nav col-md-1 mr-5">
         <li class="dropdown" appDropdown>
-          <p class="dropdown-toggle">PRODUCTS <span class="caret"></span></p>
+          <p class="">PRODUCTS</p>
           <ul class="dropdown-menu dropdown-content">
-            <li *ngFor="let category of categories"><a
-                [routerLink]="['/productsCategory/',category.id]">{{category.name}}</a></li>
+            <li *ngFor="let category of categories">
+              <a [routerLink]="['/products/category/', category.id]">{{
+                category.name
+              }}</a>
+            </li>
           </ul>
         </li>
       </ul>
       <p class="col-md-1" routerLink="/orders/2">ORDERS</p>
-      <p class="col-md-1" routerLink="/">CONTACTS</p>
-      <p class="col-md-2" routerLink="/cart-details">MY CART({{totalQuantity}})</p>
-      <button class="btn-login" routerLink="/login">LOGIN</button>
-      <button class="btn-register" routerLink="/sign-in">REGISTER</button>
+      <p class="col-md-2" routerLink="/cart-details">
+        MY CART({{ totalQuantity }})
+      </p>
+      <button *ngIf="showButtons" class="btn-login" routerLink="/login">
+        LOGIN
+      </button>
+      <button *ngIf="showButtons" class="btn-register" routerLink="/register">
+        REGISTER
+      </button>
+      <p *ngIf="!showButtons" class="col-md-2" routerLink="#">MY ACCOUNT</p>
+      <button *ngIf="!showButtons" (click)="logOutUser()" class="btn-login">
+        LOG OUT
+      </button>
     </div>
   </div>
 </div>
+<nav class="navbar navbar-expand-md breadcrumb">
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="nav nav-pills">
+      <a class="nav-item nav-link active ml-1" data-toggle="tab" href="#users">
+        <i class="fa fa-users"></i>
+        Users
+      </a>
+      <a
+        class="nav-item nav-link ml-3"
+        data-toggle="tab"
+        href="#reset-password"
+      >
+        <i class="fa fa-cogs"></i>
+        Settings
+      </a>
+      <a
+        class="nav-item nav-link move-right mr-3"
+        data-toggle="tab"
+        href="#profile"
+        *ngIf="!showButtons"
+        >Welcome, {{ user.username }}!<i class="fa fa-user"></i
+      ></a>
+    </div>
+  </div>
+</nav>

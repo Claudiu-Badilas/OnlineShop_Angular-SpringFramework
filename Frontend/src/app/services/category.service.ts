@@ -14,11 +14,11 @@ export class CategoryService {
   constructor(private httpClient: HttpClient) {}
 
   getCategories() {
-    return this.httpClient.get('/server/api/categories');
+    return this.httpClient.get('/server/category/categories');
   }
 
   createCategory(category: Category) {
     let body = JSON.stringify(category);
-    return this.httpClient.post('/server/api/saveCategory', body, httpOption);
+    return this.httpClient.post('/server/category/add', body, httpOption);
   }
 }

@@ -13,7 +13,7 @@ import { CategoryService } from '../../services/category.service';
 })
 export class AddProductComponent implements OnInit {
   productForm: FormGroup;
-  validMessage: string ;
+  validMessage: string;
   selectedCategory: Category;
   showMessage: boolean = false;
   category: Category;
@@ -56,7 +56,7 @@ export class AddProductComponent implements OnInit {
           this.productForm.reset(data);
           this.showMessage = true;
           setTimeout(() => {
-            this.router.navigate([`/productsCategory/${id}`]);
+            this.router.navigate([`/products/category/${id}`]);
           }, 2000);
           return true;
         },

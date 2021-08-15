@@ -77,7 +77,7 @@ export class EditProductComponent implements OnInit {
     //   (error) => console.log(error)
     // );
     // setTimeout(() => {
-    //   this.router.navigate(['/productsCategory/', id]);
+    //   this.router.navigate(['/products/category/', id]);
     // }, 2000)
   }
 
