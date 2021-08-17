@@ -29,7 +29,6 @@ import { AuthenticationGuard } from './guard/authentication.guard';
 import { NotificationService } from './services/notification.service';
 import { RegisterComponent } from './components/register/register.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import * as AppReducer from './reducers/app.reducer';
 
 @NgModule({
   declarations: [
