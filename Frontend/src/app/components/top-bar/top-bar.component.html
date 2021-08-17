@@ -7,9 +7,9 @@
         alt="logo"
         src="/assets/images/logo.jpg"
       />
-      <ul class="nav navbar-nav col-md-1 mr-5">
-        <li class="dropdown" appDropdown>
-          <p class="">PRODUCTS</p>
+      <div class="nav navbar-nav col-md-1 mr-5">
+        <div class="dropdown" appDropdown>
+          <p>PRODUCTS</p>
           <ul class="dropdown-menu dropdown-content">
             <li *ngFor="let category of categories">
               <a [routerLink]="['/products/category/', category.id]">{{
@@ -17,8 +17,8 @@
               }}</a>
             </li>
           </ul>
-        </li>
-      </ul>
+        </div>
+      </div>
       <p class="col-md-1" routerLink="/orders/2">ORDERS</p>
       <p class="col-md-2" routerLink="/cart-details">
         MY CART({{ totalQuantity }})
@@ -36,7 +36,7 @@
     </div>
   </div>
 </div>
-<nav class="navbar navbar-expand-md breadcrumb">
+<!-- <nav class="navbar navbar-expand-md breadcrumb">
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <div class="nav nav-pills">
       <a class="nav-item nav-link active ml-1" data-toggle="tab" href="#users">
@@ -56,8 +56,8 @@
         data-toggle="tab"
         href="#profile"
         *ngIf="!showButtons"
-        >Welcome, {{ user.username }}!<i class="fa fa-user"></i
+        >Welcome<i class="fa fa-user"></i
       ></a>
     </div>
   </div>
-</nav>
+</nav> -->

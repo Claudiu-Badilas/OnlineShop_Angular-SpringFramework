@@ -20,6 +20,7 @@ export class ProductListComponent implements OnInit {
   products: any = [];
   status: string;
   showStatus: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -30,6 +31,7 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkRole();
     this.route.paramMap.subscribe(() => {
       this.getProductsByCategoryType();
     });
@@ -89,8 +91,8 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  public get isAdmin(): boolean {
-    return this.getUserRole() === Role.ADMIN;
+  public checkRole() {
+    this.isAdmin = this.getUserRole() === Role.ADMIN;
   }
 
   private getUserRole(): string {

@@ -71,5 +71,6 @@ export class TopBarComponent implements OnInit, OnChanges {
   logOutUser() {
     this.authenticationService.logOut();
     this.showButtons = !this.showButtons;
+    window.location.reload();
   }
 }

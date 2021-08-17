@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { AppComponent } from './app.component';
@@ -27,6 +28,8 @@ import { DropdownDirective } from './shared/dropdown/dropdown.directive';
 import { AuthenticationGuard } from './guard/authentication.guard';
 import { NotificationService } from './services/notification.service';
 import { RegisterComponent } from './components/register/register.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import * as AppReducer from './reducers/app.reducer';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,9 @@ import { RegisterComponent } from './components/register/register.component';
     ReactiveFormsModule,
     FormsModule,
     NotificationModule,
+    EffectsModule.forRoot([]),
     StoreModule.forRoot({}, {}),
+    NgbModule,
   ],
   providers: [
     AuthenticationService,

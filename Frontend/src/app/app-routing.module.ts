@@ -9,6 +9,7 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthenticationGuard } from './guard/authentication.guard';
 
 const routes: Routes = [
   { path: 'login', component: LogInComponent },
@@ -16,9 +17,21 @@ const routes: Routes = [
   { path: 'products/category/:id', component: ProductListComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: 'cart-details', component: CartDetailsComponent },
-  { path: 'add', component: AddProductComponent },
-  { path: 'edit/:id', component: EditProductComponent },
-  { path: 'orders/:id', component: OrderListComponent },
+  {
+    path: 'orders/:id',
+    component: OrderListComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'add',
+    component: AddProductComponent,
+    canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'edit/:id',
+    component: EditProductComponent,
+    canActivate: [AuthenticationGuard],
+  },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];

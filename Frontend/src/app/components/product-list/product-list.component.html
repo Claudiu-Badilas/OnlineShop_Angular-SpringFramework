@@ -1,5 +1,5 @@
 <div class="container">
-  <div [hidden]="!isAdmin" class="col-md-12 text-right">
+  <div *ngIf="isAdmin" class="col-md-12 text-right">
     <button class="btn-add" routerLink="/saveProduct">ADD PRODUCT</button>
   </div>
   <br />
@@ -44,7 +44,7 @@
           <img class="image-pic" [src]="product.image"
         /></a>
         <button
-          [hidden]="!isAdmin"
+          *ngIf="isAdmin"
           (click)="deleteProduct(product.id)"
           [routerLink]="['/products/category/', product.category.id]"
           class="btn-delete"
@@ -60,7 +60,7 @@
 
       <div class="row">
         <button
-          [hidden]="!isAdmin"
+          *ngIf="isAdmin"
           [routerLink]="['/updateProduct/', product.id]"
           class="btn-edit"
         >
