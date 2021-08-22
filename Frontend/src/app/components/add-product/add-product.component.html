@@ -3,36 +3,57 @@
 </div>
 
 <div class="container text-center" style="padding-bottom: 260px">
-  <form (ngSubmit)="createProduct()" [formGroup]="productForm">
+  <form #productForm="ngForm" (ngSubmit)="createProduct(productForm.value)">
     <div>
       <div class="text-center">
-        <h3 [hidden]="!showMessage"
-          [ngStyle]="{backgroundColor: validMessage ==='Product successfully saved!' ? '#1dced1' : 'red'}"
-          style="border-radius: 15px; color:white">{{validMessage}}</h3>
-        <br>
+        <br />
       </div>
       <div class="form-group">
         <div class="row text">
           <div class="col-sm-6">
             <div>
               <label for="name">Name*</label>
-              <input type="text" class="form-control" formControlName="name" id="name">
-              <!-- <span *ngIf="!productForm.get('name').valid && productForm.get('name').touched" class="help-block">Please
-                provide a valid product name!</span> -->
+              <input
+                type="text"
+                class="form-control"
+                ngModel
+                #nameInput="ngModel"
+                required
+              />
             </div>
             <div class="form-group">
               <label for="description">Description*</label>
-              <textarea class="form-control" formControlName="description" type="text" id="description"></textarea>
+              <textarea
+                type="text"
+                class="form-control"
+                ngModel
+                #descriptionInput="ngModel"
+                required
+              ></textarea>
             </div>
             <div class="form-group">
               <label for="price">Price*</label>
-              <input class="form-control" formControlName="price" type="number" id="price">
+              <input
+                type="number"
+                class="form-control"
+                ngModel
+                #priceInput="ngModel"
+                required
+              />
             </div>
 
             <label>Category*</label>
-            <select (change)="handleCategory($event)" class="select-option form-control">
-              <option *ngFor="let tempCategory of categories" [value]="tempCategory.name" class="option">
-                {{tempCategory.name}}</option>
+            <select
+              (change)="handleCategory($event)"
+              class="select-option form-control"
+            >
+              <option
+                *ngFor="let tempCategory of categories"
+                [value]="tempCategory.name"
+                class="option"
+              >
+                {{ tempCategory.name }}
+              </option>
               <option [disabled]="!edited">
                 <button (click)="addSelect()">Select Category...</button>
               </option>
@@ -41,11 +62,23 @@
             <div class="form-group">
               <div class="image-upload">
                 <label>Upload Image*</label>
-                <input type="file" (change)="onFileSelected($event)" formControlName="image" />
+                <input
+                  type="file"
+                  (change)="onFileSelected($event)"
+                  class="form-control"
+                  ngModel
+                  name="image"
+                  required
+                />
               </div>
             </div>
           </div>
-          <img class="img-responsive" [src]="selectedFile" alt="upload Image" style="width:385px;height:380px" />
+          <img
+            class="img-responsive"
+            [src]="selectedFile"
+            alt="upload Image"
+            style="width: 385px; height: 380px"
+          />
         </div>
       </div>
     </div>

@@ -8,6 +8,8 @@ import { Product } from '../../models/product';
 import { CategoryService } from '../../services/category.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Role } from 'src/app/shared/enum/role.enum';
+import { NotificationService } from 'src/app/services/notification.service';
+import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 
 @Component({
   selector: 'app-product-list',
@@ -27,7 +29,8 @@ export class ProductListComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private categoryService: CategoryService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -61,12 +64,13 @@ export class ProductListComponent implements OnInit {
   deleteProduct(id: number) {
     this.productService.deleteProduct(id).subscribe(
       () => {
-        this.status = 'Delete successfully';
-        console.log(this.status);
-        this.showStatus = true;
         setTimeout(() => {
           window.location.reload();
-        }, 2000);
+        }, 1000);
+        this.notificationService.notify(
+          NotificationType.SUCCESS,
+          'Your selected product was deleted successfully'
+        );
       },
       (error) => console.error('There was an error!', error)
     );
