@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ProductService } from '../../services/product.service';
-import { Category } from '../../models/category';
-import { CategoryService } from '../../services/category.service';
+import { ProductService } from '../../../services/product.service';
+import { Category } from '../../../models/category';
+import { CategoryService } from '../../../services/category.service';
 import { Product } from 'src/app/models/product';
 
 @Component({

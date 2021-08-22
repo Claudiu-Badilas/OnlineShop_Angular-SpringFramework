@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 
-import { ProductService } from '../../services/product.service';
+import { ProductService } from '../../../services/product.service';
 import { ActivatedRoute } from '@angular/router';
-import { CartService } from '../../services/cart.service';
-import { CartItem } from '../../models/cart-item';
-import { Product } from '../../models/product';
-import { CategoryService } from '../../services/category.service';
+import { CartService } from '../../../services/cart.service';
+import { CartItem } from '../../../models/cart-item';
+import { Product } from '../../../models/product';
+import { CategoryService } from '../../../services/category.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Role } from 'src/app/shared/enum/role.enum';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
+import { State } from 'src/app/components/product/product-state/product.reducer';
+import * as fromProducts from '../product-state/product.reducer';
+import * as ProductActions from '../product-state/product.actions';
 
 @Component({
   selector: 'app-product-list',
@@ -19,7 +23,7 @@ import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 export class ProductListComponent implements OnInit {
   categories: any = [];
   currentCategoryId: number;
-  products: any = [];
+  products: Product[];
   status: string;
   showStatus: boolean = false;
   isAdmin: boolean = false;
@@ -30,17 +34,24 @@ export class ProductListComponent implements OnInit {
     private cartService: CartService,
     private categoryService: CategoryService,
     private authenticationService: AuthenticationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private store: Store<State>
   ) {}
 
   ngOnInit(): void {
     this.checkRole();
-    this.route.paramMap.subscribe(() => {
-      this.getProductsByCategoryType();
-    });
-    this.route.paramMap.subscribe(() => {
-      this.getCategories();
-    });
+
+    this.store
+      .select(fromProducts.getAllProducts)
+      .subscribe((products) => (this.products = products));
+    console.log(this.products);
+
+    // this.route.paramMap.subscribe(() => {
+    //   this.getProductsByCategoryType();
+    // });
+    // this.route.paramMap.subscribe(() => {
+    //   this.getCategories();
+    // });
   }
 
   getProductsByCategoryType() {

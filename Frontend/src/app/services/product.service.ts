@@ -39,7 +39,7 @@ export class ProductService {
   }
 
   getProductsByCategory(id: number) {
-    return this.http.get(`/server/product/category/${id}`);
+    return this.http.get<Product[]>(`/server/product/category/${id}`);
   }
 
   createProduct(product: Product) {

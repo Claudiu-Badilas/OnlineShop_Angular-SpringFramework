@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ProductListComponent } from './components/product-list/product-list.component';
-import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductListComponent } from './components/product/product-list/product-list.component';
+import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
-import { AddProductComponent } from './components/add-product/add-product.component';
+import { AddProductComponent } from './components/product/add-product/add-product.component';
 import { LogInComponent } from './components/log-in/log-in.component';
-import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthenticationGuard } from './guard/authentication.guard';

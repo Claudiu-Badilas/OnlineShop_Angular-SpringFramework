@@ -6,18 +6,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { AppComponent } from './app.component';
 import { AuthenticationService } from './services/authentication.service';
-import { AddProductComponent } from './components/add-product/add-product.component';
+import { AddProductComponent } from './components/product/add-product/add-product.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
-import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
-import { ProductDetailsComponent } from './components/product-details/product-details.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { ProductService } from './services/product.service';
 import { CategoryService } from './services/category.service';
 import { OrderProductService } from './services/orderProduct.service';
@@ -28,7 +28,8 @@ import { DropdownDirective } from './shared/dropdown/dropdown.directive';
 import { AuthenticationGuard } from './guard/authentication.guard';
 import { NotificationService } from './services/notification.service';
 import { RegisterComponent } from './components/register/register.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import * as fromApp from './store/app.state';
+import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -52,8 +53,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     FormsModule,
     NotificationModule,
+    StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([]),
-    StoreModule.forRoot({}, {}),
     NgbModule,
   ],
   providers: [
