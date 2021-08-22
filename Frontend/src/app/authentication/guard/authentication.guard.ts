@@ -5,9 +5,9 @@ import {
   RouterStateSnapshot,
   Router,
 } from '@angular/router';
-import { AuthenticationService } from '../services/authentication.service';
-import { NotificationService } from '../services/notification.service';
-import { NotificationType } from '../shared/enum/notification-type.enum';
+import { AuthenticationService } from '../../services/authentication.service';
+import { NotificationService } from '../../services/notification.service';
+import { NotificationType } from '../../shared/enum/notification-type.enum';
 @Injectable({
   providedIn: 'root',
 })

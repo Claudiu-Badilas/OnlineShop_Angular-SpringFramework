@@ -9,7 +9,7 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { RegisterComponent } from './components/register/register.component';
-import { AuthenticationGuard } from './guard/authentication.guard';
+import { AuthenticationGuard } from './authentication/guard/authentication.guard';
 
 const routes: Routes = [
   { path: 'login', component: LogInComponent },

@@ -8,7 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { AuthInterceptor } from './authentication/interceptor/auth.interceptor';
 import { AppComponent } from './app.component';
 import { AuthenticationService } from './services/authentication.service';
 import { AddProductComponent } from './components/product/add-product/add-product.component';
@@ -25,7 +25,7 @@ import { OrderService } from './services/order.service';
 import { UserService } from './services/user.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { DropdownDirective } from './shared/dropdown/dropdown.directive';
-import { AuthenticationGuard } from './guard/authentication.guard';
+import { AuthenticationGuard } from './authentication/guard/authentication.guard';
 import { NotificationService } from './services/notification.service';
 import { RegisterComponent } from './components/register/register.component';
 import * as fromApp from './store/app.state';
