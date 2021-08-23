@@ -25,11 +25,13 @@ import { OrderService } from './services/order.service';
 import { UserService } from './services/user.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { DropdownDirective } from './shared/dropdown/dropdown.directive';
-import { AuthenticationGuard } from './authentication/guard/authentication.guard';
 import { NotificationService } from './services/notification.service';
 import { RegisterComponent } from './components/register/register.component';
 import * as fromApp from './store/app.state';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
+import { AuthenticationGuard } from './authentication/guard/authentication.guard';
+import { ProductEffects } from './components/product/product-state/product.effects';
+import { CategoryEffects } from './components/product/category-state/category.effects';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,7 @@ import { ProductDetailsComponent } from './components/product/product-details/pr
     FormsModule,
     NotificationModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([ProductEffects, CategoryEffects]),
     NgbModule,
   ],
   providers: [

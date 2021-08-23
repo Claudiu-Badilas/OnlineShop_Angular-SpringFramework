@@ -3,9 +3,15 @@ import { createAction, props } from '@ngrx/store';
 
 export const loadProducts = createAction('[Products] Load Products');
 
-export const loadProductsSuccess = createAction('[Products] Load Success');
+export const loadProductsSuccess = createAction(
+  '[Products] Load Success',
+  props<{ products: Product[] }>()
+);
 
-export const loadProductsFailure = createAction('[Products] Load Failure');
+export const loadProductsFailure = createAction(
+  '[Products] Load Failure',
+  props<{ error: string }>()
+);
 
 export const setCurrentProduct = createAction(
   '[Product] Set Current Product',

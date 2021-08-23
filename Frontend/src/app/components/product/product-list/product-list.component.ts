@@ -1,3 +1,4 @@
+import { Category } from './../../../models/category';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
@@ -6,14 +7,15 @@ import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { CartItem } from '../../../models/cart-item';
 import { Product } from '../../../models/product';
-import { CategoryService } from '../../../services/category.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Role } from 'src/app/shared/enum/role.enum';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
-import { State } from 'src/app/components/product/product-state/product.reducer';
+import { ProductState } from 'src/app/components/product/product-state/product.reducer';
 import * as fromProducts from '../product-state/product.reducer';
+import * as fromCategories from '../category-state/category.reducer';
 import * as ProductActions from '../product-state/product.actions';
+import * as CategoriesActions from '../category-state/category.actions';
 
 @Component({
   selector: 'app-product-list',
@@ -21,7 +23,7 @@ import * as ProductActions from '../product-state/product.actions';
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-  categories: any = [];
+  categories: Category[];
   currentCategoryId: number;
   products: Product[];
   status: string;
@@ -31,34 +33,32 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private cartService: CartService,
-    private categoryService: CategoryService,
-    private authenticationService: AuthenticationService,
-    private notificationService: NotificationService,
-    private store: Store<State>
+    private _cartService: CartService,
+    private _authenticationService: AuthenticationService,
+    private _notificationService: NotificationService,
+    private store: Store<ProductState>
   ) {}
 
   ngOnInit(): void {
     this.checkRole();
+    this.store.dispatch(ProductActions.loadProducts());
 
     this.store
       .select(fromProducts.getAllProducts)
       .subscribe((products) => (this.products = products));
-    console.log(this.products);
 
-    // this.route.paramMap.subscribe(() => {
-    //   this.getProductsByCategoryType();
-    // });
-    // this.route.paramMap.subscribe(() => {
-    //   this.getCategories();
-    // });
+    this.store.dispatch(CategoriesActions.loadCategories());
+
+    this.store
+      .select(fromCategories.getAllCategories)
+      .subscribe((categories) => (this.categories = categories));
   }
 
   getProductsByCategoryType() {
     // const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
 
     const param = this.route.snapshot.paramMap.get('id');
-    this.currentCategoryId = param ? +param : 0;
+    this.currentCategoryId = param ? +param : 1;
 
     this.productService.getProductsByCategory(this.currentCategoryId).subscribe(
       (data) => {
@@ -78,7 +78,7 @@ export class ProductListComponent implements OnInit {
         setTimeout(() => {
           window.location.reload();
         }, 1000);
-        this.notificationService.notify(
+        this._notificationService.notify(
           NotificationType.SUCCESS,
           'Your selected product was deleted successfully'
         );
@@ -90,20 +90,7 @@ export class ProductListComponent implements OnInit {
   addToCart(product: Product) {
     console.log(`Adding to cart: ${product.name}, ${product.price}`);
     const theCartItem = new CartItem(product);
-    this.cartService.addToCart(theCartItem);
-  }
-
-  getCategories() {
-    this.categoryService.getCategories().subscribe(
-      (data) => {
-        this.categories = data;
-        console.log(data);
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => console.log('Categories successfully found!')
-    );
+    this._cartService.addToCart(theCartItem);
   }
 
   public checkRole() {
@@ -111,7 +98,7 @@ export class ProductListComponent implements OnInit {
   }
 
   private getUserRole(): string {
-    return this.authenticationService.getUserFromLocalCache().role;
+    return this._authenticationService.getUserFromLocalCache().role;
   }
 
   public searchUsers(searchTerm: string): void {

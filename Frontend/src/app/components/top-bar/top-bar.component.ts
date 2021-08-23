@@ -29,9 +29,9 @@ export class TopBarComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     // this.user = this.authenticationService.getUserFromLocalCache();
     this.updateCartStatus();
-    this.route.paramMap.subscribe(() => {
-      this.getCategories();
-    });
+    // this.route.paramMap.subscribe(() => {
+    //   this.getCategories();
+    // });
     this.checkIsUserLoggedIn();
   }
 
