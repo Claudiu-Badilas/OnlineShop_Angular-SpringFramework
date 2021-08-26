@@ -1,26 +1,14 @@
 <div class="container">
-  <div *ngIf="isAdmin" class="col-md-12 text-right">
+  <div *ngIf="hasAccess" class="col-md-12 text-right">
     <button class="btn-add" routerLink="/add-product">ADD PRODUCT</button>
   </div>
   <br />
-
-  <form class="form-inline my-2 my-lg-0 justify-content-center">
-    <input
-      name="searchTerm"
-      #searchInput="ngModel"
-      class="form-control mr-sm-2"
-      ngModel
-      (ngModelChange)="searchUsers(searchInput.value)"
-      type="search"
-      placeholder="Search users..."
-    />
-  </form>
 
   <div class="form-inline my-2 my-lg-0 justify-content-center">
     <table>
       <tr>
         <th
-          *ngFor="let category of categories"
+          *ngFor="let category of categories$ | async"
           class="text-center"
           style="padding: 0 40px 0 40px"
         >
@@ -35,16 +23,16 @@
       </tr>
     </table>
   </div>
-  <br /><br /><br /><br />
+  <br /><br />
 
   <div class="row">
-    <div *ngFor="let product of products" class="product-box col-md-3">
+    <div *ngFor="let product of products$ | async" class="product-box col-md-3">
       <div class="">
         <a [routerLink]="['/product/', product.id]">
           <img class="image-pic" [src]="product.image"
         /></a>
         <button
-          *ngIf="isAdmin"
+          *ngIf="hasAccess"
           (click)="deleteProduct(product.id)"
           [routerLink]="['/products/category/', product.category.id]"
           class="btn-delete"
@@ -60,9 +48,10 @@
 
       <div class="row">
         <button
-          *ngIf="isAdmin"
+          *ngIf="hasAccess"
           [routerLink]="['/edit/', product.id]"
           class="btn-edit"
+          (click)="addCurrentProductToStore(product)"
         >
           EDIT
         </button>

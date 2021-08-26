@@ -34,8 +34,8 @@ export class ProductService {
       );
   }
 
-  getProductById(id: number) {
-    return this.http.get(`/server/product/${id}`);
+  getProductById(id: number): Observable<Product> {
+    return this.http.get<Product>(`/server/product/${id}`);
   }
 
   getProductsByCategory(id: number) {
@@ -47,9 +47,13 @@ export class ProductService {
     return this.http.post(`/server/product/save`, body, httpOption);
   }
 
-  updateProduct(id: number, product: Product) {
+  updateProduct(product: Product) {
     let body = JSON.stringify(product);
-    return this.http.put(`/server/product/update/${id}`, body, httpOption);
+    return this.http.put<Product>(
+      `/server/product/update/${product.id}`,
+      body,
+      httpOption
+    );
   }
 
   deleteProduct(id: number) {
