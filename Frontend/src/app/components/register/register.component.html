@@ -23,14 +23,15 @@
               required
               ngModel
               #firstNameInput="ngModel"
+              [ngClass]="
+                firstNameInput.invalid && firstNameInput.touched
+                  ? 'is-invalid'
+                  : firstNameInput.valid
+                  ? 'is-valid'
+                  : ''
+              "
             />
           </div>
-          <span
-            class="help-block"
-            *ngIf="firstNameInput.invalid && firstNameInput.touched"
-            style="color: red"
-            >Please enter a first name</span
-          >
           <div class="input-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -43,14 +44,15 @@
               required
               ngModel
               #lastNameInput="ngModel"
+              [ngClass]="
+                lastNameInput.invalid && lastNameInput.touched
+                  ? 'is-invalid'
+                  : lastNameInput.valid
+                  ? 'is-valid'
+                  : ''
+              "
             />
           </div>
-          <span
-            class="help-block"
-            *ngIf="lastNameInput.invalid && lastNameInput.touched"
-            style="color: red"
-            >Please enter a last name</span
-          >
           <div class="input-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text"
@@ -65,14 +67,15 @@
               required
               ngModel
               #usernameInput="ngModel"
+              [ngClass]="
+                usernameInput.invalid && usernameInput.touched
+                  ? 'is-invalid'
+                  : usernameInput.valid
+                  ? 'is-valid'
+                  : ''
+              "
             />
           </div>
-          <span
-            class="help-block"
-            *ngIf="usernameInput.invalid && usernameInput.touched"
-            style="color: red"
-            >Please enter a username</span
-          >
           <div class="input-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text"
@@ -87,14 +90,15 @@
               required
               ngModel
               #emailInput="ngModel"
+              [ngClass]="
+                emailInput.invalid && emailInput.touched
+                  ? 'is-invalid'
+                  : emailInput.valid
+                  ? 'is-valid'
+                  : ''
+              "
             />
           </div>
-          <span
-            class="help-block"
-            *ngIf="emailInput.invalid && emailInput.touched"
-            style="color: red"
-            >Please enter an email.</span
-          >
           <div class="input-group mb-2">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-key"></i></span>
@@ -107,14 +111,15 @@
               ngModel
               #passwordInput="ngModel"
               required
+              [ngClass]="
+                passwordInput.invalid && passwordInput.touched
+                  ? 'is-invalid'
+                  : passwordInput.valid
+                  ? 'is-valid'
+                  : ''
+              "
             />
           </div>
-          <span
-            class="help-block"
-            style="color: red"
-            *ngIf="passwordInput.invalid && passwordInput.touched"
-            >Please enter a password.</span
-          >
           <div class="d-flex justify-content-center mt-3 login_container">
             <button
               [disabled]="registerForm.invalid || showLoading"
