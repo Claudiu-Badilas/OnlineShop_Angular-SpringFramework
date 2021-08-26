@@ -15,11 +15,28 @@ export const loadProductsFailure = createAction(
 
 export const setCurrentProduct = createAction(
   '[Product] Set Current Product',
-  props<{ product: Product }>()
+  props<{ setCurrentProduct: Product }>()
 );
 
 export const clearCurrentProduct = createAction(
   '[Product] Clear Current Product'
 );
 
-export const initProduct = createAction('[Product] Initialize Product');
+export const initializeCurrentProduct = createAction(
+  '[Product] Initialize Product'
+);
+
+export const updateProduct = createAction(
+  '[Product] Update Product',
+  props<{ product: Product }>()
+);
+
+export const updateProductSuccess = createAction(
+  '[Product] Update Product Success',
+  props<{ product: Product }>()
+);
+
+export const updateProductFailure = createAction(
+  '[Product] Update Product Fail',
+  props<{ error: string }>()
+);

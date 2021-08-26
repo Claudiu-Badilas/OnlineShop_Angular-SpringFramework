@@ -10,38 +10,77 @@ import * as ProductActions from './product.actions';
 
 export interface ProductState {
   products: Product[];
-  currentProduct: Product;
+  currentProduct: Product | null;
+  error: string;
 }
 
 const initialState: ProductState = {
   products: [],
   currentProduct: null,
+  error: null,
 };
 
 const productReducer = createReducer(
   initialState,
-  on(ProductActions.loadProducts, (state, action) => {
+  on(ProductActions.loadProducts, (state) => {
     return {
       ...state,
       products: state.products,
     };
   }),
+
   on(ProductActions.loadProductsSuccess, (state, action) => {
     return {
       ...state,
       products: action.products,
     };
   }),
+
   on(ProductActions.setCurrentProduct, (state, action) => {
     return {
       ...state,
-      currentProduct: action.product,
+      currentProduct: action.setCurrentProduct,
     };
   }),
+
   on(ProductActions.clearCurrentProduct, (state) => {
     return {
       ...state,
       currentProduct: null,
+    };
+  }),
+
+  on(ProductActions.loadProductsFailure, (state, action) => {
+    return {
+      ...state,
+      products: [],
+      error: action.error,
+    };
+  }),
+
+  on(ProductActions.initializeCurrentProduct, (state) => {
+    return {
+      ...state,
+      currentProduct: null,
+    };
+  }),
+
+  on(ProductActions.updateProductSuccess, (state, action) => {
+    const updateProducts = state.products.map((item) =>
+      action.product.id === item.id ? action.product : item
+    );
+    return {
+      ...state,
+      products: updateProducts,
+      currentProduct: action.product,
+      error: '',
+    };
+  }),
+
+  on(ProductActions.updateProductFailure, (state, action) => {
+    return {
+      ...state,
+      error: action.error,
     };
   })
 );
@@ -55,8 +94,12 @@ export const getAllProducts = createSelector(
 
 export const getCurrentProduct = createSelector(
   getProductFeatureState,
-  (state, currentProductId) =>
-    state.products.find((p) => p.id === currentProductId)
+  (state) => state.currentProduct
+);
+
+export const getError = createSelector(
+  getProductFeatureState,
+  (state) => state.error
 );
 
 export function reducer(state: ProductState, action: Action) {
