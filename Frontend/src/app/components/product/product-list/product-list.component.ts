@@ -17,6 +17,7 @@ import * as ProductActions from '../product-state/product.actions';
 import * as CategoriesActions from '../category-state/category.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
+import { ProductTypeAction } from '../utils/product-type-action.util';
 
 @Component({
   selector: 'app-product-list',
@@ -68,9 +69,23 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  addCurrentProductToStore(product: Product) {
+  initStateForEditMode(product: Product) {
     this.store.dispatch(
       ProductActions.setCurrentProduct({ setCurrentProduct: product })
+    );
+    this.store.dispatch(
+      ProductActions.setTypeAction({ typeAction: ProductTypeAction.UPDATE })
+    );
+  }
+
+  initStateForSaveMode() {
+    this.store.dispatch(
+      ProductActions.setCurrentProduct({
+        setCurrentProduct: new Product(),
+      })
+    );
+    this.store.dispatch(
+      ProductActions.setTypeAction({ typeAction: ProductTypeAction.SAVE })
     );
   }
 

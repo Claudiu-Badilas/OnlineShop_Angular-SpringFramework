@@ -1,60 +1,146 @@
-<div class="text-center">
-  <p class="title">EDIT A PRODUCT!</p>
-</div>
+<div class="col-xs-3 container mt-5 text-center">
+  <div class="card-header border border-secondary">
+    <b>{{ typeAction | uppercase }}</b>
+  </div>
+  <div class="card-body text-center border border-secondary">
+    <form
+      novalidate
+      (ngSubmit)="editProduct(productForm.value)"
+      [formGroup]="productForm"
+    >
+      <fieldset>
+        <div class="row">
+          <div class="col-md-9">
+            <div *ngIf="isEditMode" class="form-group row">
+              <label class="col-md-3 col-form-label" for="productId"
+                ><b>Product Id</b>
+              </label>
+              <div class="col-md-8">
+                <input
+                  class="form-control"
+                  [(ngModel)]="product.id"
+                  id="productId"
+                  formControlName="id"
+                  type="text"
+                  (blur)="blur()"
+                />
+              </div>
+            </div>
 
-<div class="container">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="productNameId"
+                ><b>Product Name</b>
+              </label>
+              <div class="col-md-8">
+                <input
+                  class="form-control"
+                  [(ngModel)]="product.name"
+                  id="productNameId"
+                  formControlName="name"
+                  type="text"
+                  (blur)="blur()"
+                />
+              </div>
+            </div>
 
-  <form (ngSubmit)="editProduct(product.category.id)" [formGroup]="productForm">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="productCodeId"
+                ><b>Product Price</b></label
+              >
+              <div class="col-md-8">
+                <input
+                  class="form-control"
+                  [(ngModel)]="product.price"
+                  id="productCodeId"
+                  type="number"
+                  formControlName="price"
+                  (blur)="blur()"
+                />
+              </div>
+            </div>
 
-    <div class="container">
-      <div class="text-center">
-        <h3 [hidden]="!showMessage"
-          [ngStyle]="{backgroundColor: validMessage ==='Product successfully updated!' ? '#1dced1' : 'red'}"
-          style="border-radius: 4px; color: white">{{validMessage}}</h3>
-        <br>
-      </div>
-    </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="descriptionId"
+                ><b>Product Description</b></label
+              >
+              <div class="col-md-8">
+                <textarea
+                  class="form-control"
+                  [(ngModel)]="product.description"
+                  id="descriptionId"
+                  rows="3"
+                  formControlName="description"
+                  (blur)="blur()"
+                  [ngClass]="
+                    productForm.value.invalid && productForm.touched
+                      ? 'is-invalid'
+                      : ''
+                  "
+                ></textarea>
+              </div>
+            </div>
 
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="productCategoryId"
+                ><b>Product Category</b></label
+              >
+              <div class="col-md-8">
+                <select
+                  (change)="handleCategory($event)"
+                  class="select-option form-control"
+                >
+                  <option
+                    *ngFor="let category of categories$ | async"
+                    [value]="category.name"
+                    class="option"
+                  >
+                    {{ category.name }}
+                  </option>
+                  <option *ngIf="!product.category" [disabled]="!edited">
+                    <button (click)="addSelect()">Select Category...</button>
+                  </option>
+                  <option *ngIf="product.category" [disabled]="!edited">
+                    <button (click)="addSelect()">
+                      {{ product.category.name }}
+                    </button>
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-    <!-- <div class="form-group" hidden>
-      <label>Id*</label>
-      <input [(ngModel)]="product.id" class="form-control" formControlName="id" required type="text">
-    </div> -->
-
-    <div class="row">
-      <div class="col-sm-6">
-
-        <div class="form-group">
-          <label>Name*</label>
-          <input [(ngModel)]="product.name" class="form-control" formControlName="name" required type="text">
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-form-label" for="productImageId"
+                ><b>Product Image</b></label
+              >
+              <div class="col-md-offset-2">
+                <img
+                  class="img-responsive w-75 pr-5"
+                  [src]="selectedFile"
+                  alt="aaa"
+                />
+                <input
+                  class="pt-3"
+                  id="productImageId"
+                  (change)="onFileSelected($event)"
+                  [(ngModel)]="product.image"
+                  type="file"
+                  formControlName="image"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>Price*</label>
-          <input [(ngModel)]="product.price" class="form-control" formControlName="price" required type="number">
+        <div class="form-group pl-5">
+          <div class="col-md-10">
+            <button class="btn-update" type="submit">
+              {{ typeAction }}
+            </button>
+          </div>
         </div>
-
-        <div class="form-group">
-          <label>Description*</label>
-          <textarea [(ngModel)]="product.description" class="form-control" formControlName="description" required
-            style="height: 130px" type="text"></textarea>
-        </div>
-      </div>
-      <div class="form-group col-sm-6">
-        <div class="image-upload">
-          <img class="img-responsive" [src]="product.image" alt="" style="max-width:300px;max-height:300px" />
-          <input (change)="onFileSelected($event)" [(ngModel)]="product.image" type="file" />
-        </div>
-      </div>
-    </div>
-
-    <!--    <div hidden class="form-group">-->
-    <!--      <label>Category Type*</label>-->
-    <!--      <input type="text" class="form-control" required [(ngModel)]="product.category"-->
-    <!--             formControlName="category">-->
-    <!--    </div>-->
-    <div class="text-center">
-      <button class="btn btn-update" type="submit">Update Product</button>
-    </div>
-  </form>
+      </fieldset>
+    </form>
+  </div>
 </div>

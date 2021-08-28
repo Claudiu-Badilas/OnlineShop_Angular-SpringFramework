@@ -1,84 +1,131 @@
+import { Product } from './../../../models/product';
+import { ProductTypeAction } from './../utils/product-type-action.util';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
-import { ProductService } from '../../../services/product.service';
-import { Product } from '../../../models/product';
+import { AppState } from 'src/app/store/app.state';
+import * as ProductActions from '../product-state/product.actions';
+import * as fromProduct from './../product-state/product.reducer';
+import * as fromCategories from '../category-state/category.reducer';
+import * as CategoriesActions from '../category-state/category.actions';
+
+import { Category } from 'src/app/models/category';
 
 @Component({
-  selector: 'app-update-product',
+  selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.scss'],
 })
 export class EditProductComponent implements OnInit {
   productForm: FormGroup;
-  validMessage: string = '';
-  imageSrc: string;
-  id: number;
-  product: any;
-  showMessage: boolean = false;
-  selectedFile: any;
+  categories$: Observable<Category[]>;
+  product$: Observable<Product>;
+  errorMessage$: Observable<string>;
+
+  product: Product;
+  typeAction: string;
+  selectedCategory: Category;
+  edited: boolean = false;
+  selectedFile: any = '/assets/images/no-image.png';
+  isEditMode: boolean;
 
   constructor(
-    private productService: ProductService,
-    private route: ActivatedRoute,
-    private router: Router
+    private store: Store<AppState>,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.product = null;
-    this.id = this.route.snapshot.params['id'];
+    this.store.dispatch(CategoriesActions.loadCategories());
+    this.categories$ = this.store.select(fromCategories.getAllCategories);
 
-    this.productService.getProductById(this.id).subscribe(
-      (data) => {
-        console.log(data);
-        this.product = data;
-      },
-      (error) => console.log(error)
-    );
-
-    this.productForm = new FormGroup({
-      id: new FormControl(this.product.id),
-      name: new FormControl(null),
-      description: new FormControl(null),
-      price: new FormControl(null),
-      image: new FormControl(null),
-      category: new FormControl(this.product.category),
+    this.product$ = this.store.select(fromProduct.getCurrentProduct);
+    this.product$.subscribe((product) => {
+      this.product = product;
     });
+
+    this.store.select(fromProduct.getTypeAction).subscribe((typeAction) => {
+      this.typeAction = typeAction;
+    });
+
+    this.isEditMode = this.typeAction === ProductTypeAction.UPDATE;
+
+    if (this.typeAction === ProductTypeAction.UPDATE) {
+      this.selectedFile = this.product.image;
+      this.selectedCategory = this.product.category;
+
+      this.productForm = this.formBuilder.group({
+        id: ['', Validators.required],
+        name: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(30),
+          ],
+        ],
+        description: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(10),
+            Validators.maxLength(100),
+          ],
+        ],
+        price: ['', Validators.required],
+        image: ['', Validators.required],
+        category: ['', Validators.required],
+      });
+    } else if (this.typeAction === ProductTypeAction.SAVE) {
+      this.productForm = this.formBuilder.group({
+        name: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(30),
+          ],
+        ],
+        description: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(10),
+            Validators.maxLength(100),
+          ],
+        ],
+        price: ['', Validators.required],
+        image: ['', Validators.required],
+        category: ['', Validators.required],
+      });
+    }
   }
 
-  editProduct(id: number) {
-    this.showMessage = true;
-    if (this.productForm.valid) {
-      this.validMessage = 'Product successfully updated!';
-      const payload = this.productForm.value;
-      payload.image = this.selectedFile;
-      // payload.categoryType = this.categoryType;
-      console.log(this.productForm.value);
-      this.productService.updateProduct(id, this.productForm.value).subscribe(
-        (data) => {
-          this.productForm.reset(data);
-          return true;
-        },
-        (error) => {
-          console.error(error);
-        },
-        () => console.log('Products successfully found!')
-      );
-    } else {
-      this.validMessage = 'Please fill out the form!';
-    }
+  editProduct(originalProduct: Product) {
+    if (this.typeAction === ProductTypeAction.UPDATE) {
+      if (this.productForm.valid) {
+        if (this.productForm.dirty) {
+          const payload = this.productForm.value;
+          payload.image = this.selectedFile;
 
-    // this.productService.updateProduct(this.id, this.product).subscribe(
-    //   (data) => {
-    //     console.log(data);
-    //     this.product = new Product();
-    //   },
-    //   (error) => console.log(error)
-    // );
-    // setTimeout(() => {
-    //   this.router.navigate(['/products/category/', id]);
-    // }, 2000)
+          console.log(this.productForm.value);
+
+          const product = { ...originalProduct, ...this.productForm.value };
+
+          this.store.dispatch(ProductActions.editProduct({ product }));
+        }
+      }
+    } else if (this.typeAction === ProductTypeAction.SAVE) {
+      const payload: Product = originalProduct;
+      payload.image = this.selectedFile;
+      payload.category = this.selectedCategory;
+      console.log(originalProduct);
+
+      this.store.dispatch(
+        ProductActions.saveProduct({ product: originalProduct })
+      );
+    }
   }
 
   onFileSelected(event: any) {
@@ -88,5 +135,20 @@ export class EditProductComponent implements OnInit {
     reader.onload = () => {
       this.selectedFile = reader.result;
     };
+  }
+
+  blur(): void {}
+
+  handleCategory(event: any) {
+    const categoryName = event.target.value;
+    this.categories$.subscribe((categories) => {
+      this.selectedCategory = categories.find(
+        (category) => category.name === categoryName
+      );
+    });
+  }
+
+  addSelect() {
+    this.edited = true;
   }
 }

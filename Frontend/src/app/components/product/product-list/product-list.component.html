@@ -1,16 +1,20 @@
 <div class="container">
   <div *ngIf="hasAccess" class="col-md-12 text-right">
-    <button class="btn-add" routerLink="/add-product">ADD PRODUCT</button>
+    <button
+      class="btn-add"
+      (click)="initStateForSaveMode()"
+      routerLink="/edit/0"
+    >
+      ADD PRODUCT
+    </button>
   </div>
-  <br />
 
-  <div class="form-inline my-2 my-lg-0 justify-content-center">
+  <div class="form-inline justify-content-center">
     <table>
       <tr>
         <th
           *ngFor="let category of categories$ | async"
-          class="text-center"
-          style="padding: 0 40px 0 40px"
+          class="text-center pl-4 pr-4"
         >
           <p
             class="category-list"
@@ -23,9 +27,8 @@
       </tr>
     </table>
   </div>
-  <br /><br />
 
-  <div class="row">
+  <div class="row pt-5">
     <div *ngFor="let product of products$ | async" class="product-box col-md-3">
       <div class="">
         <a [routerLink]="['/product/', product.id]">
@@ -49,9 +52,9 @@
       <div class="row">
         <button
           *ngIf="hasAccess"
-          [routerLink]="['/edit/', product.id]"
           class="btn-edit"
-          (click)="addCurrentProductToStore(product)"
+          [routerLink]="['/edit/', product.id]"
+          (click)="initStateForEditMode(product)"
         >
           EDIT
         </button>

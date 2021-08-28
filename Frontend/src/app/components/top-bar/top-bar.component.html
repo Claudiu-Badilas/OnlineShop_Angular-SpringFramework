@@ -7,21 +7,11 @@
         alt="logo"
         src="/assets/images/logo.jpg"
       />
-      <div class="nav navbar-nav col-md-1 mr-5">
-        <div class="dropdown" appDropdown>
-          <p>PRODUCTS</p>
-          <ul class="dropdown-menu dropdown-content">
-            <li *ngFor="let category of categories">
-              <a [routerLink]="['/products/category/', category.id]">{{
-                category.name
-              }}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <p class="col-md-1">PRODUCTS</p>
       <p class="col-md-1" routerLink="/orders/2">ORDERS</p>
       <p class="col-md-2" routerLink="/cart-details">
-        MY CART({{ totalQuantity }})
+        <i class="fas fa-shopping-cart">{{ totalQuantity }}</i>
+        CART
       </p>
       <button *ngIf="showButtons" class="btn-login" routerLink="/login">
         LOGIN
@@ -29,8 +19,10 @@
       <button *ngIf="showButtons" class="btn-register" routerLink="/register">
         REGISTER
       </button>
-      <p *ngIf="!showButtons" class="col-md-2" routerLink="#">MY ACCOUNT</p>
-      <button *ngIf="!showButtons" (click)="logOutUser()" class="btn-login">
+      <p *ngIf="!showButtons" class="col-md-2" routerLink="#">
+        <i class="fas fa-user"></i> MY ACCOUNT
+      </p>
+      <button *ngIf="!showButtons" class="btn-login" (click)="logOutUser()">
         LOG OUT
       </button>
     </div>

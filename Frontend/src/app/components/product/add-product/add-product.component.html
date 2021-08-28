@@ -1,4 +1,116 @@
-<div class="text-center">
+<div class="col-xs-3 container mt-5">
+  <div class="card-header border border-secondary">
+    <b>ADD PRODUCT</b>
+  </div>
+  <div class="card-body text-center border border-secondary">
+    <form
+      novalidate
+      (ngSubmit)="saveProduct(productForm.value)"
+      [formGroup]="productForm"
+    >
+      <fieldset>
+        <div class="row">
+          <div class="col-md-9">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="productNameId"
+                ><b>Product Name</b>
+              </label>
+              <div class="col-md-8">
+                <input
+                  class="form-control"
+                  id="productNameId"
+                  formControlName="name"
+                  type="text"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="productCodeId"
+                ><b>Product Price</b></label
+              >
+              <div class="col-md-8">
+                <input
+                  class="form-control"
+                  id="productCodeId"
+                  type="number"
+                  formControlName="price"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="descriptionId"
+                ><b>Product Description</b></label
+              >
+              <div class="col-md-8">
+                <textarea
+                  class="form-control"
+                  id="descriptionId"
+                  rows="3"
+                  formControlName="description"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="productCategoryId"
+                ><b>Product Category</b></label
+              >
+              <div class="col-md-8">
+                <select
+                  (change)="handleCategory($event)"
+                  class="select-option form-control"
+                >
+                  <option
+                    *ngFor="let category of categories$ | async"
+                    [value]="category.name"
+                    class="option"
+                  >
+                    {{ category.name }}
+                  </option>
+                  <option [disabled]="!edited">
+                    <button (click)="addSelect()">Select Category...</button>
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row text-center">
+              <label class="p-2" for="productImageId"
+                ><b>Product Image</b></label
+              >
+              <div class="col-md-offset-2">
+                <img
+                  class="img-responsive w-75 pr-5 mr-5"
+                  alt=""
+                  [src]="selectedFile"
+                />
+                <input
+                  class="pt-3"
+                  id="productImageId"
+                  (change)="onFileSelected($event)"
+                  type="file"
+                  formControlName="image"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group ml-5 pl-5 pt-4">
+          <div class="col-md-10 col-md-offset-2">
+            <button class="btn btn-save" type="submit">Save Product</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<!-- <div class="text-center">
   <p class="title">ADD A NEW PRODUCT!</p>
 </div>
 
@@ -12,18 +124,28 @@
         <div class="row text">
           <div class="col-sm-6">
             <div>
-              <label for="name">Name*</label>
+              <label for="nameId">Name*</label>
               <input
+                id="nameId"
                 type="text"
                 class="form-control"
+                name="name"
                 ngModel
-                #nameInput="ngModel"
-                required
+                #productNameInput="ngModel"
+                [ngClass]="
+                  productNameInput.invalid && productNameInput.touched
+                    ? 'is-invalid'
+                    : productNameInput.valid && productNameInput.touched
+                    ? 'is-valid'
+                    : ''
+                "
               />
             </div>
             <div class="form-group">
-              <label for="description">Description*</label>
+              <label for="descriptionId">Description*</label>
               <textarea
+                id="descriptionId"
+                name="description"
                 type="text"
                 class="form-control"
                 ngModel
@@ -32,8 +154,10 @@
               ></textarea>
             </div>
             <div class="form-group">
-              <label for="price">Price*</label>
+              <label for="priceId">Price*</label>
               <input
+                id="priceId"
+                name="price"
                 type="number"
                 class="form-control"
                 ngModel
@@ -74,14 +198,13 @@
             </div>
           </div>
           <img
-            class="img-responsive"
+            class="img-responsive w-50 p-3"
             [src]="selectedFile"
             alt="upload Image"
-            style="width: 385px; height: 380px"
           />
         </div>
       </div>
     </div>
     <button class="btn btn-save text-center" type="submit">Save Product</button>
   </form>
-</div>
+</div> -->

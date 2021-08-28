@@ -1,11 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { ProductService } from '../../../services/product.service';
 import { Category } from '../../../models/category';
-import { CategoryService } from '../../../services/category.service';
 import { Product } from 'src/app/models/product';
+
+import { AppState } from 'src/app/store/app.state';
+import * as ProductActions from '../product-state/product.actions';
+import * as fromCategories from '../category-state/category.reducer';
+import * as CategoriesActions from '../category-state/category.actions';
 
 @Component({
   selector: 'app-add-product',
@@ -13,62 +24,54 @@ import { Product } from 'src/app/models/product';
   styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements OnInit {
-  //productForm: FormGroup;
-  validMessage: string;
-  selectedCategory: Category;
-  showMessage: boolean = false;
-  category: Category;
-  categories: any = [];
+  productForm: FormGroup;
+  selectedCategory: any;
   edited: boolean = false;
-  selectedFile: any;
+  selectedFile: any = '/assets/images/no-image.png';
+  categories$: Observable<Category[]>;
+  errorMessage$: Observable<string>;
 
   constructor(
-    private productService: ProductService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private categoryService: CategoryService
+    private formBuilder: FormBuilder,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    // this.productForm = new FormGroup({
-    //   name: new FormControl(null, Validators.required),
-    //   description: new FormControl(null, Validators.required),
-    //   price: new FormControl(20.0, Validators.required),
-    //   image: new FormControl(null),
-    //   category: new FormControl(null),
-    // });
+    this.store.dispatch(CategoriesActions.loadCategories());
+    this.categories$ = this.store.select(fromCategories.getAllCategories);
 
-    this.route.paramMap.subscribe(() => {
-      this.getCategories();
+    this.errorMessage$ = this.store.select(fromCategories.getError);
+
+    this.productForm = this.formBuilder.group({
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(30),
+        ],
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(100),
+        ],
+      ],
+      price: ['', Validators.required],
+      image: ['', Validators.required],
+      category: ['', Validators.required],
     });
   }
 
-  createProduct(product: Product) {
-    if (product) {
-      this.validMessage = 'Product successfully saved!';
-      const id = this.category.id;
+  saveProduct(product: Product) {
+    const payload: Product = product;
+    payload.image = this.selectedFile;
+    payload.category = this.selectedCategory;
+    console.log(product);
 
-      const payload = product;
-      payload.image = this.selectedFile;
-      payload.category = this.category;
-      console.log(product);
-      this.productService.createProduct(product).subscribe(
-        (data) => {
-          //this.productForm.reset(data);
-          this.showMessage = true;
-          setTimeout(() => {
-            this.router.navigate([`/products/category/${id}`]);
-          }, 2000);
-          return true;
-        },
-        (error) => {
-          console.error(error);
-        },
-        () => console.log(this.validMessage)
-      );
-    } else {
-      this.validMessage = 'Please fill out the form!';
-    }
+    this.store.dispatch(ProductActions.saveProduct({ product }));
   }
 
   onFileSelected(event: any) {
@@ -80,29 +83,13 @@ export class AddProductComponent implements OnInit {
     };
   }
 
-  getCategories() {
-    this.categoryService.getCategories().subscribe(
-      (data) => {
-        this.categories = data;
-        console.log(data);
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => console.log('Categories successfully found!')
-    );
-  }
-
   handleCategory(event: any) {
-    this.selectedCategory = event.target.value;
-    for (let i = 0; i < this.categories.length; i++) {
-      if (this.selectedCategory === this.categories[i].name) {
-        this.category = new Category(
-          this.categories[i].id,
-          this.categories[i].name
-        );
-      }
-    }
+    const categoryName = event.target.value;
+    this.categories$.subscribe((categories) => {
+      this.selectedCategory = categories.find(
+        (category) => category.name === categoryName
+      );
+    });
   }
 
   addSelect() {
