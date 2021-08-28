@@ -42,12 +42,12 @@ export class ProductService {
     return this.http.get<Product[]>(`/server/product/category/${id}`);
   }
 
-  createProduct(product: Product) {
+  saveProduct(product: Product) {
     let body = JSON.stringify(product);
     return this.http.post(`/server/product/save`, body, httpOption);
   }
 
-  updateProduct(product: Product) {
+  editProduct(product: Product) {
     let body = JSON.stringify(product);
     return this.http.put<Product>(
       `/server/product/update/${product.id}`,

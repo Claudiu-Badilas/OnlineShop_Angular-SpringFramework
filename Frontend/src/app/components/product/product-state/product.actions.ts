@@ -26,17 +26,37 @@ export const initializeCurrentProduct = createAction(
   '[Product] Initialize Product'
 );
 
-export const updateProduct = createAction(
+export const saveProduct = createAction(
+  '[Product] Save Product',
+  props<{ product: Product }>()
+);
+
+export const saveProductSuccess = createAction(
+  '[Product] Save Product Success',
+  props<{ product: Product }>()
+);
+
+export const saveProductFailure = createAction(
+  '[Product] Save Product Fail',
+  props<{ error: string }>()
+);
+
+export const editProduct = createAction(
   '[Product] Update Product',
   props<{ product: Product }>()
 );
 
-export const updateProductSuccess = createAction(
+export const editProductSuccess = createAction(
   '[Product] Update Product Success',
   props<{ product: Product }>()
 );
 
-export const updateProductFailure = createAction(
+export const editProductFailure = createAction(
   '[Product] Update Product Fail',
   props<{ error: string }>()
+);
+
+export const setTypeAction = createAction(
+  '[Product] Set Type Action Product Success',
+  props<{ typeAction: string }>()
 );

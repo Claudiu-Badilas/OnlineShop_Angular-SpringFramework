@@ -4,12 +4,17 @@ import { ProductService } from 'src/app/services/product.service';
 import * as ProductActions from './product.actions';
 import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
 
 @Injectable()
 export class ProductEffects {
   constructor(
     private actions$: Actions,
-    private _productService: ProductService
+    private _productService: ProductService,
+    private store: Store<AppState>,
+    private notificationService: NotificationService
   ) {}
 
   loadProducts$ = createEffect(() => {
@@ -26,14 +31,28 @@ export class ProductEffects {
     );
   });
 
-  updateProduct$ = createEffect(() => {
+  saveProduct$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ProductActions.updateProduct),
+      ofType(ProductActions.saveProduct),
       concatMap((action) =>
-        this._productService.updateProduct(action.product).pipe(
-          map((product) => ProductActions.updateProductSuccess({ product })),
+        this._productService.saveProduct(action.product).pipe(
+          map((product) => ProductActions.saveProductSuccess({ product })),
           catchError((error) =>
-            of(ProductActions.updateProductFailure({ error }))
+            of(ProductActions.saveProductFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
+  editProduct$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.editProduct),
+      concatMap((action) =>
+        this._productService.editProduct(action.product).pipe(
+          map((product) => ProductActions.editProductSuccess({ product })),
+          catchError((error) =>
+            of(ProductActions.editProductFailure({ error }))
           )
         )
       )

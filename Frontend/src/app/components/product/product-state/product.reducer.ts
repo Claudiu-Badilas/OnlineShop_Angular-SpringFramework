@@ -11,12 +11,14 @@ import * as ProductActions from './product.actions';
 export interface ProductState {
   products: Product[];
   currentProduct: Product | null;
+  typeAction: string;
   error: string;
 }
 
 const initialState: ProductState = {
   products: [],
   currentProduct: null,
+  typeAction: null,
   error: null,
 };
 
@@ -64,8 +66,26 @@ const productReducer = createReducer(
       currentProduct: null,
     };
   }),
+  on(ProductActions.saveProductSuccess, (state, action) => {
+    const saveProducts = state.products.map((item) =>
+      action.product.id === item.id ? action.product : item
+    );
+    return {
+      ...state,
+      products: saveProducts,
+      currentProduct: action.product,
+      error: '',
+    };
+  }),
 
-  on(ProductActions.updateProductSuccess, (state, action) => {
+  on(ProductActions.saveProductFailure, (state, action) => {
+    return {
+      ...state,
+      error: action.error,
+    };
+  }),
+
+  on(ProductActions.editProductSuccess, (state, action) => {
     const updateProducts = state.products.map((item) =>
       action.product.id === item.id ? action.product : item
     );
@@ -77,10 +97,17 @@ const productReducer = createReducer(
     };
   }),
 
-  on(ProductActions.updateProductFailure, (state, action) => {
+  on(ProductActions.editProductFailure, (state, action) => {
     return {
       ...state,
       error: action.error,
+    };
+  }),
+
+  on(ProductActions.setTypeAction, (state, action) => {
+    return {
+      ...state,
+      typeAction: action.typeAction,
     };
   })
 );
@@ -100,6 +127,11 @@ export const getCurrentProduct = createSelector(
 export const getError = createSelector(
   getProductFeatureState,
   (state) => state.error
+);
+
+export const getTypeAction = createSelector(
+  getProductFeatureState,
+  (state) => state.typeAction
 );
 
 export function reducer(state: ProductState, action: Action) {
