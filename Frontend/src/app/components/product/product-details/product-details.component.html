@@ -1,10 +1,11 @@
-<div class="container main-content">
-  <div class="row">
-    <span>
-      <span>
-        <p class="product-title-price">
+<div class="pt-5">
+  <div class="container main-content position-static">
+    <div class="row">
+      <img alt="" class="image img-responsive" src="{{ product.image }}" />
+      <span class="pl-5">
+        <h3 class="pt-2">
           {{ product.name }} | {{ product.price | currency: "USD" }}
-        </p>
+        </h3>
         <p>✔ Fără zahăr adăugat, conservanți, coloranți.</p>
         <p>✔ Fără chimicale, valabilitate 20 zile.</p>
         <p>✔ Fără ambalaje de plastic.</p>
@@ -12,21 +13,18 @@
         <p>✔ Livrare în toată România.</p>
         <p>✔ 100% ingrediente naturale.</p>
       </span>
-      <img alt="" class="image" src="{{ product.image }}" />
-    </span>
-
-    <div class="text-right" style="padding: 0px 25px 25px 0px">
-      <button (click)="addToCart()" class="btn btn-cart">ADD TO CART</button>
+    </div>
+    <div class="text-right pb-3 position-relative top-0">
+      <button (click)="addToCart()" class="btn-cart">ADD TO CART</button>
     </div>
   </div>
 </div>
 
 <div class="container">
-  <br />
-  <div class="text-center" style="margin-bottom: 130px">
+  <div class="text-center pt-5">
     <button
-      class="btn btn-back"
-      routerLink="/products/category/{{ product.category.id }}"
+      class="btn-back"
+      routerLink="/products/category/{{ product.category.name }}"
     >
       GO TO PRODUCTS
     </button>

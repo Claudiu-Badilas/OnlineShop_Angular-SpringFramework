@@ -45,24 +45,6 @@ export class CartService {
 
     this.totalPrice.next(totalPriceValue);
     this.totalQuantity.next(totalQuantityValue);
-
-    this.logCartData(totalPriceValue, totalQuantityValue);
-  }
-
-  private logCartData(totalPriceValue: number, totalQuantityValue: number) {
-    console.log('Content of the cart');
-    for (let tempCartItem of this.cartItems) {
-      const subTotalPrice = tempCartItem.quantity * tempCartItem.price;
-      console.log(
-        `name: ${tempCartItem.name} , unitPrice=${tempCartItem.price}, subTotalPrice=${subTotalPrice}`
-      );
-    }
-    console.log(
-      `totalPrice: ${totalPriceValue.toFixed(
-        2
-      )}, totalQuantity: ${totalQuantityValue}`
-    );
-    console.log(`---------`);
   }
 
   decrementQuantity(cartItem: CartItem) {

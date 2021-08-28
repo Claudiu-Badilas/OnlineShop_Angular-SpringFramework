@@ -42,6 +42,10 @@ export class LogInComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/products/category/1');
           window.location.reload();
           this.showLoading = false;
+          this.notificationService.notify(
+            NotificationType.SUCCESS,
+            'Welcome Back!'
+          );
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendErrorNotification(
