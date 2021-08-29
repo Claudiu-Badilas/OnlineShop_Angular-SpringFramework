@@ -21,7 +21,7 @@
             [routerLink]="['/products/category/', category.id]"
             routerLinkActive="active-link"
           >
-            {{ category.name }}
+            {{ category.name | uppercase }}
           </p>
         </th>
       </tr>

@@ -29,9 +29,7 @@ export class TopBarComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     // this.user = this.authenticationService.getUserFromLocalCache();
     this.updateCartStatus();
-    // this.route.paramMap.subscribe(() => {
-    //   this.getCategories();
-    // });
+
     this.checkIsUserLoggedIn();
   }
 
@@ -42,19 +40,6 @@ export class TopBarComponent implements OnInit, OnChanges {
 
     this.cartService.totalQuantity.subscribe(
       (data) => (this.totalQuantity = data)
-    );
-  }
-
-  getCategories() {
-    this.categoryService.getCategories().subscribe(
-      (data) => {
-        this.categories = data;
-        console.log(data);
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => console.log('Categories successfully found!')
     );
   }
 

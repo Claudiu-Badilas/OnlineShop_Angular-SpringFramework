@@ -1,3 +1,4 @@
+import { ProductTypeAction } from './../utils/product-type-action.util';
 import {
   Action,
   createFeatureSelector,
@@ -17,8 +18,8 @@ export interface ProductState {
 
 const initialState: ProductState = {
   products: [],
-  currentProduct: null,
-  typeAction: null,
+  currentProduct: new Product(),
+  typeAction: ProductTypeAction.SAVE,
   error: null,
 };
 

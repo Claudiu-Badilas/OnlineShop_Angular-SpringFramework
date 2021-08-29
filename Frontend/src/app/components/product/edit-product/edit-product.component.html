@@ -11,22 +11,6 @@
       <fieldset>
         <div class="row">
           <div class="col-md-9">
-            <div *ngIf="isEditMode" class="form-group row">
-              <label class="col-md-3 col-form-label" for="productId"
-                ><b>Product Id</b>
-              </label>
-              <div class="col-md-8">
-                <input
-                  class="form-control"
-                  [(ngModel)]="product.id"
-                  id="productId"
-                  formControlName="id"
-                  type="text"
-                  (blur)="blur()"
-                />
-              </div>
-            </div>
-
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="productNameId"
                 ><b>Product Name</b>
@@ -38,8 +22,19 @@
                   id="productNameId"
                   formControlName="name"
                   type="text"
+                  [ngClass]="{
+                    'is-invalid':
+                      (productForm.get('name').touched ||
+                        productForm.get('name').dirty) &&
+                      !productForm.get('name').valid
+                  }"
                   (blur)="blur()"
                 />
+                <span class="invalid-feedback">
+                  <span *ngIf="!productForm.get('name').errors?.required">
+                    Please enter a valid product name
+                  </span>
+                </span>
               </div>
             </div>
 
@@ -55,7 +50,18 @@
                   type="number"
                   formControlName="price"
                   (blur)="blur()"
+                  [ngClass]="{
+                    'is-invalid':
+                      (productForm.get('price').touched ||
+                        productForm.get('price').dirty) &&
+                      !productForm.get('price').valid
+                  }"
                 />
+                <span class="invalid-feedback">
+                  <span *ngIf="!productForm.get('price').errors?.required">
+                    Please enter a valid product price
+                  </span>
+                </span>
               </div>
             </div>
 
@@ -71,12 +77,19 @@
                   rows="3"
                   formControlName="description"
                   (blur)="blur()"
-                  [ngClass]="
-                    productForm.value.invalid && productForm.touched
-                      ? 'is-invalid'
-                      : ''
-                  "
-                ></textarea>
+                  [ngClass]="{
+                    'is-invalid':
+                      (productForm.get('description').touched ||
+                        productForm.get('description').dirty) &&
+                      !productForm.get('description').valid
+                  }"
+                >
+                <span class="invalid-feedback">
+                  <span *ngIf="!productForm.get('price').errors?.required">
+                    Please enter a valid product description
+                  </span>
+                </span>
+                </textarea>
               </div>
             </div>
 

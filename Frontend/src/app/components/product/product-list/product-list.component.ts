@@ -33,7 +33,6 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute,
     private _cartService: CartService,
     private _authenticationService: AuthenticationService,
     private _notificationService: NotificationService,
