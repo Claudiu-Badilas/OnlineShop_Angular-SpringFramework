@@ -1,12 +1,24 @@
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import * as moment from 'moment';
 
 import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/cart-item';
 import { OrderService } from '../../services/order.service';
 import { User } from '../../models/user';
-import { OrderProductService } from '../../services/orderProduct.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import * as ProductActions from 'src/app/components/product/product-state/product.actions';
+import * as fromProducts from 'src/app/components/product/product-state/product.reducer';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-cart-details',
@@ -23,41 +35,50 @@ export class CartDetailsComponent implements OnInit {
   //=======post
   orderForm: FormGroup;
   orderProductsForm: FormGroup;
-  validMessage: string = '';
+  products$: Observable<Product[]>;
+  products: Product[];
+  user: User;
 
   constructor(
     private cartService: CartService,
     private orderService: OrderService,
-    private orderProductService: OrderProductService,
-    private route: ActivatedRoute
+    private formBuilder: FormBuilder,
+    private store: Store<AppState>,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
     this.getCartProducts();
-    this.getOrders();
 
-    this.orderForm = new FormGroup({
-      date: new FormControl(this.getCurrentDateAndTime(), Validators.required),
-      totalPrice: new FormControl(this.totalPrice, Validators.required),
-      status: new FormControl('pending', Validators.required),
-      //user: new FormControl(new User(2, "test", "test", "USER")),
-      user: new FormControl(null),
+    this.user = this.authService.getUserFromLocalCache();
+
+    this.store.dispatch(ProductActions.loadProducts());
+    this.products$ = this.store.select(fromProducts.getAllProducts);
+
+    this.products$.subscribe((products) => {
+      this.products = products;
     });
 
-    this.orderProductsForm = new FormGroup({
-      orderId: new FormControl('', Validators.required),
-      productId: new FormControl('', Validators.required),
+    this.orderForm = this.formBuilder.group({
+      date: [null, Validators.required],
+      totalPrice: [null, Validators.required],
+      status: ['', Validators.required],
+      user: [null, Validators.required],
+      products: [null, Validators.required],
     });
   }
 
-  getCurrentDateAndTime() {
-    let currentDate = new Date().toISOString().slice(0, 10);
-    let d = new Date(),
-      h = (d.getHours() < 10 ? '0' : '') + d.getHours(),
-      m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes(),
-      s = (d.getSeconds() < 10 ? '0' : '') + d.getSeconds();
-    let currentHour = h + ':' + m + ':' + s;
-    return currentDate + ' ' + currentHour;
+  saveOrder() {
+    const payload = this.orderForm.value;
+
+    payload.date = moment().toDate();
+    payload.totalPrice = 19;
+    payload.status = 'pending';
+    payload.products = this.products;
+    payload.user = this.user;
+
+    console.log(this.orderForm.value);
+    this.orderService.saveOrder(this.orderForm.value);
   }
 
   getCartProducts() {
@@ -82,69 +103,5 @@ export class CartDetailsComponent implements OnInit {
 
   remove(cartItem: CartItem) {
     this.cartService.remove(cartItem);
-  }
-
-  createOrder() {
-    if (this.orderForm.valid) {
-      this.validMessage = 'Your order was successfully saved!';
-      console.log(this.orderForm.value);
-      this.orderService.createOrder(this.orderForm.value).subscribe(
-        (data) => {
-          this.orderForm.reset(data);
-          return true;
-        },
-        (error) => {
-          console.error(error);
-        },
-        () => console.log('Order successfully placed!')
-      );
-      this.setOrderProducts();
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
-    } else {
-      this.validMessage = 'Please fill out customer details!';
-    }
-  }
-
-  //========set product to order just placed=============================================
-  setOrderProducts() {
-    for (let i = 0; i < this.cartItems.length; i++) {
-      console.log(i);
-      // if (this.orderProductsForm.valid) {
-      this.validMessage = 'Product successfully saved to order!';
-      const payload = this.orderProductsForm.value;
-
-      payload.productId = this.cartItems[i].id;
-      let id = this.orders[this.orders.length - 1].id;
-      payload.orderId = id + 1;
-      console.log('payload.productId ' + payload.productId);
-      console.log('payload.orderId ' + payload.orderId);
-      console.log(this.orderProductsForm.value);
-      this.orderProductService
-        .createOrderProduct(this.orderProductsForm.value)
-        .subscribe(
-          (data) => {
-            this.orderProductsForm.reset(data);
-            return true;
-          },
-          (error) => {
-            console.error(error);
-          },
-          () => console.log('Product successfully added to order!')
-        );
-    }
-  }
-
-  getOrders() {
-    this.orderService.getOrders().subscribe(
-      (data) => {
-        this.orders = data;
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => console.log('Products successfully found!')
-    );
   }
 }

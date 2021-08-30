@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "orders")
@@ -18,7 +19,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String date;
+    private Date date;
     private Double totalPrice;
     private String status;
 
@@ -26,7 +27,7 @@ public class Order {
     @ManyToOne
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.MERGE)
     //@JsonManagedReference
     @JoinTable(name = "orders_products",
             joinColumns = {@JoinColumn(name = "order_id")},

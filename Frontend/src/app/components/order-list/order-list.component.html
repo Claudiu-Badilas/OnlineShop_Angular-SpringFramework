@@ -1,7 +1,4 @@
 <div class="container">
-  <button class="btn btn-danger" (click)="cleanTrashOrders()">
-    CLEAN ORDERS
-  </button>
   <div class="section-content section-content-p30">
     <div class="container-fluid">
       <div *ngIf="orders.length > 0">
@@ -32,9 +29,7 @@
                 <p>Order nr: #{{ tempOrder.id }}</p>
                 <p>Order placed on: {{ tempOrder.date }}</p>
                 <p>Status: {{ tempOrder.status }}</p>
-                <button (click)="deleteOrder(tempOrder)" class="btn btn-danger">
-                  DELETE
-                </button>
+
                 <hr />
                 <table class="table table-bordered">
                   <thead style="background: #f2e8df; color: black">

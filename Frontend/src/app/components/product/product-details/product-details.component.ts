@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { CartItem } from 'src/app/models/cart-item';
+import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
-import { ProductService } from 'src/app/services/product.service';
+import { AppState } from 'src/app/store/app.state';
+import * as fromProduct from './../product-state/product.reducer';
 
 @Component({
   selector: 'app-product-details',
@@ -10,29 +13,19 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
-  product: any;
+  product: Product;
+  product$: Observable<Product>;
 
   constructor(
-    private productService: ProductService,
     private cartService: CartService,
-    private route: ActivatedRoute
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    this.getProductById(this.route.snapshot.params.id);
-  }
-
-  private getProductById(id: number) {
-    this.productService.getProductById(id).subscribe(
-      (data) => {
-        this.product = data;
-        console.log(data);
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => console.log('Product successfully found!')
-    );
+    this.product$ = this.store.select(fromProduct.getCurrentProduct);
+    this.product$.subscribe((product) => {
+      this.product = product;
+    });
   }
 
   addToCart() {

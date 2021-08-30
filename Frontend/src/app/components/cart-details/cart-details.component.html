@@ -1,6 +1,6 @@
 <div class="container" style="font-family: 'Montserrat SemiBold'">
   <div class="container-fluid">
-    <div *ngIf="cartItems.length > 0">
+    <div>
       <table class="table table-bordered">
         <thead style="background: #212f49; color: white">
           <tr>
@@ -23,24 +23,26 @@
           <td>
             <div>
               <label>Quantity:</label>
-              <div class="row" style="padding-left: 15px">
+              <div class="row pl-2">
                 <span>
                   <button
                     (click)="decrementQuantity(item)"
-                    class="btn btn-decrement fa fa-minus"
-                  ></button>
+                    class="btn btn-decrement"
+                  >
+                    <i class="fas fa-minus"></i>
+                  </button>
                 </span>
-                <span style="padding-left: 40px; padding-right: 40px">{{
-                  item.quantity
-                }}</span>
+                <span class="pl-5 pr-5">{{ item.quantity }}</span>
                 <span>
                   <button
                     (click)="incrementQuantity(item)"
-                    class="btn btn-increment fa fa-plus"
-                  ></button>
+                    class="btn-increment"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
                 </span>
-                <span style="padding-left: 35px">
-                  <button (click)="remove(item)" class="btn btn-remove">
+                <span class="pl-4">
+                  <button (click)="remove(item)" class="btn-remove">
                     REMOVE
                   </button>
                 </span>
@@ -55,7 +57,7 @@
         </tr>
         <tr>
           <td colspan="2"></td>
-          <td style="font-weight: bold">
+          <td>
             <p>Total Quantity: {{ totalQuantity }}</p>
             <p *ngIf="totalPrice <= 100">Shipping: 15$</p>
             <p *ngIf="totalPrice > 100">Shipping: FREE</p>
@@ -64,23 +66,19 @@
         </tr>
       </table>
     </div>
-    <div *ngIf="cartItems.length === 0" class="text-center">
-      <p style="font-family: 'Montserrat SemiBold'; font-size: 30px">
-        Your cart is empty!
-      </p>
-      <p style="font-family: 'Montserrat SemiBold'; font-size: 30px">
+    <div *ngIf="cartItems.length == 0" class="text-center">
+      <p id="text">Your cart is empty!</p>
+      <p id="text">
         Go fill with some
-        <a routerLink="/products/category/1" style="color: #ff3c00"
-          >products!</a
-        >
+        <a routerLink="/products/category/1">products!</a>
       </p>
     </div>
   </div>
 </div>
-<form (ngSubmit)="createOrder()" [formGroup]="orderForm">
-  <div *ngIf="cartItems.length > 0" class="container">
+<form (ngSubmit)="saveOrder()" [formGroup]="orderForm">
+  <div *ngIf="cartItems.length === 0" class="container">
     <div class="text-center">
-      <button class="btn btn-place-order" type="submit">PLACE ORDER</button>
+      <button class="btn-place-order" type="submit">PLACE ORDER</button>
     </div>
   </div>
 </form>

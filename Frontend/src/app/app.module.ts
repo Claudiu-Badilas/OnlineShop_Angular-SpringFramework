@@ -20,7 +20,6 @@ import { OrderListComponent } from './components/order-list/order-list.component
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { ProductService } from './services/product.service';
 import { CategoryService } from './services/category.service';
-import { OrderProductService } from './services/orderProduct.service';
 import { OrderService } from './services/order.service';
 import { UserService } from './services/user.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
@@ -65,7 +64,6 @@ import { CategoryEffects } from './components/product/category-state/category.ef
     OrderService,
     UserService,
     CategoryService,
-    OrderProductService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthenticationGuard,
     NotificationService,

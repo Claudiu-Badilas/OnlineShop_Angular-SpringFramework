@@ -25,7 +25,7 @@ import { ProductTypeAction } from '../utils/product-type-action.util';
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-  hasAccess: boolean = false;
+  hasAccess: boolean = true;
 
   products$: Observable<Product[]>;
   categories$: Observable<Category[]>;
@@ -40,7 +40,7 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.hasAccess = this.checkRole();
+    //this.hasAccess = this.checkRole();
 
     this.store.dispatch(ProductActions.loadProducts());
     this.products$ = this.store.select(fromProducts.getAllProducts);
@@ -58,7 +58,7 @@ export class ProductListComponent implements OnInit {
       () => {
         setTimeout(() => {
           window.location.reload();
-        }, 1000);
+        }, 100);
         this._notificationService.notify(
           NotificationType.SUCCESS,
           'Your selected product was deleted successfully'
