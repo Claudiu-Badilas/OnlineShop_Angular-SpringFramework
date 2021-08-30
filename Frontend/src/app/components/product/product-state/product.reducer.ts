@@ -75,7 +75,7 @@ const productReducer = createReducer(
       ...state,
       products: saveProducts,
       currentProduct: action.product,
-      error: '',
+      error: null,
     };
   }),
 
@@ -94,7 +94,7 @@ const productReducer = createReducer(
       ...state,
       products: updateProducts,
       currentProduct: action.product,
-      error: '',
+      error: null,
     };
   }),
 

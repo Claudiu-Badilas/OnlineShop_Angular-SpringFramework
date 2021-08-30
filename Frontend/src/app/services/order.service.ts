@@ -20,9 +20,9 @@ export class OrderService {
     return this.httpClient.get('/server/user-orders/' + id);
   }
 
-  createOrder(order: Order) {
-    let body = JSON.stringify(order);
-    return this.httpClient.post('/server/order/saveOrder', body, httpOption);
+  saveOrder(order: Order) {
+    const body = JSON.stringify(order);
+    return this.httpClient.post('/server/order/save', body, httpOption);
   }
 
   deleteOrder(id: number) {

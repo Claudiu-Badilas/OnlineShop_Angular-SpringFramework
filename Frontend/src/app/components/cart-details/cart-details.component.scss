@@ -3,7 +3,8 @@
   height: 40px;
   background-color: dodgerblue;
   color: white;
-  border-radius: 13px 0px 13px 0px
+  border-radius: 13px 0px 13px 0px;
+  border: none;
 }
 
 .btn-decrement:hover {
@@ -16,7 +17,8 @@
   height: 40px;
   border-radius: 0px 13px 0px 13px;
   background-color: dodgerblue;
-  color: white
+  color: white;
+  border: none;
 }
 
 .btn-increment:hover {
@@ -32,6 +34,7 @@
   font-family: "Montserrat SemiBold";
   border-radius: 15px 0px 15px 0px;
   font-size: 13px;
+  border: none;
 }
 
 .btn-remove:hover {
@@ -51,10 +54,16 @@ p label {
   border-radius: 30px;
   font-family: Montserrat SemiBold;
   font-size: 15px;
-  margin-left: 10px;
   color: #ffffff;
+  border: none;
 }
+
 .btn-place-order:hover {
   background-color: #fddd07;
   color: black;
+}
+
+#text {
+  font-family: "Montserrat SemiBold";
+  font-size: 30px;
 }

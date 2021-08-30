@@ -29,8 +29,7 @@ export class OrderListComponent implements OnInit {
   }
 
   getOrders() {
-    let user: any = this.authenticationService.getUserFromLocalCache;
-    this.orderService.getOrdersByUserId(4).subscribe(
+    this.orderService.getOrdersByUserId(1).subscribe(
       (data) => {
         this.orders = data;
       },
