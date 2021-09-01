@@ -19,6 +19,8 @@ import { AppState } from 'src/app/store/app.state';
 import * as ProductActions from 'src/app/components/product/product-state/product.actions';
 import * as fromProducts from 'src/app/components/product/product-state/product.reducer';
 import { Product } from 'src/app/models/product';
+import * as fromUser from '../../authentication/user-state/user.reducer';
+import * as UserActions from '../../authentication/user-state/user.actions';
 
 @Component({
   selector: 'app-cart-details',
@@ -50,7 +52,10 @@ export class CartDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getCartProducts();
 
-    this.user = this.authService.getUserFromLocalCache();
+    this.store.dispatch(UserActions.loadUser());
+    this.store.select(fromUser.getUser).subscribe((user) => {
+      this.user = user;
+    });
 
     this.store.dispatch(ProductActions.loadProducts());
     this.products$ = this.store.select(fromProducts.getAllProducts);

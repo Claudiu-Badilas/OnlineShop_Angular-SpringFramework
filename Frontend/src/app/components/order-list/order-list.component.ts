@@ -1,10 +1,10 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Order } from 'src/app/models/order';
-import { User } from 'src/app/models/user';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-
-import { OrderService } from '../../services/order.service';
+import { AppState } from 'src/app/store/app.state';
+import * as OrderActions from './order-state/order.actions';
+import * as fromOrder from './order-state/order.reducer';
 
 @Component({
   selector: 'app-order-list',
@@ -12,29 +12,15 @@ import { OrderService } from '../../services/order.service';
   styleUrls: ['./order-list.component.scss'],
 })
 export class OrderListComponent implements OnInit {
-  orders: any = [];
-  status: string = '';
+  orders$: Observable<Order[]>;
+  errorMessage$: Observable<string>;
 
-  constructor(
-    private orderService: OrderService,
-    private route: ActivatedRoute,
-    private authenticationService: AuthenticationService
-  ) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.getOrders();
-  }
+    this.store.dispatch(OrderActions.loadOrders());
+    this.orders$ = this.store.select(fromOrder.getAllOrders);
 
-  getOrders() {
-    this.orderService.getOrdersByUserId(1).subscribe(
-      (data) => {
-        this.orders = data;
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => console.log('Products successfully found!')
-    );
-    this.orders.reverse();
+    this.errorMessage$ = this.store.select(fromOrder.getError);
   }
 }

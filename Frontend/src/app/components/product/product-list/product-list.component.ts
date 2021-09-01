@@ -1,23 +1,24 @@
 import { Category } from './../../../models/category';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
 
 import { ProductService } from '../../../services/product.service';
 import { CartService } from '../../../services/cart.service';
 import { CartItem } from '../../../models/cart-item';
 import { Product } from '../../../models/product';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Role } from 'src/app/shared/enum/role.enum';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import * as fromProducts from '../product-state/product.reducer';
 import * as fromCategories from '../category-state/category.reducer';
+import * as fromUser from '../../../authentication/user-state/user.reducer';
+import * as UserActions from '../../../authentication/user-state/user.actions';
 import * as ProductActions from '../product-state/product.actions';
 import * as CategoriesActions from '../category-state/category.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { ProductTypeAction } from '../utils/product-type-action.util';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-product-list',
@@ -25,7 +26,8 @@ import { ProductTypeAction } from '../utils/product-type-action.util';
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-  hasAccess: boolean = true;
+  user: User;
+  hasAccess: boolean = false;
 
   products$: Observable<Product[]>;
   categories$: Observable<Category[]>;
@@ -34,13 +36,17 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private _cartService: CartService,
-    private _authenticationService: AuthenticationService,
     private _notificationService: NotificationService,
     private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    //this.hasAccess = this.checkRole();
+    this.hasAccess = this.checkRole();
+
+    this.store.dispatch(UserActions.loadUser());
+    this.store.select(fromUser.getUser).subscribe((user) => {
+      this.user = user;
+    });
 
     this.store.dispatch(ProductActions.loadProducts());
     this.products$ = this.store.select(fromProducts.getAllProducts);
@@ -89,16 +95,10 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    console.log(`Adding to cart: ${product.name}, ${product.price}`);
-    const theCartItem = new CartItem(product);
-    this._cartService.addToCart(theCartItem);
+    this._cartService.addToCart(new CartItem(product));
   }
 
   public checkRole(): boolean {
-    return this.getUserRole() === Role.ADMIN;
-  }
-
-  private getUserRole(): string {
-    return this._authenticationService.getUserFromLocalCache().role;
+    return this.user.role === Role.ADMIN;
   }
 }

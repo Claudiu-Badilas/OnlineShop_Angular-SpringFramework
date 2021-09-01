@@ -1,7 +1,7 @@
 const user: User = {
   id: '1',
-  firstName: 'Claudiu',
-  lastName: 'Claudiu',
+  firstName: 'Test',
+  lastName: 'Test',
   email: 'admin',
   username: 'admin',
   profileImageUrl: 'http://localhost:8080/user/image/profile/admin',

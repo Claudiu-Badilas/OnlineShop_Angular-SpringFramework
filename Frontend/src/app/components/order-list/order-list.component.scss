@@ -1,0 +1,19 @@
+.order-list {
+  margin-bottom: 30px;
+  margin-top: 30px;
+  width: 1200px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 1px 1px 20px 1px;
+  color: #f2e8df;
+  border: 1px solid #ffe1d9;
+}
+
+thead {
+  background: #f2e8df;
+  color: black;
+
+  tr {
+    border-bottom: 3px solid #f2e8df;
+  }
+}

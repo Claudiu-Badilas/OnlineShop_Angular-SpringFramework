@@ -28,16 +28,16 @@ const shoppingCartReducer = createReducer(
   })
 );
 
-const getProductFeatureState =
+const getShoppingCartFeatureState =
   createFeatureSelector<ShoppingCartState>('shoppingCart');
 
 export const getAllCartProducts = createSelector(
-  getProductFeatureState,
+  getShoppingCartFeatureState,
   (state) => state.products
 );
 
 export const getError = createSelector(
-  getProductFeatureState,
+  getShoppingCartFeatureState,
   (state) => state.error
 );
 

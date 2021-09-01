@@ -27,7 +27,7 @@ public class Order {
     @ManyToOne
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.MERGE)
+    @ManyToMany//(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     //@JsonManagedReference
     @JoinTable(name = "orders_products",
             joinColumns = {@JoinColumn(name = "order_id")},

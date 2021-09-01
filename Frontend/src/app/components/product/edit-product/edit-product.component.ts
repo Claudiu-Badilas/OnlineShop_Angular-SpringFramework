@@ -5,6 +5,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -77,17 +78,25 @@ export class EditProductComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.minLength(10),
+          Validators.minLength(1),
           Validators.maxLength(100),
         ],
       ],
-      price: [null, priceRangeValidator],
-      image: [null, imageValidator],
+      price: [null, priceRangeValidator(0, 100)],
+      image: [null, imageValidator(this.selectedFile)],
       category: [null, Validators.required],
     });
   }
 
   editProduct(originalProduct: Product) {
+    const payload: Product = originalProduct;
+    payload.image = this.selectedFile;
+    payload.category = this.selectedCategory;
+    console.log(originalProduct);
+
+    this.store.dispatch(
+      ProductActions.saveProduct({ product: originalProduct })
+    );
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
         if (this.typeAction === ProductTypeAction.UPDATE) {
@@ -142,26 +151,23 @@ export class EditProductComponent implements OnInit {
       );
     });
   }
-
-  addSelect() {
-    this.edited = true;
-  }
 }
-
-function priceRangeValidator(
-  p: AbstractControl
-): { [key: string]: boolean } | null {
-  if (p.value !== null && (isNaN(p.value) || p.value < 0)) {
-    return { range: true };
-  }
-
-  return null;
+function priceRangeValidator(min: number, max: number): ValidatorFn {
+  return (p: AbstractControl): { [key: string]: boolean } | null => {
+    if (
+      p.value !== null &&
+      (isNaN(p.value) || p.value < min || p.value > max)
+    ) {
+      return { range: true };
+    }
+    return null;
+  };
 }
-
-function imageValidator(): { [key: string]: boolean } | null {
-  if (this.selectedFile !== '/assets/images/no-image.png') {
-    return { image: true };
-  }
-
-  return null;
+function imageValidator(defaultImage: any): ValidatorFn {
+  return (i: AbstractControl): { [key: string]: boolean } | null => {
+    if (defaultImage === i) {
+      return { image: true };
+    }
+    return null;
+  };
 }

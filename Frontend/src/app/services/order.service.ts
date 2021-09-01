@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Order } from '../models/order';
+import { Observable } from 'rxjs';
 
 const httpOption = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -12,12 +13,12 @@ const httpOption = {
 export class OrderService {
   constructor(private httpClient: HttpClient) {}
 
-  getOrders() {
-    return this.httpClient.get('/serve/orders/orders');
+  getOrders(): Observable<Order[]> {
+    return this.httpClient.get<Order[]>('/serve/orders/orders');
   }
 
-  getOrdersByUserId(id: number) {
-    return this.httpClient.get('/server/user-orders/' + id);
+  getOrdersByUserId(id: number): Observable<Order[]> {
+    return this.httpClient.get<Order[]>('/server/user-orders/' + id);
   }
 
   saveOrder(order: Order) {

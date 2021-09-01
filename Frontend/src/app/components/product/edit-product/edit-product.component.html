@@ -110,10 +110,10 @@
                     {{ category.name }}
                   </option>
                   <option *ngIf="!product.category" [disabled]="!edited">
-                    <button (click)="addSelect()">Select Category...</button>
+                    <button (click)="(!edited)">Select Category...</button>
                   </option>
                   <option *ngIf="product.category" [disabled]="!edited">
-                    <button (click)="addSelect()">
+                    <button (click)="(!edited)">
                       {{ product.category.name }}
                     </button>
                   </option>
@@ -140,6 +140,12 @@
                   [(ngModel)]="product.image"
                   type="file"
                   formControlName="image"
+                  [ngClass]="{
+                    'is-invalid':
+                      (productForm.get('image').touched ||
+                        productForm.get('image').dirty) &&
+                      !productForm.get('image').valid
+                  }"
                 />
               </div>
             </div>

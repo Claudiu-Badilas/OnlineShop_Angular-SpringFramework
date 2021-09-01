@@ -28,7 +28,7 @@ public class Product {
     @OneToOne
     private Category category;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade=CascadeType.PERSIST)
     //@JsonBackReference
     @JsonIgnore
     private List<Order> orders = new ArrayList<>();
