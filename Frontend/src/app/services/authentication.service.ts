@@ -43,7 +43,7 @@ export class AuthenticationService {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  public getUserFromLocalCache(): User {
+  public getUserFromLocalCache(): Observable<User> {
     return JSON.parse(localStorage.getItem('user'));
   }
 
