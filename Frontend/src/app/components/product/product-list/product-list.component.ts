@@ -41,12 +41,11 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.hasAccess = this.checkRole();
-
     this.store.dispatch(UserActions.loadUser());
     this.store.select(fromUser.getUser).subscribe((user) => {
       this.user = user;
     });
+    this.hasAccess = this.checkRole();
 
     this.store.dispatch(ProductActions.loadProducts());
     this.products$ = this.store.select(fromProducts.getAllProducts);
