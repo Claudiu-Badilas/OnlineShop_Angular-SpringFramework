@@ -51,12 +51,19 @@ export const editProductSuccess = createAction(
   props<{ product: Product }>()
 );
 
-export const editProductFailure = createAction(
-  '[Product] Update Product Fail',
-  props<{ error: string }>()
-);
+export const editProductFailure = createAction('[Product] Update Product Fail');
 
 export const setTypeAction = createAction(
   '[Product] Set Type Action Product Success',
   props<{ typeAction: string }>()
+);
+
+export const deleteProduct = createAction('[Product] Delete Product');
+export const deleteProductSuccess = createAction(
+  '[Product] Delete Product Success',
+  props<{ product: Product }>()
+);
+
+export const deleteProductError = createAction(
+  '[Product] Delete Product Error'
 );

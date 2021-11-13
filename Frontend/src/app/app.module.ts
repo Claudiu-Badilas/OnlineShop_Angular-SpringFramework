@@ -1,3 +1,5 @@
+import { PlatformEffects } from './platform-state/platform.effects';
+import { OrderEffects } from './components/order-list/order-state/order.effects';
 import { NotificationModule } from './shared/Notification/notification.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
@@ -31,6 +33,7 @@ import { ProductDetailsComponent } from './components/product/product-details/pr
 import { AuthenticationGuard } from './authentication/guard/authentication.guard';
 import { ProductEffects } from './components/product/product-state/product.effects';
 import { CategoryEffects } from './components/product/category-state/category.effects';
+import { NavigationEffects } from './components/navigation/navigation.effects';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,13 @@ import { CategoryEffects } from './components/product/category-state/category.ef
     FormsModule,
     NotificationModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([ProductEffects, CategoryEffects]),
+    EffectsModule.forRoot([
+      ProductEffects,
+      CategoryEffects,
+      OrderEffects,
+      NavigationEffects,
+      PlatformEffects,
+    ]),
     NgbModule,
   ],
   providers: [
@@ -64,9 +73,9 @@ import { CategoryEffects } from './components/product/category-state/category.ef
     OrderService,
     UserService,
     CategoryService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthenticationGuard,
     NotificationService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

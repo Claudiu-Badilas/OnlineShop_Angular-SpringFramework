@@ -14,6 +14,7 @@ const user: User = {
   notLocked: true,
 };
 
+import { ActivatedRoute } from '@angular/router';
 import {
   Action,
   createFeatureSelector,
@@ -22,16 +23,14 @@ import {
   on,
 } from '@ngrx/store';
 import { User } from 'src/app/models/user';
-import * as UserActions from './user.actions';
+import * as UserActions from './platform.actions';
 
 export interface UserState {
   user: User;
-  error: string;
 }
 
 const initialState: UserState = {
   user: user,
-  error: null,
 };
 
 const userReducer = createReducer(
@@ -64,9 +63,9 @@ export const getUser = createSelector(
   (state) => state.user
 );
 
-export const getError = createSelector(
+export const getRouterParams = createSelector(
   getUserFeatureState,
-  (state) => state.error
+  () => new ActivatedRoute().params
 );
 
 export function reducer(state: UserState, action: Action) {

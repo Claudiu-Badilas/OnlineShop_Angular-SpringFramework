@@ -7,8 +7,8 @@ import { OrderService } from 'src/app/services/order.service';
 import { User } from 'src/app/models/user';
 import { AppState } from 'src/app/store/app.state';
 import { Store } from '@ngrx/store';
-import * as UserAction from '../../../authentication/user-state/user.actions';
-import * as fromUser from '../../../authentication/user-state/user.reducer';
+import * as PlatformActions from '../../../platform-state/platform.actions';
+import * as fromPlatform from '../../../platform-state/platform.reducer';
 
 @Injectable()
 export class OrderEffects {
@@ -19,14 +19,14 @@ export class OrderEffects {
     private _orderService: OrderService,
     private store: Store<AppState>
   ) {
-    this.store.dispatch(UserAction.loadUser());
-    this.store.select(fromUser.getUser).subscribe((user) => {
+    this.store.dispatch(PlatformActions.loadUser());
+    this.store.select(fromPlatform.getUser).subscribe((user) => {
       this.user = user;
     });
   }
 
-  loadOrders$ = createEffect(() => {
-    return this.actions$.pipe(
+  loadOrders$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(OrderActions.loadOrders),
       mergeMap(() =>
         this._orderService.getOrdersByUserId(+this.user.id).pipe(
@@ -34,6 +34,6 @@ export class OrderEffects {
           catchError((error) => of(OrderActions.loadOrdersFailure({ error })))
         )
       )
-    );
-  });
+    )
+  );
 }

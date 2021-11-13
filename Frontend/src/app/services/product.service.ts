@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../models/product';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 const httpOption = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -15,23 +15,22 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
-    return this.http
-      .get<Product[]>(`/server/product/products`)
-      .pipe(
-        map((results) =>
-          results.map(
-            (result) =>
-              new Product(
-                result.id,
-                result.name,
-                result.description,
-                result.price,
-                result.image,
-                result.category
-              )
-          )
+    return this.http.get<Product[]>(`/server/product/products`).pipe(
+      first(),
+      map((results) =>
+        results.map(
+          (result) =>
+            new Product(
+              result.id,
+              result.name,
+              result.description,
+              result.price,
+              result.image,
+              result.category
+            )
         )
-      );
+      )
+    );
   }
 
   getProductById(id: number): Observable<Product> {

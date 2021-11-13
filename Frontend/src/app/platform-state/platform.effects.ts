@@ -1,12 +1,12 @@
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as UserActions from './user.actions';
+import * as UserActions from './platform.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Injectable()
-export class UserEffects {
+export class PlatformEffects {
   constructor(
     private actions$: Actions,
     private _authService: AuthenticationService

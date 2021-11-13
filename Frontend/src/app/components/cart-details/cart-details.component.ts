@@ -19,8 +19,8 @@ import { AppState } from 'src/app/store/app.state';
 import * as ProductActions from 'src/app/components/product/product-state/product.actions';
 import * as fromProducts from 'src/app/components/product/product-state/product.reducer';
 import { Product } from 'src/app/models/product';
-import * as fromUser from '../../authentication/user-state/user.reducer';
-import * as UserActions from '../../authentication/user-state/user.actions';
+import * as fromPlatform from '../../platform-state/platform.reducer';
+import * as UserActions from '../../platform-state/platform.actions';
 
 @Component({
   selector: 'app-cart-details',
@@ -53,7 +53,7 @@ export class CartDetailsComponent implements OnInit {
     this.getCartProducts();
 
     this.store.dispatch(UserActions.loadUser());
-    this.store.select(fromUser.getUser).subscribe((user) => {
+    this.store.select(fromPlatform.getUser).subscribe((user) => {
       this.user = user;
     });
 

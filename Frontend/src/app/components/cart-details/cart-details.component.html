@@ -76,7 +76,7 @@
   </div>
 </div>
 <form (ngSubmit)="saveOrder()" [formGroup]="orderForm">
-  <div *ngIf="cartItems.length === 0" class="container">
+  <div *ngIf="cartItems.length !== 0" class="container">
     <div class="text-center">
       <button class="btn-place-order" type="submit">PLACE ORDER</button>
     </div>

@@ -11,9 +11,10 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import * as fromProducts from '../product-state/product.reducer';
 import * as fromCategories from '../category-state/category.reducer';
-import * as fromUser from '../../../authentication/user-state/user.reducer';
-import * as UserActions from '../../../authentication/user-state/user.actions';
+import * as fromPlatform from '../../../platform-state/platform.reducer';
+import * as UserActions from '../../../platform-state/platform.actions';
 import * as ProductActions from '../product-state/product.actions';
+import * as NavigationActions from '../../navigation/navigation.actions';
 import * as CategoriesActions from '../category-state/category.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
@@ -42,7 +43,7 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(UserActions.loadUser());
-    this.store.select(fromUser.getUser).subscribe((user) => {
+    this.store.select(fromPlatform.getUser).subscribe((user) => {
       this.user = user;
     });
     this.hasAccess = this.checkRole();
@@ -50,12 +51,8 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(ProductActions.loadProducts());
     this.products$ = this.store.select(fromProducts.getAllProducts);
 
-    this.errorMessage$ = this.store.select(fromProducts.getError);
-
     this.store.dispatch(CategoriesActions.loadCategories());
     this.categories$ = this.store.select(fromCategories.getAllCategories);
-
-    this.errorMessage$ = this.store.select(fromCategories.getError);
   }
 
   deleteProduct(id: number) {
