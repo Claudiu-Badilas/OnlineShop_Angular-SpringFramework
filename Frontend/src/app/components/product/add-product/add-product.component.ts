@@ -1,22 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ProductService } from '../../../services/product.service';
 import { Category } from '../../../models/category';
 import { Product } from 'src/app/models/product';
 
 import { AppState } from 'src/app/store/app.state';
-import * as ProductActions from '../product-state/product.actions';
-import * as fromCategories from '../category-state/category.reducer';
-import * as CategoriesActions from '../category-state/category.actions';
+import * as fromPlatform from '../../../platform-state/platform.reducer';
+import * as PlatformActions from '../../../platform-state/platform.actions';
 
 @Component({
   selector: 'app-add-product',
@@ -37,10 +29,8 @@ export class AddProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(CategoriesActions.loadCategories());
-    this.categories$ = this.store.select(fromCategories.getAllCategories);
-
-    this.errorMessage$ = this.store.select(fromCategories.getError);
+    this.store.dispatch(PlatformActions.loadCategories());
+    this.categories$ = this.store.select(fromPlatform.getAllCategories);
 
     this.productForm = this.formBuilder.group({
       name: [
@@ -71,7 +61,7 @@ export class AddProductComponent implements OnInit {
     payload.category = this.selectedCategory;
     console.log(product);
 
-    this.store.dispatch(ProductActions.saveProduct({ product }));
+    this.store.dispatch(PlatformActions.saveProduct({ product }));
   }
 
   onFileSelected(event: any) {

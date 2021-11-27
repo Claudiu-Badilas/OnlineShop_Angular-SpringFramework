@@ -5,8 +5,7 @@ import { CartItem } from 'src/app/models/cart-item';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
 import { AppState } from 'src/app/store/app.state';
-import * as fromProduct from './../product-state/product.reducer';
-
+import * as fromPlatform from '../../../platform-state/platform.reducer';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -22,7 +21,7 @@ export class ProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.product$ = this.store.select(fromProduct.getCurrentProduct);
+    this.product$ = this.store.select(fromPlatform.getCurrentProduct);
     this.product$.subscribe((product) => {
       this.product = product;
     });

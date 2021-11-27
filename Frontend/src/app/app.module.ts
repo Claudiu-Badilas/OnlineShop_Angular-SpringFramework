@@ -31,8 +31,6 @@ import { RegisterComponent } from './components/register/register.component';
 import * as fromApp from './store/app.state';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 import { AuthenticationGuard } from './authentication/guard/authentication.guard';
-import { ProductEffects } from './components/product/product-state/product.effects';
-import { CategoryEffects } from './components/product/category-state/category.effects';
 import { NavigationEffects } from './components/navigation/navigation.effects';
 
 @NgModule({
@@ -58,13 +56,7 @@ import { NavigationEffects } from './components/navigation/navigation.effects';
     FormsModule,
     NotificationModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([
-      ProductEffects,
-      CategoryEffects,
-      OrderEffects,
-      NavigationEffects,
-      PlatformEffects,
-    ]),
+    EffectsModule.forRoot([OrderEffects, NavigationEffects, PlatformEffects]),
     NgbModule,
   ],
   providers: [

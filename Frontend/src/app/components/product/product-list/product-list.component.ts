@@ -9,13 +9,8 @@ import { Product } from '../../../models/product';
 import { Role } from 'src/app/shared/enum/role.enum';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
-import * as fromProducts from '../product-state/product.reducer';
-import * as fromCategories from '../category-state/category.reducer';
 import * as fromPlatform from '../../../platform-state/platform.reducer';
-import * as UserActions from '../../../platform-state/platform.actions';
-import * as ProductActions from '../product-state/product.actions';
-import * as NavigationActions from '../../navigation/navigation.actions';
-import * as CategoriesActions from '../category-state/category.actions';
+import * as PlatformActions from '../../../platform-state/platform.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { ProductTypeAction } from '../utils/product-type-action.util';
@@ -42,17 +37,17 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(UserActions.loadUser());
+    this.store.dispatch(PlatformActions.loadUser());
     this.store.select(fromPlatform.getUser).subscribe((user) => {
       this.user = user;
     });
     this.hasAccess = this.checkRole();
 
-    this.store.dispatch(ProductActions.loadProducts());
-    this.products$ = this.store.select(fromProducts.getAllProducts);
+    this.store.dispatch(PlatformActions.loadProducts());
+    this.products$ = this.store.select(fromPlatform.getAllProducts);
 
-    this.store.dispatch(CategoriesActions.loadCategories());
-    this.categories$ = this.store.select(fromCategories.getAllCategories);
+    this.store.dispatch(PlatformActions.loadCategories());
+    this.categories$ = this.store.select(fromPlatform.getAllCategories);
   }
 
   deleteProduct(id: number) {
@@ -72,21 +67,21 @@ export class ProductListComponent implements OnInit {
 
   initStateForEditMode(product: Product) {
     this.store.dispatch(
-      ProductActions.setCurrentProduct({ setCurrentProduct: product })
+      PlatformActions.setCurrentProduct({ setCurrentProduct: product })
     );
     this.store.dispatch(
-      ProductActions.setTypeAction({ typeAction: ProductTypeAction.UPDATE })
+      PlatformActions.setTypeAction({ typeAction: ProductTypeAction.UPDATE })
     );
   }
 
   initStateForSaveMode() {
     this.store.dispatch(
-      ProductActions.setCurrentProduct({
+      PlatformActions.setCurrentProduct({
         setCurrentProduct: new Product(),
       })
     );
     this.store.dispatch(
-      ProductActions.setTypeAction({ typeAction: ProductTypeAction.SAVE })
+      PlatformActions.setTypeAction({ typeAction: ProductTypeAction.SAVE })
     );
   }
 

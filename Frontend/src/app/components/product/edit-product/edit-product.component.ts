@@ -12,10 +12,8 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { AppState } from 'src/app/store/app.state';
-import * as ProductActions from '../product-state/product.actions';
-import * as fromProduct from './../product-state/product.reducer';
-import * as fromCategories from '../category-state/category.reducer';
-import * as CategoriesActions from '../category-state/category.actions';
+import * as fromPlatform from '../../../platform-state/platform.reducer';
+import * as PlatformActions from '../../../platform-state/platform.actions';
 
 import { Category } from 'src/app/models/category';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -46,15 +44,15 @@ export class EditProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(CategoriesActions.loadCategories());
-    this.categories$ = this.store.select(fromCategories.getAllCategories);
+    this.store.dispatch(PlatformActions.loadCategories());
+    this.categories$ = this.store.select(fromPlatform.getAllCategories);
 
-    this.product$ = this.store.select(fromProduct.getCurrentProduct);
+    this.product$ = this.store.select(fromPlatform.getCurrentProduct);
     this.product$.subscribe((product) => {
       this.product = product;
     });
 
-    this.store.select(fromProduct.getTypeAction).subscribe((typeAction) => {
+    this.store.select(fromPlatform.getTypeAction).subscribe((typeAction) => {
       this.typeAction = typeAction;
     });
 
@@ -95,7 +93,7 @@ export class EditProductComponent implements OnInit {
     console.log(originalProduct);
 
     this.store.dispatch(
-      ProductActions.saveProduct({ product: originalProduct })
+      PlatformActions.saveProduct({ product: originalProduct })
     );
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
@@ -109,7 +107,7 @@ export class EditProductComponent implements OnInit {
 
           const product = { ...originalProduct, ...this.productForm.value };
 
-          this.store.dispatch(ProductActions.editProduct({ product }));
+          this.store.dispatch(PlatformActions.editProduct({ product }));
         } else if (this.typeAction === ProductTypeAction.SAVE) {
           const payload: Product = originalProduct;
           payload.image = this.selectedFile;
@@ -117,7 +115,7 @@ export class EditProductComponent implements OnInit {
           console.log(originalProduct);
 
           this.store.dispatch(
-            ProductActions.saveProduct({ product: originalProduct })
+            PlatformActions.saveProduct({ product: originalProduct })
           );
         }
         this._notificationService.notify(

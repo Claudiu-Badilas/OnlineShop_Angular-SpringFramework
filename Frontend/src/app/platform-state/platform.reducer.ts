@@ -23,51 +23,175 @@ import {
   on,
 } from '@ngrx/store';
 import { User } from 'src/app/models/user';
-import * as UserActions from './platform.actions';
+import { ProductTypeAction } from '../components/product/utils/product-type-action.util';
+import { Category } from '../models/category';
+import { Product } from '../models/product';
+import * as PlatformActions from './platform.actions';
 
-export interface UserState {
+export interface PlatformState {
   user: User;
+  products: Product[];
+  selectedProduct: Product;
+  typeAction: string;
+  categories: Category[];
+  currentCategory: Category;
 }
 
-const initialState: UserState = {
+const initialState: PlatformState = {
   user: user,
+  products: [],
+  selectedProduct: new Product(),
+  typeAction: ProductTypeAction.SAVE,
+  categories: [],
+  currentCategory: null,
 };
 
 const userReducer = createReducer(
   initialState,
-  on(UserActions.loadUser, (state) => {
+  on(PlatformActions.loadUser, (state) => {
     return {
       ...state,
       user: state.user,
     };
   }),
-  on(UserActions.loadUserSuccess, (state, action) => {
+  on(PlatformActions.loadUserSuccess, (state, action) => {
     return {
       ...state,
       user: action.user,
     };
   }),
-  on(UserActions.loadUserFailure, (state, action) => {
+  on(PlatformActions.loadProducts, (state) => {
     return {
       ...state,
-      user: null,
-      error: action.error,
+      products: state.products,
+    };
+  }),
+
+  on(PlatformActions.loadProductsSuccess, (state, action) => {
+    return {
+      ...state,
+      products: action.products,
+    };
+  }),
+
+  on(PlatformActions.setCurrentProduct, (state, action) => {
+    return {
+      ...state,
+      selectedProduct: action.setCurrentProduct,
+    };
+  }),
+
+  on(PlatformActions.clearCurrentProduct, (state) => {
+    return {
+      ...state,
+      selectedProduct: null,
+    };
+  }),
+
+  on(PlatformActions.initializeCurrentProduct, (state) => {
+    return {
+      ...state,
+      selectedProduct: null,
+    };
+  }),
+
+  on(PlatformActions.deleteProductSuccess, (state) => {
+    return {
+      ...state,
+      selectedProduct: null,
+    };
+  }),
+
+  on(PlatformActions.saveProductSuccess, (state, action) => {
+    const saveProducts = state.products.map((item) =>
+      action.product.id === item.id ? action.product : item
+    );
+    return {
+      ...state,
+      products: saveProducts,
+      selectedProduct: action.product,
+      error: null,
+    };
+  }),
+
+  on(PlatformActions.editProductSuccess, (state, action) => {
+    const updateProducts = state.products.map((item) =>
+      action.product.id === item.id ? action.product : item
+    );
+    return {
+      ...state,
+      products: updateProducts,
+      selectedProduct: action.product,
+      error: null,
+    };
+  }),
+
+  on(PlatformActions.setTypeAction, (state, action) => {
+    return {
+      ...state,
+      typeAction: action.typeAction,
+    };
+  }),
+
+  on(PlatformActions.loadCategories, (state) => {
+    return {
+      ...state,
+      categories: state.categories,
+    };
+  }),
+  on(PlatformActions.loadCategoriesSuccess, (state, action) => {
+    return {
+      ...state,
+      categories: action.categories,
+    };
+  }),
+  on(PlatformActions.setCurrentCategory, (state) => {
+    return {
+      ...state,
+      currentCategory: state.currentCategory,
     };
   })
 );
 
-const getUserFeatureState = createFeatureSelector<UserState>('user');
+const getPlatformFeatureState =
+  createFeatureSelector<PlatformState>('platform');
 
 export const getUser = createSelector(
-  getUserFeatureState,
+  getPlatformFeatureState,
   (state) => state.user
 );
 
 export const getRouterParams = createSelector(
-  getUserFeatureState,
+  getPlatformFeatureState,
   () => new ActivatedRoute().params
 );
 
-export function reducer(state: UserState, action: Action) {
+export const getAllProducts = createSelector(
+  getPlatformFeatureState,
+  (state) => state.products
+);
+
+export const getCurrentProduct = createSelector(
+  getPlatformFeatureState,
+  (state) => state.selectedProduct
+);
+
+export const getTypeAction = createSelector(
+  getPlatformFeatureState,
+  (state) => state.typeAction
+);
+
+export const getAllCategories = createSelector(
+  getPlatformFeatureState,
+  (state) => state.categories
+);
+
+export const getCurrentCategory = createSelector(
+  getPlatformFeatureState,
+  (state, currentCategoryId) =>
+    state.categories.find((c) => c.id === currentCategoryId)
+);
+
+export function reducer(state: PlatformState, action: Action) {
   return userReducer(state, action);
 }

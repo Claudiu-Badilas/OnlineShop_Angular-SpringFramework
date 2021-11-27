@@ -16,11 +16,9 @@ import { OrderService } from '../../services/order.service';
 import { User } from '../../models/user';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import * as ProductActions from 'src/app/components/product/product-state/product.actions';
-import * as fromProducts from 'src/app/components/product/product-state/product.reducer';
 import { Product } from 'src/app/models/product';
 import * as fromPlatform from '../../platform-state/platform.reducer';
-import * as UserActions from '../../platform-state/platform.actions';
+import * as PlatformActions from '../../platform-state/platform.actions';
 
 @Component({
   selector: 'app-cart-details',
@@ -52,13 +50,13 @@ export class CartDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getCartProducts();
 
-    this.store.dispatch(UserActions.loadUser());
+    this.store.dispatch(PlatformActions.loadUser());
     this.store.select(fromPlatform.getUser).subscribe((user) => {
       this.user = user;
     });
 
-    this.store.dispatch(ProductActions.loadProducts());
-    this.products$ = this.store.select(fromProducts.getAllProducts);
+    this.store.dispatch(PlatformActions.loadProducts());
+    this.products$ = this.store.select(fromPlatform.getAllProducts);
 
     this.products$.subscribe((products) => {
       this.products = products;
