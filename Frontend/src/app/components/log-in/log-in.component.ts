@@ -25,7 +25,7 @@ export class LogInComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.authenticationService.isUserLoggedIn()) {
-      this.router.navigateByUrl('/products/category/1');
+      this.router.navigateByUrl('/products/category/Ovaz');
     } else {
       this.router.navigateByUrl('/login');
     }
@@ -39,7 +39,7 @@ export class LogInComponent implements OnInit, OnDestroy {
           const token = response.headers.get(HeaderType.JWT_TOKEN);
           this.authenticationService.saveToken(token);
           this.authenticationService.addUserToLocalCache(response.body);
-          this.router.navigateByUrl('/products/category/1');
+          this.router.navigateByUrl('/products/category/Ovaz');
           window.location.reload();
           this.showLoading = false;
           this.notificationService.notify(

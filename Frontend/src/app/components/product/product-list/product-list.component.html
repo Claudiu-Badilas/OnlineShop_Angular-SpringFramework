@@ -18,7 +18,7 @@
         >
           <p
             class="category-list"
-            [routerLink]="['/products/category/', category.id]"
+            [routerLink]="['/products/category/', category.name]"
             routerLinkActive="active-link"
           >
             {{ category.name | uppercase }}
@@ -35,7 +35,7 @@
           (click)="initStateForEditMode(product)"
           [routerLink]="['/product/', product.id]"
         >
-          <img class="image-pic" [src]="product.image"
+          <img class="image-pic img-responsive" [src]="product.image"
         /></a>
         <button
           *ngIf="hasAccess"

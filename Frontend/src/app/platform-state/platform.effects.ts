@@ -33,11 +33,7 @@ export class PlatformEffects {
     this.actions$.pipe(
       ofType(PlatformActions.loadProducts),
       withLatestFrom(this.store.select(fromPlatform.getRouterParams)),
-      mergeMap(([action, params]) => {
-        console.log(
-          '🚀 ~ file: product.effects.ts ~ line 34 ~ ProductEffects ~ mergeMap ~ params',
-          params
-        );
+      mergeMap((action) => {
         return this._productService.getProducts().pipe(
           map((products) => PlatformActions.loadProductsSuccess({ products })),
           catchError((error) => of(null))
@@ -100,15 +96,15 @@ export class PlatformEffects {
     );
   });
 
-  loadOrders$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(UserActions.loadUser),
-      mergeMap(() =>
-        this._authService.getUserFromLocalCache().pipe(
-          map((user) => UserActions.loadUserSuccess({ user })),
-          catchError((error) => of(null))
-        )
-      )
-    );
-  });
+  // loadOrders$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(UserActions.loadUser),
+  //     mergeMap(() =>
+  //       this._authService.getUserFromLocalCache().pipe(
+  //         map((user) => UserActions.loadUserSuccess({ user })),
+  //         catchError((error) => of(null))
+  //       )
+  //     )
+  //   );
+  // });
 }
