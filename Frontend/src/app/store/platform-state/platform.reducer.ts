@@ -23,9 +23,9 @@ import {
   on,
 } from '@ngrx/store';
 import { User } from 'src/app/models/user';
-import { ProductTypeAction } from '../components/product/utils/product-type-action.util';
-import { Category } from '../models/category';
-import { Product } from '../models/product';
+import { ProductTypeAction } from '../../components/product/utils/product-type-action.util';
+import { Category } from '../../models/category';
+import { Product } from '../../models/product';
 import * as PlatformActions from './platform.actions';
 
 export interface PlatformState {
@@ -110,7 +110,6 @@ const userReducer = createReducer(
       ...state,
       products: saveProducts,
       selectedProduct: action.product,
-      error: null,
     };
   }),
 
@@ -122,7 +121,6 @@ const userReducer = createReducer(
       ...state,
       products: updateProducts,
       selectedProduct: action.product,
-      error: null,
     };
   }),
 
@@ -145,10 +143,10 @@ const userReducer = createReducer(
       categories: action.categories,
     };
   }),
-  on(PlatformActions.setCurrentCategory, (state) => {
+  on(PlatformActions.setCurrentCategory, (state, action) => {
     return {
       ...state,
-      currentCategory: state.currentCategory,
+      currentCategory: action.category,
     };
   })
 );
@@ -171,6 +169,18 @@ export const getAllProducts = createSelector(
   (state) => state.products
 );
 
+export const getCurrentCategory = createSelector(
+  getPlatformFeatureState,
+  (state) => state.currentCategory
+);
+
+export const getAllProductsByCategory = createSelector(
+  getPlatformFeatureState,
+  getCurrentCategory,
+  (state, currentCategory) =>
+    state.products.filter((p) => p.category.name === currentCategory.name)
+);
+
 export const getCurrentProduct = createSelector(
   getPlatformFeatureState,
   (state) => state.selectedProduct
@@ -184,12 +194,6 @@ export const getTypeAction = createSelector(
 export const getAllCategories = createSelector(
   getPlatformFeatureState,
   (state) => state.categories
-);
-
-export const getCurrentCategory = createSelector(
-  getPlatformFeatureState,
-  (state, currentCategoryId) =>
-    state.categories.find((c) => c.id === currentCategoryId)
 );
 
 export function reducer(state: PlatformState, action: Action) {

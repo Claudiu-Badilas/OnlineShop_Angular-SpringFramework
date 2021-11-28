@@ -5,7 +5,7 @@ import { CartItem } from 'src/app/models/cart-item';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
 import { AppState } from 'src/app/store/app.state';
-import * as fromPlatform from '../../../platform-state/platform.reducer';
+import * as fromPlatform from '../../../store/platform-state/platform.reducer';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',

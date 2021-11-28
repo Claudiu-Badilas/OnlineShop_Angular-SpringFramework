@@ -10,13 +10,13 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { ProductService } from '../services/product.service';
-import { NotificationService } from '../services/notification.service';
-import { AppState } from '../store/app.state';
+import { ProductService } from '../../services/product.service';
+import { NotificationService } from '../../services/notification.service';
+import { AppState } from '../app.state';
 import { Store } from '@ngrx/store';
 import * as PlatformActions from './platform.actions';
 import * as fromPlatform from './platform.reducer';
-import { CategoryService } from '../services/category.service';
+import { CategoryService } from '../../services/category.service';
 
 @Injectable()
 export class PlatformEffects {
@@ -87,9 +87,13 @@ export class PlatformEffects {
       ofType(PlatformActions.loadCategories),
       mergeMap(() =>
         this._categoryService.getCategories().pipe(
-          map((categories) =>
-            PlatformActions.loadCategoriesSuccess({ categories })
-          ),
+          map((categories) => {
+            this.store.dispatch(
+              PlatformActions.setCurrentCategory({ category: categories[0] })
+            );
+
+            return PlatformActions.loadCategoriesSuccess({ categories });
+          }),
           catchError((error) => of(null))
         )
       )

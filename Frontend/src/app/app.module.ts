@@ -1,4 +1,4 @@
-import { PlatformEffects } from './platform-state/platform.effects';
+import { PlatformEffects } from './store/platform-state/platform.effects';
 import { OrderEffects } from './components/order-list/order-state/order.effects';
 import { NotificationModule } from './shared/Notification/notification.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,7 +31,6 @@ import { RegisterComponent } from './components/register/register.component';
 import * as fromApp from './store/app.state';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 import { AuthenticationGuard } from './authentication/guard/authentication.guard';
-import { NavigationEffects } from './components/navigation/navigation.effects';
 
 @NgModule({
   declarations: [
@@ -56,7 +55,7 @@ import { NavigationEffects } from './components/navigation/navigation.effects';
     FormsModule,
     NotificationModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([OrderEffects, NavigationEffects, PlatformEffects]),
+    EffectsModule.forRoot([OrderEffects, PlatformEffects]),
     NgbModule,
   ],
   providers: [

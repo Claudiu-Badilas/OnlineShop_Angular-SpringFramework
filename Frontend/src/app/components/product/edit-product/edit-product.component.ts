@@ -12,8 +12,8 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { AppState } from 'src/app/store/app.state';
-import * as fromPlatform from '../../../platform-state/platform.reducer';
-import * as PlatformActions from '../../../platform-state/platform.actions';
+import * as fromPlatform from '../../../store/platform-state/platform.reducer';
+import * as PlatformActions from '../../../store/platform-state/platform.actions';
 
 import { Category } from 'src/app/models/category';
 import { NotificationService } from 'src/app/services/notification.service';

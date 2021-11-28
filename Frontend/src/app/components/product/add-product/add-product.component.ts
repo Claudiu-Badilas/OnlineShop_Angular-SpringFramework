@@ -7,8 +7,8 @@ import { Category } from '../../../models/category';
 import { Product } from 'src/app/models/product';
 
 import { AppState } from 'src/app/store/app.state';
-import * as fromPlatform from '../../../platform-state/platform.reducer';
-import * as PlatformActions from '../../../platform-state/platform.actions';
+import * as fromPlatform from '../../../store/platform-state/platform.reducer';
+import * as PlatformActions from '../../../store/platform-state/platform.actions';
 
 @Component({
   selector: 'app-add-product',

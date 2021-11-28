@@ -9,8 +9,8 @@ import { Product } from '../../../models/product';
 import { Role } from 'src/app/shared/enum/role.enum';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
-import * as fromPlatform from '../../../platform-state/platform.reducer';
-import * as PlatformActions from '../../../platform-state/platform.actions';
+import * as fromPlatform from '../../../store/platform-state/platform.reducer';
+import * as PlatformActions from '../../../store/platform-state/platform.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { ProductTypeAction } from '../utils/product-type-action.util';
@@ -22,12 +22,11 @@ import { User } from 'src/app/models/user';
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-  user: User;
-  hasAccess: boolean = false;
+  user$ = this.store.select(fromPlatform.getUser);
+  products$ = this.store.select(fromPlatform.getAllProductsByCategory);
+  categories$ = this.store.select(fromPlatform.getAllCategories);
 
-  products$: Observable<Product[]>;
-  categories$: Observable<Category[]>;
-  errorMessage$: Observable<string>;
+  ADMIN = Role.ADMIN;
 
   constructor(
     private productService: ProductService,
@@ -38,16 +37,8 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(PlatformActions.loadUser());
-    this.store.select(fromPlatform.getUser).subscribe((user) => {
-      this.user = user;
-    });
-    this.hasAccess = this.checkRole();
-
-    this.store.dispatch(PlatformActions.loadProducts());
-    this.products$ = this.store.select(fromPlatform.getAllProducts);
-
     this.store.dispatch(PlatformActions.loadCategories());
-    this.categories$ = this.store.select(fromPlatform.getAllCategories);
+    this.store.dispatch(PlatformActions.loadProducts());
   }
 
   deleteProduct(id: number) {
@@ -89,7 +80,7 @@ export class ProductListComponent implements OnInit {
     this._cartService.addToCart(new CartItem(product));
   }
 
-  public checkRole(): boolean {
-    return this.user.role === Role.ADMIN;
+  changeCategory(category) {
+    this.store.dispatch(PlatformActions.setCurrentCategory({ category }));
   }
 }

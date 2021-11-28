@@ -1,7 +1,7 @@
-import { User } from '../models/user';
+import { User } from '../../models/user';
 import { createAction, props } from '@ngrx/store';
-import { Category } from '../models/category';
-import { Product } from '../models/product';
+import { Category } from '../../models/category';
+import { Product } from '../../models/product';
 
 export const loadUser = createAction('[User] Load User');
 

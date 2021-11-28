@@ -1,5 +1,5 @@
 import { ActionReducerMap } from '@ngrx/store';
-import * as fromPlatform from '../platform-state/platform.reducer';
+import * as fromPlatform from './platform-state/platform.reducer';
 import * as fromShoppingCart from '../components/cart-details/shopping-cart-state/shopping-cart.reducer';
 import * as fromOrders from '../components/order-list/order-state/order.reducer';
 

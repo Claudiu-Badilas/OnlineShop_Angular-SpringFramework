@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="hasAccess" class="col-md-12 text-right">
+  <div *ngIf="(user$ | async).role === ADMIN" class="col-md-12 text-right">
     <button
       class="btn-add"
       (click)="initStateForSaveMode()"
@@ -19,6 +19,7 @@
           <p
             class="category-list"
             [routerLink]="['/products/category/', category.name]"
+            (click)="changeCategory(category)"
             routerLinkActive="active-link"
           >
             {{ category.name | uppercase }}
@@ -38,7 +39,7 @@
           <img class="image-pic img-responsive" [src]="product.image"
         /></a>
         <button
-          *ngIf="hasAccess"
+          *ngIf="(user$ | async).role === ADMIN"
           (click)="deleteProduct(product.id)"
           [routerLink]="['/products/category/', product.category.id]"
           class="btn-delete"
@@ -54,7 +55,7 @@
 
       <div class="row">
         <button
-          *ngIf="hasAccess"
+          *ngIf="(user$ | async).role === ADMIN"
           class="btn-edit"
           [routerLink]="['/edit/', product.id]"
           (click)="initStateForEditMode(product)"
