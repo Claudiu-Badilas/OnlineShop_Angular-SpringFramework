@@ -1,33 +1,50 @@
-import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
+import {
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+} from '@ngrx/store';
 import * as fromPlatform from './platform-state/platform.reducer';
 import * as fromShoppingCart from '../components/cart-details/shopping-cart-state/shopping-cart.reducer';
 import * as fromOrders from '../components/order-list/order-state/order.reducer';
-import * as fromRouter from '@ngrx/router-store';
+import {
+  routerReducer,
+  RouterReducerState,
+  getSelectors,
+} from '@ngrx/router-store';
+import { RouterState } from './navigation-state/router-serializer';
 
 export interface AppState {
-  router: fromRouter.routerReducer;
+  router: RouterReducerState;
   platform: fromPlatform.PlatformState;
   shoppingCart: fromShoppingCart.ShoppingCartState;
   orders: fromOrders.OrderState;
 }
 
 export const appReducer: ActionReducerMap<AppState> = {
-  router: fromRouter.reducer,
+  router: routerReducer,
   platform: fromPlatform.reducer,
   shoppingCart: fromShoppingCart.reducer,
   orders: fromOrders.reducer,
 };
 
-// const getRouterState =
-//   createFeatureSelector<fromRouter.RouterReducerState<RouterStateUrl>>(
-//     'router'
-//   );
+const getRouterState = createFeatureSelector<RouterReducerState>('router');
 
-// export const getRouterParams = createSelector(
-//   getRouterState,
-//   (state: fromRouter.RouterReducerState<RouterStateUrl>) => {
-//     if (state) {
-//       return state.state.params;
-//     }
-//   }
-// );
+export const {
+  selectCurrentRoute,
+  selectFragment,
+  selectQueryParams,
+  selectQueryParam,
+  selectRouteParams,
+  selectRouteParam,
+  selectRouteData,
+  selectUrl,
+} = getSelectors(getRouterState);
+
+export const getRouterParams = createSelector(
+  selectQueryParams,
+  (state: RouterReducerState<RouterState>) => {
+    if (state) {
+      return state.state.params;
+    }
+  }
+);
