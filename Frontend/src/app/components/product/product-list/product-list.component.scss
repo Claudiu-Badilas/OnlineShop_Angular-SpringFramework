@@ -23,35 +23,25 @@
   }
 }
 
-.outer-box {
-  display: grid;
-  place-content: center;
+table {
+  margin-top: 60px;
+  border-collapse: separate;
+  border: solid #ffe1d9 1px;
+  border-radius: 30px;
+  background-color: white;
 
-  p {
-    cursor: pointer;
-  }
-
-  table {
-    border-collapse: separate;
-    border: solid #ffe1d9 1px;
+  th {
     border-radius: 30px;
-    -moz-border-radius: 6px;
-    background-color: white;
-
-    th {
-      border-radius: 30px;
-      border-top: none;
-      height: 65px;
-      font-size: 15px;
-      font-weight: 700;
-      p {
-        padding-top: 15px;
-      }
+    border-top: none;
+    font-size: 15px;
+    font-weight: 700;
+    p {
+      padding-top: 15px;
     }
-    td:first-child,
-    th:first-child {
-      border-left: none;
-    }
+  }
+  td:first-child,
+  th:first-child {
+    border-left: none;
   }
 }
 

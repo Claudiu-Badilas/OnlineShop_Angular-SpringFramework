@@ -4,12 +4,8 @@
   <div class="form-inline justify-content-center">
     <table>
       <tr>
-        <th
-          *ngFor="let category of categories$ | async"
-          class="text-center pl-4 pr-4"
-        >
+        <th *ngFor="let category of categories$ | async" class="pl-4 pr-4">
           <p
-            class="category-list"
             [routerLink]="['/products/category/', category.name]"
             (click)="changeCategory(category)"
             routerLinkActive="active-link"
