@@ -1,15 +1,6 @@
 <ngx-loading-x [show]="isLoading$ | async"></ngx-loading-x>
 <div class="container align-top">
-  <div *ngIf="(user$ | async).role === ADMIN" class="col-md-12 text-right">
-    <button
-      class="btn-add"
-      (click)="initStateForSaveMode()"
-      routerLink="/edit/0"
-    >
-      ADD PRODUCT
-    </button>
-  </div>
-
+  <div class="title text-center p-3">You eat better, you feel better!</div>
   <div class="form-inline justify-content-center">
     <table>
       <tr>

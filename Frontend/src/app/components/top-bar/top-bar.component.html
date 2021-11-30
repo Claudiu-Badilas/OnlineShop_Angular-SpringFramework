@@ -1,55 +1,76 @@
 <div class="nav-bar">
   <div class="container">
-    <div class="row">
-      <img
-        class="img-responsive logo col-md-2"
-        routerLink="/products/category/Ovaz"
-        alt="logo"
-        src="/assets/images/logo.jpg"
-      />
-      <p class="col-md-1">PRODUCTS</p>
-      <p class="col-md-1" routerLink="/orders/2">ORDERS</p>
-      <p class="col-md-2" routerLink="/cart-details">
-        <i class="fas fa-shopping-cart">{{ totalQuantity }}</i>
-        CART
-      </p>
-      <button *ngIf="showButtons" class="btn-login" routerLink="/login">
-        LOGIN
-      </button>
-      <button *ngIf="showButtons" class="btn-register" routerLink="/register">
-        REGISTER
-      </button>
-      <p *ngIf="!showButtons" class="col-md-2" routerLink="#">
-        <i class="fas fa-user"></i> MY ACCOUNT
-      </p>
-      <button *ngIf="!showButtons" class="btn-login" (click)="logOutUser()">
-        LOG OUT
-      </button>
+    <div class="row d-flex">
+      <div class="row d-flex">
+        <img
+          class="img-responsive logo"
+          routerLink="/products/category/Ovaz"
+          alt="logo"
+          src="/assets/images/logo.jpg"
+        />
+        <div class="main-option">
+          <p routerLink="#">HOME</p>
+        </div>
+        <div class="dropdown">
+          <p class="main-option">PRODUCTS</p>
+          <div class="dropdown-content">
+            <p
+              *ngFor="let category of categories$ | async"
+              routerLink="/products/category/{{ category.name }}"
+            >
+              {{ category.name }}
+            </p>
+          </div>
+        </div>
+        <div class="main-option">
+          <p routerLink="#">CONTACT</p>
+        </div>
+        <div class="main-option">
+          <p routerLink="#">BLOG</p>
+        </div>
+      </div>
+      <div
+        class="row d-flex"
+        [ngStyle]="{ 'margin-left': !showButtons ? '120px' : '0px' }"
+      >
+        <div class="second-option">
+          <p *ngIf="!showButtons" routerLink="/orders/2">My Orders</p>
+        </div>
+
+        <div class="dropdown second-option">
+          <p *ngIf="!showButtons" routerLink="#">
+            Settings
+            <i class="pl-1 fa fa-cogs"></i>
+          </p>
+          <div class="dropdown-content">
+            <p *ngIf="!showButtons">
+              My Account <i class="pl-1 fas fa-user"></i>
+            </p>
+            <p (click)="initStateForSaveMode()" routerLink="/edit/0">
+              Add Product<i class="pl-2 fas fa-plus"></i>
+            </p>
+            <p *ngIf="!showButtons" class="" (click)="logOutUser()">Log out</p>
+          </div>
+        </div>
+        <div class="second-option">
+          <p routerLink="/cart-details">
+            My Cart
+            <i class="fas fa-shopping-cart pr-2"> {{ totalQuantity }}</i>
+          </p>
+        </div>
+        <div>
+          <button *ngIf="showButtons" class="btn-login" routerLink="/login">
+            LOGIN
+          </button>
+          <button
+            *ngIf="showButtons"
+            class="btn-register ml-2"
+            routerLink="/register"
+          >
+            REGISTER
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<!-- <nav class="navbar navbar-expand-md breadcrumb">
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <div class="nav nav-pills">
-      <a class="nav-item nav-link active ml-1" data-toggle="tab" href="#users">
-        <i class="fa fa-users"></i>
-        Users
-      </a>
-      <a
-        class="nav-item nav-link ml-3"
-        data-toggle="tab"
-        href="#reset-password"
-      >
-        <i class="fa fa-cogs"></i>
-        Settings
-      </a>
-      <a
-        class="nav-item nav-link move-right mr-3"
-        data-toggle="tab"
-        href="#profile"
-        *ngIf="!showButtons"
-        >Welcome<i class="fa fa-user"></i
-      ></a>
-    </div>
-  </div>
-</nav> -->

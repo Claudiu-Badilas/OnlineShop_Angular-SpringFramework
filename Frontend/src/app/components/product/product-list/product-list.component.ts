@@ -67,17 +67,6 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  initStateForSaveMode() {
-    this.store.dispatch(
-      PlatformActions.setCurrentProduct({
-        setCurrentProduct: new Product(),
-      })
-    );
-    this.store.dispatch(
-      PlatformActions.setTypeAction({ typeAction: ProductTypeAction.SAVE })
-    );
-  }
-
   addToCart(product: Product) {
     this._cartService.addToCart(new CartItem(product));
   }
