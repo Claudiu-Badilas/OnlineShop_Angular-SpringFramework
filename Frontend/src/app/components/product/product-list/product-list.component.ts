@@ -25,6 +25,7 @@ export class ProductListComponent implements OnInit {
   user$ = this.store.select(fromPlatform.getUser);
   products$ = this.store.select(fromPlatform.getAllProductsByCategory);
   categories$ = this.store.select(fromPlatform.getAllCategories);
+  isLoading$ = this.store.select(fromPlatform.getSpinnerLoading);
 
   ADMIN = Role.ADMIN;
 

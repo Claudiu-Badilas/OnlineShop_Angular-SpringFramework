@@ -87,3 +87,8 @@ export const setCurrentCategory = createAction(
 export const clearCurrentCategory = createAction(
   '[Platform]Clear Current Category'
 );
+
+export const setSpinnerLoading = createAction(
+  '[Platform] Set Spinner Loading',
+  props<{ isLoading: boolean }>()
+);

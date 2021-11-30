@@ -31,6 +31,25 @@ import { RegisterComponent } from './components/register/register.component';
 import * as fromApp from './store/app.state';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 import { AuthenticationGuard } from './authentication/guard/authentication.guard';
+import {
+  NgxLoadingXConfig,
+  POSITION,
+  SPINNER,
+  NgxLoadingXModule,
+} from 'ngx-loading-x';
+
+const ngxLoadingXConfig: NgxLoadingXConfig = {
+  show: false,
+  bgBlur: 2,
+  bgOpacity: 2,
+  bgLogoUrl: '',
+  bgLogoUrlPosition: POSITION.topLeft,
+  bgLogoUrlSize: 60,
+  spinnerType: SPINNER.wanderingCubes,
+  spinnerSize: 80,
+  spinnerColor: '#dd0031',
+  spinnerPosition: POSITION.centerCenter,
+};
 
 @NgModule({
   declarations: [
@@ -57,6 +76,7 @@ import { AuthenticationGuard } from './authentication/guard/authentication.guard
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([OrderEffects, PlatformEffects]),
     NgbModule,
+    NgxLoadingXModule.forRoot(ngxLoadingXConfig),
   ],
   providers: [
     AuthenticationService,

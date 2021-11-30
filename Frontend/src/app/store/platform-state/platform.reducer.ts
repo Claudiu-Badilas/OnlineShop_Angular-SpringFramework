@@ -35,6 +35,7 @@ export interface PlatformState {
   typeAction: string;
   categories: Category[];
   currentCategory: Category;
+  isLoading: boolean;
 }
 
 const initialState: PlatformState = {
@@ -44,6 +45,7 @@ const initialState: PlatformState = {
   typeAction: ProductTypeAction.SAVE,
   categories: [],
   currentCategory: null,
+  isLoading: false,
 };
 
 const userReducer = createReducer(
@@ -148,6 +150,13 @@ const userReducer = createReducer(
       ...state,
       currentCategory: action.category,
     };
+  }),
+
+  on(PlatformActions.setSpinnerLoading, (state, action) => {
+    return {
+      ...state,
+      isLoading: action.isLoading,
+    };
   })
 );
 
@@ -194,6 +203,11 @@ export const getTypeAction = createSelector(
 export const getAllCategories = createSelector(
   getPlatformFeatureState,
   (state) => state.categories
+);
+
+export const getSpinnerLoading = createSelector(
+  getPlatformFeatureState,
+  (state) => state.isLoading
 );
 
 export function reducer(state: PlatformState, action: Action) {

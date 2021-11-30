@@ -1,3 +1,4 @@
+<ngx-loading-x [show]="isLoading$ | async"></ngx-loading-x>
 <div class="container">
   <div *ngIf="(user$ | async).role === ADMIN" class="col-md-12 text-right">
     <button
