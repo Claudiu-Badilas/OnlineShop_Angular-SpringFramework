@@ -5,6 +5,7 @@ import * as UserActions from './platform.actions';
 import {
   catchError,
   concatMap,
+  first,
   map,
   mergeMap,
   withLatestFrom,
@@ -35,7 +36,13 @@ export class PlatformEffects {
       withLatestFrom(this.store.select(fromPlatform.getRouterParams)),
       mergeMap((action) => {
         return this._productService.getProducts().pipe(
-          map((products) => PlatformActions.loadProductsSuccess({ products })),
+          first(),
+          map((products) => {
+            this.store.dispatch(
+              PlatformActions.loadProductsSuccess({ products })
+            );
+            return PlatformActions.setSpinnerLoading({ isLoading: false });
+          }),
           catchError((error) => of(null))
         );
       })
