@@ -1,5 +1,5 @@
 <ngx-loading-x [show]="isLoading$ | async"></ngx-loading-x>
-<div class="container">
+<div class="container align-top">
   <div *ngIf="(user$ | async).role === ADMIN" class="col-md-12 text-right">
     <button
       class="btn-add"

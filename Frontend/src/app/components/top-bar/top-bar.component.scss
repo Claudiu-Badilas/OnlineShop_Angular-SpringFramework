@@ -1,14 +1,16 @@
 .nav-bar {
   background-color: white;
   padding: 10px;
-  color: #f2e8df;
   border: 1px solid #f2e8df;
-  // box-shadow: 1px 1px 10px 1px;
-  box-shadow: 0px 8px 16px 0px #f2e8df(0, 0, 0, 0.2);
   width: 100%;
   font-size: 15px;
   font-weight: bold;
   color: black;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  height: 65px;
 
   p {
     cursor: pointer;
