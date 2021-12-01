@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
   Router,
+  RouterStateSnapshot,
+  UrlTree,
 } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthenticationService } from '../../services/authentication.service';
 import { NotificationService } from '../../services/notification.service';
 import { NotificationType } from '../../shared/enum/notification-type.enum';
@@ -19,9 +21,9 @@ export class AuthenticationGuard implements CanActivate {
   ) {}
 
   canActivate(
-    next: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
+  ): Observable<boolean> | Promise<boolean> | boolean | UrlTree {
     return this.isUserLoggedIn();
   }
 
