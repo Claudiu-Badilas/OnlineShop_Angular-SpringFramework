@@ -28,6 +28,8 @@ export class ProductListComponent implements OnInit {
   isLoading$ = this.store.select(fromPlatform.getSpinnerLoading);
 
   ADMIN = Role.ADMIN;
+  page = 1;
+  pageSize = 15;
 
   constructor(
     private productService: ProductService,
