@@ -37,9 +37,9 @@ import {
   SPINNER,
   NgxLoadingXModule,
 } from 'ngx-loading-x';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
+// import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { NavigationEffects } from './store/navigation-state/navigation.effects';
-import { RouterSerializer } from './store/navigation-state/router-serializer';
+// import { RouterSerializer } from './store/navigation-state/router-serializer';
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
   show: false,
@@ -80,9 +80,9 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     EffectsModule.forRoot([OrderEffects, PlatformEffects, NavigationEffects]),
     NgbModule,
     NgxLoadingXModule.forRoot(ngxLoadingXConfig),
-    StoreRouterConnectingModule.forRoot({
-      serializer: RouterSerializer,
-    }),
+    // StoreRouterConnectingModule.forRoot({
+    //   serializer: RouterSerializer,
+    // }),
   ],
   providers: [
     AuthenticationService,
