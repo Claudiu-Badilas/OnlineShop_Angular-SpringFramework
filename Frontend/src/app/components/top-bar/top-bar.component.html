@@ -44,18 +44,20 @@
           </p>
           <div class="dropdown-content">
             <p *ngIf="!showButtons">
-              My Account <i class="pl-1 fas fa-user"></i>
+              My Account <i class="pl-2 fas fa-user"></i>
             </p>
             <p (click)="initStateForSaveMode()" routerLink="/edit/0">
               Add Product<i class="pl-2 fas fa-plus"></i>
             </p>
-            <p *ngIf="!showButtons" class="" (click)="logOutUser()">Log out</p>
+            <p *ngIf="!showButtons" class="" (click)="logOutUser()">
+              Log out <i class="fas fa-sign-out-alt pl-2"></i>
+            </p>
           </div>
         </div>
         <div class="second-option">
           <p routerLink="/cart-details">
             My Cart
-            <i class="fas fa-shopping-cart pr-2"> {{ totalQuantity }}</i>
+            <i class="fas fa-cart-plus pr-2"> {{ totalQuantity }}</i>
           </p>
         </div>
         <div>
