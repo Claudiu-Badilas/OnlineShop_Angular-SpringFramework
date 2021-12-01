@@ -81,7 +81,7 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     NgbModule,
     NgxLoadingXModule.forRoot(ngxLoadingXConfig),
     StoreRouterConnectingModule.forRoot({
-      //serializer: RouterSerializer,
+      serializer: RouterSerializer,
     }),
   ],
   providers: [
