@@ -29,7 +29,7 @@ export class ProductListComponent implements OnInit {
 
   ADMIN = Role.ADMIN;
   page = 1;
-  pageSize = 15;
+  pageSize = 9;
 
   constructor(
     private productService: ProductService,
