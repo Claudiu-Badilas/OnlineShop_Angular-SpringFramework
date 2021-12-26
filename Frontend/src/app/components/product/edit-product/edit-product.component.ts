@@ -44,7 +44,6 @@ export class EditProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(PlatformActions.loadCategories());
     this.categories$ = this.store.select(fromPlatform.getAllCategories);
 
     this.product$ = this.store.select(fromPlatform.getCurrentProduct);

@@ -10,10 +10,8 @@ export const loadUserSuccess = createAction(
   props<{ user: User }>()
 );
 
-export const loadProducts = createAction('[Platform] Load Products');
-
-export const loadProductsSuccess = createAction(
-  '[Platform] Load Success',
+export const loadProducts = createAction(
+  '[Platform] Load Products',
   props<{ products: Product[] }>()
 );
 
@@ -50,10 +48,6 @@ export const editProductSuccess = createAction(
   props<{ product: Product }>()
 );
 
-export const editProductFailure = createAction(
-  '[Platform] Update Product Fail'
-);
-
 export const setTypeAction = createAction(
   '[Platform] Set Type Action Product Success',
   props<{ typeAction: string }>()
@@ -66,16 +60,8 @@ export const deleteProductSuccess = createAction(
   props<{ product: Product }>()
 );
 
-export const deleteProductError = createAction(
-  '[Platform] Delete Product Error'
-);
-
 export const loadCategories = createAction(
-  '   [Platform]    Load     Categories'
-);
-
-export const loadCategoriesSuccess = createAction(
-  '[Platform]Load Success',
+  '[Platform] Load Categories ',
   props<{ categories: Category[] }>()
 );
 

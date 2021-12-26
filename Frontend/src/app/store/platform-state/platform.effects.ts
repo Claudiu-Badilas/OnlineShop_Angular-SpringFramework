@@ -1,25 +1,21 @@
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as UserActions from './platform.actions';
 import {
-  catchError,
   concatMap,
   debounceTime,
   filter,
   first,
   map,
   mergeMap,
-  withLatestFrom,
 } from 'rxjs/operators';
 import { combineLatest, of } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { NotificationService } from '../../services/notification.service';
-import { AppState, getRouterParams } from '../app.state';
+import { AppState } from '../app.state';
 import { select, Store } from '@ngrx/store';
 import * as PlatformActions from './platform.actions';
 import { CategoryService } from '../../services/category.service';
-import * as NavigationActions from '../navigation-state/navigation.actions';
 import * as fromState from '../app.state';
 import * as fromPlatform from '../platform-state/platform.reducer';
 @Injectable()
@@ -40,18 +36,15 @@ export class PlatformEffects {
     ]).pipe(
       debounceTime(500),
       filter(([, products]) => products.length === 0),
-      mergeMap(([, _]) => {
-        console.log('loadProducts');
-        return this._productService.getProducts().pipe(
+      mergeMap(([,]) =>
+        this._productService.getProducts().pipe(
           first(),
           map((products) => {
-            this.store.dispatch(
-              PlatformActions.loadProductsSuccess({ products })
-            );
+            this.store.dispatch(PlatformActions.loadProducts({ products }));
             return PlatformActions.setSpinnerLoading({ isLoading: false });
           })
-        );
-      })
+        )
+      )
     )
   );
 
@@ -65,12 +58,11 @@ export class PlatformEffects {
       mergeMap(() =>
         this._categoryService.getCategories().pipe(
           map((categories) => {
-            console.log('loadCategories');
             this.store.dispatch(
               PlatformActions.setCurrentCategory({ category: categories[0] })
             );
 
-            return PlatformActions.loadCategoriesSuccess({ categories });
+            return PlatformActions.loadCategories({ categories });
           })
         )
       )
@@ -84,10 +76,13 @@ export class PlatformEffects {
       this.store.pipe(select(fromPlatform.getAllCategories)),
       this.store.pipe(select(fromPlatform.getCurrentCategory)),
     ]).pipe(
-      debounceTime(500),
-      filter(([, params, , selectedCategory]) => {
+      debounceTime(200),
+      filter(([url, params, , selectedCategory]) => {
         return (
-          selectedCategory && params && params['name'] !== selectedCategory.name
+          url.startsWith(`/products`) &&
+          selectedCategory &&
+          params &&
+          params['name'] !== selectedCategory.name
         );
       }),
       map(([, params, categories]) => {
@@ -115,10 +110,11 @@ export class PlatformEffects {
     return this.actions$.pipe(
       ofType(PlatformActions.editProduct),
       concatMap((action) =>
-        this._productService.editProduct(action.product).pipe(
-          map((product) => PlatformActions.editProductSuccess({ product })),
-          catchError((error) => of(PlatformActions.editProductFailure()))
-        )
+        this._productService
+          .editProduct(action.product)
+          .pipe(
+            map((product) => PlatformActions.editProductSuccess({ product }))
+          )
       )
     );
   });
@@ -136,24 +132,6 @@ export class PlatformEffects {
   //         )
   //       )
   //     )
-  // });
-
-  // loadCategories$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(PlatformActions.loadCategories),
-  //     mergeMap(() =>
-  //       this._categoryService.getCategories().pipe(
-  //         map((categories) => {
-  //           this.store.dispatch(
-  //             PlatformActions.setCurrentCategory({ category: categories[0] })
-  //           );
-
-  //           return PlatformActions.loadCategoriesSuccess({ categories });
-  //         }),
-  //         catchError((error) => of(null))
-  //       )
-  //     )
-  //   );
   // });
 
   // loadOrders$ = createEffect(() => {

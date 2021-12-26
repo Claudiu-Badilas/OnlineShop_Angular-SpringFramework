@@ -61,14 +61,8 @@ const userReducer = createReducer(
       user: action.user,
     };
   }),
-  on(PlatformActions.loadProducts, (state) => {
-    return {
-      ...state,
-      products: state.products,
-    };
-  }),
 
-  on(PlatformActions.loadProductsSuccess, (state, action) => {
+  on(PlatformActions.loadProducts, (state, action) => {
     return {
       ...state,
       products: action.products,
@@ -132,18 +126,13 @@ const userReducer = createReducer(
     };
   }),
 
-  on(PlatformActions.loadCategories, (state) => {
-    return {
-      ...state,
-      categories: state.categories,
-    };
-  }),
-  on(PlatformActions.loadCategoriesSuccess, (state, action) => {
+  on(PlatformActions.loadCategories, (state, action) => {
     return {
       ...state,
       categories: action.categories,
     };
   }),
+
   on(PlatformActions.setCurrentCategory, (state, action) => {
     return {
       ...state,

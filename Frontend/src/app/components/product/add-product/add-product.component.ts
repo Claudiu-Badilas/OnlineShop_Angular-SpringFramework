@@ -29,7 +29,6 @@ export class AddProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(PlatformActions.loadCategories());
     this.categories$ = this.store.select(fromPlatform.getAllCategories);
 
     this.productForm = this.formBuilder.group({
