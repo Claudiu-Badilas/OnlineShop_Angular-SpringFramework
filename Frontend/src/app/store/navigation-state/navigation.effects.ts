@@ -9,14 +9,14 @@ import * as NavigationActions from './navigation.actions';
 export class NavigationEffects {
   constructor(private actions$: Actions, private router: Router) {}
 
-  // goTo$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(NavigationActions.navigateTo),
-  //       tap((action) => {
-  //         return this.router.navigate([action.route]);
-  //       })
-  //     ),
-  //   { dispatch: false }
-  // );
+  goTo$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(NavigationActions.navigateTo),
+        tap((action) => {
+          return this.router.navigate([action.route]);
+        })
+      ),
+    { dispatch: false }
+  );
 }

@@ -5,20 +5,22 @@ import * as UserActions from './platform.actions';
 import {
   catchError,
   concatMap,
+  debounceTime,
+  filter,
   first,
   map,
   mergeMap,
   withLatestFrom,
 } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { NotificationService } from '../../services/notification.service';
-import { AppState } from '../app.state';
-import { Store } from '@ngrx/store';
+import { AppState, getRouterParams } from '../app.state';
+import { select, Store } from '@ngrx/store';
 import * as PlatformActions from './platform.actions';
-import * as fromPlatform from './platform.reducer';
 import { CategoryService } from '../../services/category.service';
-
+import * as NavigationActions from '../navigation-state/navigation.actions';
+import * as fromState from '../app.state';
 @Injectable()
 export class PlatformEffects {
   constructor(
@@ -30,11 +32,35 @@ export class PlatformEffects {
     private notificationService: NotificationService
   ) {}
 
+  // navigateWhenNoProductAvailable$ = createEffect(() =>
+  //   combineLatest([
+  //     this.store.pipe(select(fromState.getRouterUrl)),
+  //     this.store.pipe(select(fromState.getRouterParams)),
+  //   ]).pipe(
+  //     debounceTime(500),
+  //     filter(([url, params]) => true),
+  //     map(([url, params]) => {
+  //       console.log('🚀  params', params);
+  //       console.log('🚀  url', url);
+  //       this.store.dispatch(
+  //         PlatformActions.setSpinnerLoading({ isLoading: false })
+  //       );
+  //       return NavigationActions.navigateTo({
+  //         route: `products/category/Ovaz`,
+  //       });
+  //     })
+  //   )
+  // );
+
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PlatformActions.loadProducts),
-      withLatestFrom(this.store.select(fromPlatform.getRouterParams)),
-      mergeMap((action) => {
+      withLatestFrom(this.store.select(getRouterParams)),
+      mergeMap(([action, params]) => {
+        console.log(
+          '🚀 ~ file: platform.effects.ts ~ line 60 ~ PlatformEffects ~ mergeMap ~ action',
+          action
+        );
         return this._productService.getProducts().pipe(
           first(),
           map((products) => {

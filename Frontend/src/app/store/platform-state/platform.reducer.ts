@@ -14,7 +14,6 @@ const user: User = {
   notLocked: true,
 };
 
-import { ActivatedRoute } from '@angular/router';
 import {
   Action,
   createFeatureSelector,
@@ -45,7 +44,7 @@ const initialState: PlatformState = {
   typeAction: ProductTypeAction.SAVE,
   categories: [],
   currentCategory: null,
-  isLoading: false,
+  isLoading: true,
 };
 
 const userReducer = createReducer(
@@ -166,11 +165,6 @@ const getPlatformFeatureState =
 export const getUser = createSelector(
   getPlatformFeatureState,
   (state) => state.user
-);
-
-export const getRouterParams = createSelector(
-  getPlatformFeatureState,
-  () => new ActivatedRoute().params
 );
 
 export const getAllProducts = createSelector(
