@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import * as fromPlatform from '../../../store/platform-state/platform.reducer';
 import * as PlatformActions from '../../../store/platform-state/platform.actions';
+import * as NavigationActions from '../../../store/navigation-state/navigation.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { ProductTypeAction } from '../utils/product-type-action.util';
@@ -39,7 +40,6 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(PlatformActions.setSpinnerLoading({ isLoading: true }));
     this.store.dispatch(PlatformActions.loadUser());
   }
 
@@ -58,6 +58,15 @@ export class ProductListComponent implements OnInit {
     );
   }
 
+  onProductDetails(product) {
+    this.store.dispatch(
+      PlatformActions.setCurrentProduct({ setCurrentProduct: product })
+    );
+    this.store.dispatch(
+      NavigationActions.navigateTo({ route: `product/${product.id}` })
+    );
+  }
+
   initStateForEditMode(product: Product) {
     this.store.dispatch(
       PlatformActions.setCurrentProduct({ setCurrentProduct: product })
@@ -72,10 +81,6 @@ export class ProductListComponent implements OnInit {
   }
 
   changeCategory(category) {
-    this.store.dispatch(PlatformActions.setSpinnerLoading({ isLoading: true }));
     this.store.dispatch(PlatformActions.setCurrentCategory({ category }));
-    this.store.dispatch(
-      PlatformActions.setSpinnerLoading({ isLoading: false })
-    );
   }
 }

@@ -31,7 +31,7 @@ export interface PlatformState {
   user: User;
   products: Product[];
   selectedProduct: Product;
-  typeAction: string;
+  typeAction: ProductTypeAction;
   categories: Category[];
   currentCategory: Category;
   isLoading: boolean;
@@ -40,11 +40,11 @@ export interface PlatformState {
 const initialState: PlatformState = {
   user: user,
   products: [],
-  selectedProduct: new Product(),
+  selectedProduct: null,
   typeAction: ProductTypeAction.SAVE,
   categories: [],
   currentCategory: null,
-  isLoading: true,
+  isLoading: false,
 };
 
 const userReducer = createReducer(

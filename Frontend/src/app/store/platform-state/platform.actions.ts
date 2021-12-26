@@ -2,6 +2,7 @@ import { User } from '../../models/user';
 import { createAction, props } from '@ngrx/store';
 import { Category } from '../../models/category';
 import { Product } from '../../models/product';
+import { ProductTypeAction } from 'src/app/components/product/utils/product-type-action.util';
 
 export const loadUser = createAction('[User] Load User');
 
@@ -50,7 +51,7 @@ export const editProductSuccess = createAction(
 
 export const setTypeAction = createAction(
   '[Platform] Set Type Action Product Success',
-  props<{ typeAction: string }>()
+  props<{ typeAction: ProductTypeAction }>()
 );
 
 export const deleteProduct = createAction('[Platform] Delete Product');

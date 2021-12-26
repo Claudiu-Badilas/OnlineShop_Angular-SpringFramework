@@ -37,20 +37,19 @@ import {
   SPINNER,
   NgxLoadingXModule,
 } from 'ngx-loading-x';
-// import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { NavigationEffects } from './store/navigation-state/navigation.effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { RouterSerializer } from './store/navigation-state/router-serializer';
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
   show: false,
-  bgBlur: 2,
-  bgOpacity: 2,
+  bgBlur: 0,
+  bgOpacity: 1,
   bgLogoUrl: '',
   bgLogoUrlPosition: POSITION.topLeft,
-  bgLogoUrlSize: 60,
-  spinnerType: SPINNER.wanderingCubes,
-  spinnerSize: 80,
+  bgLogoUrlSize: 50,
+  spinnerType: SPINNER.circleSpinner,
+  spinnerSize: 100,
   spinnerColor: '#dd0031',
   spinnerPosition: POSITION.centerCenter,
 };

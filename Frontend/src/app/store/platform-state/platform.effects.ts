@@ -36,15 +36,40 @@ export class PlatformEffects {
     ]).pipe(
       debounceTime(500),
       filter(([, products]) => products.length === 0),
-      mergeMap(([,]) =>
-        this._productService.getProducts().pipe(
+      mergeMap(([,]) => {
+        console.log('loadProductsSSSSSSSSSSSSs');
+        return this._productService.getProducts().pipe(
           first(),
           map((products) => {
-            this.store.dispatch(PlatformActions.loadProducts({ products }));
-            return PlatformActions.setSpinnerLoading({ isLoading: false });
+            return PlatformActions.loadProducts({ products });
           })
-        )
-      )
+        );
+      })
+    )
+  );
+
+  loadProduct$ = createEffect(() =>
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromState.getRouterParams)),
+      this.store.pipe(select(fromPlatform.getCurrentProduct)),
+    ]).pipe(
+      debounceTime(500),
+      filter(
+        ([url, params, selectedProduct]) =>
+          url.startsWith(`/product/`) && !!params && selectedProduct === null
+      ),
+      mergeMap(([, params]) => {
+        console.log('loadProduct');
+        return this._productService.getProductById(+params['id']).pipe(
+          first(),
+          map((product) => {
+            return PlatformActions.setCurrentProduct({
+              setCurrentProduct: product,
+            });
+          })
+        );
+      })
     )
   );
 
