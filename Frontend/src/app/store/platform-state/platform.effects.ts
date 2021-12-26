@@ -21,6 +21,7 @@ import * as PlatformActions from './platform.actions';
 import { CategoryService } from '../../services/category.service';
 import * as NavigationActions from '../navigation-state/navigation.actions';
 import * as fromState from '../app.state';
+import * as fromPlatform from '../platform-state/platform.reducer';
 @Injectable()
 export class PlatformEffects {
   constructor(
@@ -32,35 +33,15 @@ export class PlatformEffects {
     private notificationService: NotificationService
   ) {}
 
-  // navigateWhenNoProductAvailable$ = createEffect(() =>
-  //   combineLatest([
-  //     this.store.pipe(select(fromState.getRouterUrl)),
-  //     this.store.pipe(select(fromState.getRouterParams)),
-  //   ]).pipe(
-  //     debounceTime(500),
-  //     filter(([url, params]) => true),
-  //     map(([url, params]) => {
-  //       console.log('🚀  params', params);
-  //       console.log('🚀  url', url);
-  //       this.store.dispatch(
-  //         PlatformActions.setSpinnerLoading({ isLoading: false })
-  //       );
-  //       return NavigationActions.navigateTo({
-  //         route: `products/category/Ovaz`,
-  //       });
-  //     })
-  //   )
-  // );
-
   loadProducts$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(PlatformActions.loadProducts),
-      withLatestFrom(this.store.select(getRouterParams)),
-      mergeMap(([action, params]) => {
-        console.log(
-          '🚀 ~ file: platform.effects.ts ~ line 60 ~ PlatformEffects ~ mergeMap ~ action',
-          action
-        );
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromPlatform.getAllProducts)),
+    ]).pipe(
+      debounceTime(500),
+      filter(([, products]) => products.length === 0),
+      mergeMap(([, _]) => {
+        console.log('loadProducts');
         return this._productService.getProducts().pipe(
           first(),
           map((products) => {
@@ -68,9 +49,51 @@ export class PlatformEffects {
               PlatformActions.loadProductsSuccess({ products })
             );
             return PlatformActions.setSpinnerLoading({ isLoading: false });
-          }),
-          catchError((error) => of(null))
+          })
         );
+      })
+    )
+  );
+
+  loadCategories$ = createEffect(() =>
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromPlatform.getAllCategories)),
+    ]).pipe(
+      debounceTime(500),
+      filter(([, categories]) => categories.length === 0),
+      mergeMap(() =>
+        this._categoryService.getCategories().pipe(
+          map((categories) => {
+            console.log('loadCategories');
+            this.store.dispatch(
+              PlatformActions.setCurrentCategory({ category: categories[0] })
+            );
+
+            return PlatformActions.loadCategoriesSuccess({ categories });
+          })
+        )
+      )
+    )
+  );
+
+  changeCategory$ = createEffect(() =>
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromState.getRouterParams)),
+      this.store.pipe(select(fromPlatform.getAllCategories)),
+      this.store.pipe(select(fromPlatform.getCurrentCategory)),
+    ]).pipe(
+      debounceTime(500),
+      filter(([, params, , selectedCategory]) => {
+        return (
+          selectedCategory && params && params['name'] !== selectedCategory.name
+        );
+      }),
+      map(([, params, categories]) => {
+        const category = categories.find((c) => c.name === params['name']);
+
+        return PlatformActions.setCurrentCategory({ category });
       })
     )
   );
@@ -115,23 +138,23 @@ export class PlatformEffects {
   //     )
   // });
 
-  loadCategories$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(PlatformActions.loadCategories),
-      mergeMap(() =>
-        this._categoryService.getCategories().pipe(
-          map((categories) => {
-            this.store.dispatch(
-              PlatformActions.setCurrentCategory({ category: categories[0] })
-            );
+  // loadCategories$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(PlatformActions.loadCategories),
+  //     mergeMap(() =>
+  //       this._categoryService.getCategories().pipe(
+  //         map((categories) => {
+  //           this.store.dispatch(
+  //             PlatformActions.setCurrentCategory({ category: categories[0] })
+  //           );
 
-            return PlatformActions.loadCategoriesSuccess({ categories });
-          }),
-          catchError((error) => of(null))
-        )
-      )
-    );
-  });
+  //           return PlatformActions.loadCategoriesSuccess({ categories });
+  //         }),
+  //         catchError((error) => of(null))
+  //       )
+  //     )
+  //   );
+  // });
 
   // loadOrders$ = createEffect(() => {
   //   return this.actions$.pipe(

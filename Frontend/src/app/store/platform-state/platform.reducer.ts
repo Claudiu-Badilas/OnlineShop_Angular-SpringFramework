@@ -172,6 +172,11 @@ export const getAllProducts = createSelector(
   (state) => state.products
 );
 
+export const getAllCategories = createSelector(
+  getPlatformFeatureState,
+  (state) => state.categories
+);
+
 export const getCurrentCategory = createSelector(
   getPlatformFeatureState,
   (state) => state.currentCategory
@@ -192,11 +197,6 @@ export const getCurrentProduct = createSelector(
 export const getTypeAction = createSelector(
   getPlatformFeatureState,
   (state) => state.typeAction
-);
-
-export const getAllCategories = createSelector(
-  getPlatformFeatureState,
-  (state) => state.categories
 );
 
 export const getSpinnerLoading = createSelector(

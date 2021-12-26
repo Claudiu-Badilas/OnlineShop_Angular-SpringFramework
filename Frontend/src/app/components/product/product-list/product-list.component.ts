@@ -41,8 +41,6 @@ export class ProductListComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(PlatformActions.setSpinnerLoading({ isLoading: true }));
     this.store.dispatch(PlatformActions.loadUser());
-    this.store.dispatch(PlatformActions.loadCategories());
-    this.store.dispatch(PlatformActions.loadProducts());
   }
 
   deleteProduct(id: number) {
