@@ -16,7 +16,7 @@
           <div class="dropdown-content">
             <p
               *ngFor="let category of categories$ | async"
-              routerLink="/products/category/{{ category.name }}"
+              (click)="onChangeCategory(category)"
             >
               {{ category.name }}
             </p>

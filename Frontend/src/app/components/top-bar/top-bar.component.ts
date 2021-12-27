@@ -77,6 +77,14 @@ export class TopBarComponent implements OnInit, OnChanges {
     }
   }
 
+  onChangeCategory(category) {
+    this.store.dispatch(
+      NavigationActions.navigateTo({
+        route: `products/category/${category.name}`,
+      })
+    );
+  }
+
   logOutUser() {
     this.authenticationService.logOut();
     this.showButtons = !this.showButtons;

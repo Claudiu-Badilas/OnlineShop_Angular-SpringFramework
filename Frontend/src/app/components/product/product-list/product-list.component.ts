@@ -93,9 +93,11 @@ export class ProductListComponent implements OnInit {
     this._cartService.addToCart(new CartItem(product));
   }
 
-  changeCategory(category) {
+  onChangeCategory(category) {
     this.store.dispatch(
-      PlatformActions.changeSelectedCategory({ selectedCategory: category })
+      NavigationActions.navigateTo({
+        route: `products/category/${category.name}`,
+      })
     );
   }
 }
