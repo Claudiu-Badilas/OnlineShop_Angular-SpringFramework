@@ -2,6 +2,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
+  catchError,
   concatMap,
   debounceTime,
   filter,
@@ -9,7 +10,7 @@ import {
   map,
   mergeMap,
 } from 'rxjs/operators';
-import { combineLatest, of } from 'rxjs';
+import { combineLatest, EMPTY, of } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { NotificationService } from '../../services/notification.service';
 import { AppState } from '../app.state';
@@ -18,6 +19,7 @@ import * as PlatformActions from './platform.actions';
 import { CategoryService } from '../../services/category.service';
 import * as fromState from '../app.state';
 import * as fromPlatform from '../platform-state/platform.reducer';
+import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 @Injectable()
 export class PlatformEffects {
   constructor(
@@ -26,7 +28,7 @@ export class PlatformEffects {
     private _productService: ProductService,
     private store: Store<AppState>,
     private _categoryService: CategoryService,
-    private notificationService: NotificationService
+    private _notificationService: NotificationService
   ) {}
 
   loadProducts$ = createEffect(() =>
@@ -42,6 +44,13 @@ export class PlatformEffects {
           first(),
           map((products) => {
             return PlatformActions.loadProducts({ products });
+          }),
+          catchError(() => {
+            this._notificationService.notify(
+              NotificationType.ERROR,
+              'some problems occurred please refresh the page again!'
+            );
+            return EMPTY;
           })
         );
       })
@@ -67,6 +76,13 @@ export class PlatformEffects {
             return PlatformActions.setCurrentProduct({
               setCurrentProduct: product,
             });
+          }),
+          catchError(() => {
+            this._notificationService.notify(
+              NotificationType.ERROR,
+              'some problems occurred please refresh the page again!'
+            );
+            return EMPTY;
           })
         );
       })
@@ -76,18 +92,27 @@ export class PlatformEffects {
   loadCategories$ = createEffect(() =>
     combineLatest([
       this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromState.getRouterParams)),
       this.store.pipe(select(fromPlatform.getAllCategories)),
     ]).pipe(
       debounceTime(500),
-      filter(([, categories]) => categories.length === 0),
-      mergeMap(() =>
+      filter(([, , categories]) => categories.length === 0),
+      mergeMap(([, params]) =>
         this._categoryService.getCategories().pipe(
           map((categories) => {
+            const category = categories.find((c) => c.name === params['name']);
             this.store.dispatch(
-              PlatformActions.setCurrentCategory({ category: categories[0] })
+              PlatformActions.setCurrentCategory({ category })
             );
 
             return PlatformActions.loadCategories({ categories });
+          }),
+          catchError(() => {
+            this._notificationService.notify(
+              NotificationType.ERROR,
+              'some problems occurred please refresh the page again!'
+            );
+            return EMPTY;
           })
         )
       )
