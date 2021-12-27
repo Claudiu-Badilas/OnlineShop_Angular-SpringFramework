@@ -60,7 +60,7 @@ export class ProductListComponent implements OnInit {
 
   onProductDetails(product) {
     this.store.dispatch(
-      PlatformActions.setCurrentProduct({ setCurrentProduct: product })
+      PlatformActions.changeSelectedProduct({ selectedProduct: product })
     );
     const productNameSplited = product.name.toLowerCase().split(' ');
     let name = '';
@@ -77,7 +77,7 @@ export class ProductListComponent implements OnInit {
 
   initStateForEditMode(product: Product) {
     this.store.dispatch(
-      PlatformActions.setCurrentProduct({ setCurrentProduct: product })
+      PlatformActions.changeSelectedProduct({ selectedProduct: product })
     );
     this.store.dispatch(
       PlatformActions.setTypeAction({ typeAction: ProductTypeAction.EDIT })
@@ -89,6 +89,8 @@ export class ProductListComponent implements OnInit {
   }
 
   changeCategory(category) {
-    this.store.dispatch(PlatformActions.setCurrentCategory({ category }));
+    this.store.dispatch(
+      PlatformActions.changeSelectedCategory({ selectedCategory: category })
+    );
   }
 }

@@ -18,7 +18,7 @@ export interface PlatformState {
   selectedProduct: Product;
   typeAction: ProductTypeAction;
   categories: Category[];
-  currentCategory: Category;
+  selectedCategory: Category;
   isLoading: boolean;
 }
 
@@ -28,7 +28,7 @@ const initialState: PlatformState = {
   selectedProduct: null,
   typeAction: ProductTypeAction.SAVE,
   categories: [],
-  currentCategory: null,
+  selectedCategory: null,
   isLoading: false,
 };
 
@@ -40,6 +40,7 @@ const userReducer = createReducer(
       user: state.user,
     };
   }),
+
   on(PlatformActions.loadUserSuccess, (state, action) => {
     return {
       ...state,
@@ -54,10 +55,10 @@ const userReducer = createReducer(
     };
   }),
 
-  on(PlatformActions.setCurrentProduct, (state, action) => {
+  on(PlatformActions.changeSelectedProduct, (state, action) => {
     return {
       ...state,
-      selectedProduct: action.setCurrentProduct,
+      selectedProduct: action.selectedProduct,
     };
   }),
 
@@ -104,10 +105,10 @@ const userReducer = createReducer(
     };
   }),
 
-  on(PlatformActions.setCurrentCategory, (state, action) => {
+  on(PlatformActions.changeSelectedCategory, (state, action) => {
     return {
       ...state,
-      currentCategory: action.category,
+      selectedCategory: action.selectedCategory,
     };
   }),
 
@@ -137,16 +138,16 @@ export const getAllCategories = createSelector(
   (state) => state.categories
 );
 
-export const getCurrentCategory = createSelector(
+export const getSelectedCategory = createSelector(
   getPlatformFeatureState,
-  (state) => state.currentCategory
+  (state) => state.selectedCategory
 );
 
 export const getAllProductsByCategory = createSelector(
   getPlatformFeatureState,
-  getCurrentCategory,
-  (state, currentCategory) =>
-    state.products.filter((p) => p.category.name === currentCategory.name)
+  getSelectedCategory,
+  (state, selectedCategory) =>
+    state.products.filter((p) => p.category.name === selectedCategory.name)
 );
 
 export const getCurrentProduct = createSelector(

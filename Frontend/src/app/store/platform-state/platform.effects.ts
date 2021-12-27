@@ -39,7 +39,7 @@ export class PlatformEffects {
       debounceTime(500),
       filter(([, products]) => products.length === 0),
       mergeMap(([,]) => {
-        console.log('loadProductsSSSSSSSSSSSSs');
+        console.log('loadProductSSSSSS');
         return this._productService.getProducts().pipe(
           first(),
           map((products) => {
@@ -75,8 +75,8 @@ export class PlatformEffects {
         return this._productService.getProductById(+params['productId']).pipe(
           first(),
           map((product) => {
-            return PlatformActions.setCurrentProduct({
-              setCurrentProduct: product,
+            return PlatformActions.changeSelectedProduct({
+              selectedProduct: product,
             });
           }),
           catchError(() => {
@@ -106,8 +106,8 @@ export class PlatformEffects {
               (c) => c.name === params['categoryName']
             );
             this.store.dispatch(
-              PlatformActions.setCurrentCategory({
-                category: category ? category : categories[0],
+              PlatformActions.changeSelectedCategory({
+                selectedCategory: category ? category : categories[0],
               })
             );
 
@@ -130,7 +130,7 @@ export class PlatformEffects {
       this.store.pipe(select(fromState.getRouterUrl)),
       this.store.pipe(select(fromState.getRouterParams)),
       this.store.pipe(select(fromPlatform.getAllCategories)),
-      this.store.pipe(select(fromPlatform.getCurrentCategory)),
+      this.store.pipe(select(fromPlatform.getSelectedCategory)),
     ]).pipe(
       debounceTime(200),
       filter(([url, params, , selectedCategory]) => {
@@ -146,7 +146,9 @@ export class PlatformEffects {
           (c) => c.name === params['categoryName']
         );
 
-        return PlatformActions.setCurrentCategory({ category });
+        return PlatformActions.changeSelectedCategory({
+          selectedCategory: category,
+        });
       })
     )
   );

@@ -16,9 +16,9 @@ export const loadProducts = createAction(
   props<{ products: Product[] }>()
 );
 
-export const setCurrentProduct = createAction(
-  '[Platform] Set Current Product',
-  props<{ setCurrentProduct: Product }>()
+export const changeSelectedProduct = createAction(
+  '[Platform] Change Selected Product',
+  props<{ selectedProduct: Product }>()
 );
 
 export const saveProduct = createAction(
@@ -58,9 +58,9 @@ export const loadCategories = createAction(
   props<{ categories: Category[] }>()
 );
 
-export const setCurrentCategory = createAction(
-  '[Platform]Set Current Category',
-  props<{ category: Category }>()
+export const changeSelectedCategory = createAction(
+  '[Platform] Change Selected Category',
+  props<{ selectedCategory: Category }>()
 );
 
 export const setSpinnerLoading = createAction(
