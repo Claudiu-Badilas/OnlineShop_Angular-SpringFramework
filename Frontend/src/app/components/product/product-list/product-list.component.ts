@@ -82,6 +82,11 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(
       PlatformActions.setTypeAction({ typeAction: ProductTypeAction.EDIT })
     );
+    this.store.dispatch(
+      NavigationActions.navigateTo({
+        route: `edit-mode/${ProductTypeAction.EDIT}/${product.id}`,
+      })
+    );
   }
 
   addToCart(product: Product) {

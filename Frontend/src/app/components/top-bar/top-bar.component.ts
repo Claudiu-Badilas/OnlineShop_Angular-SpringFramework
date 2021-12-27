@@ -11,6 +11,7 @@ import * as fromPlatform from '../../store/platform-state/platform.reducer';
 import * as PlatformActions from '../../store/platform-state/platform.actions';
 import { ProductTypeAction } from '../product/utils/product-type-action.util';
 import { Product } from 'src/app/models/product';
+import * as NavigationActions from '../../store/navigation-state/navigation.actions';
 
 @Component({
   selector: 'app-top-bar',
@@ -47,15 +48,17 @@ export class TopBarComponent implements OnInit, OnChanges {
 
   initStateForSaveMode() {
     this.store.dispatch(
-      PlatformActions.changeSelectedProduct({
-        selectedProduct: new Product(),
-      })
+      PlatformActions.changeSelectedProduct({ selectedProduct: new Product() })
     );
     this.store.dispatch(
       PlatformActions.setTypeAction({ typeAction: ProductTypeAction.SAVE })
     );
+    this.store.dispatch(
+      NavigationActions.navigateTo({
+        route: `edit-mode/${ProductTypeAction.SAVE}/0`,
+      })
+    );
   }
-
   private updateCartStatus() {
     this.cartService.totalPrice.subscribe((data) => (this.totalPrice = data));
 

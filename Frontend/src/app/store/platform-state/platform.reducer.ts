@@ -25,7 +25,7 @@ export interface PlatformState {
 const initialState: PlatformState = {
   user: USER,
   products: [],
-  selectedProduct: null,
+  selectedProduct: new Product(),
   typeAction: ProductTypeAction.SAVE,
   categories: [],
   selectedCategory: null,

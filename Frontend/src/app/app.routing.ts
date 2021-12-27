@@ -31,7 +31,7 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard],
   },
   {
-    path: 'edit/:id',
+    path: 'edit-mode/:actionType/:productId',
     component: EditProductComponent,
     canActivate: [AuthenticationGuard],
   },

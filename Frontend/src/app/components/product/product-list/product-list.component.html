@@ -49,7 +49,6 @@
         <button
           *ngIf="(user$ | async).role === ADMIN"
           class="btn-edit"
-          [routerLink]="['/edit/', product.id]"
           (click)="initStateForEditMode(product)"
         >
           EDIT
