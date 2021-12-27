@@ -1,7 +1,6 @@
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as UserActions from './platform.actions';
 import {
   catchError,
   concatMap,
@@ -10,17 +9,17 @@ import {
   first,
   map,
   mergeMap,
-  withLatestFrom,
 } from 'rxjs/operators';
-import { combineLatest, of } from 'rxjs';
+import { combineLatest, EMPTY, of } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { NotificationService } from '../../services/notification.service';
-import { AppState, getRouterParams } from '../app.state';
+import { AppState } from '../app.state';
 import { select, Store } from '@ngrx/store';
 import * as PlatformActions from './platform.actions';
 import { CategoryService } from '../../services/category.service';
-import * as NavigationActions from '../navigation-state/navigation.actions';
 import * as fromState from '../app.state';
+import * as fromPlatform from '../platform-state/platform.reducer';
+import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 @Injectable()
 export class PlatformEffects {
   constructor(
@@ -29,48 +28,127 @@ export class PlatformEffects {
     private _productService: ProductService,
     private store: Store<AppState>,
     private _categoryService: CategoryService,
-    private notificationService: NotificationService
+    private _notificationService: NotificationService
   ) {}
 
-  // navigateWhenNoProductAvailable$ = createEffect(() =>
-  //   combineLatest([
-  //     this.store.pipe(select(fromState.getRouterUrl)),
-  //     this.store.pipe(select(fromState.getRouterParams)),
-  //   ]).pipe(
-  //     debounceTime(500),
-  //     filter(([url, params]) => true),
-  //     map(([url, params]) => {
-  //       console.log('🚀  params', params);
-  //       console.log('🚀  url', url);
-  //       this.store.dispatch(
-  //         PlatformActions.setSpinnerLoading({ isLoading: false })
-  //       );
-  //       return NavigationActions.navigateTo({
-  //         route: `products/category/Ovaz`,
-  //       });
-  //     })
-  //   )
-  // );
-
   loadProducts$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(PlatformActions.loadProducts),
-      withLatestFrom(this.store.select(getRouterParams)),
-      mergeMap(([action, params]) => {
-        console.log(
-          '🚀 ~ file: platform.effects.ts ~ line 60 ~ PlatformEffects ~ mergeMap ~ action',
-          action
-        );
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromPlatform.getAllProducts)),
+    ]).pipe(
+      debounceTime(500),
+      filter(([, products]) => products.length === 0),
+      mergeMap(([,]) => {
+        console.log('loadProductSSSSSS');
         return this._productService.getProducts().pipe(
           first(),
           map((products) => {
-            this.store.dispatch(
-              PlatformActions.loadProductsSuccess({ products })
-            );
-            return PlatformActions.setSpinnerLoading({ isLoading: false });
+            return PlatformActions.loadProducts({ products });
           }),
-          catchError((error) => of(null))
+          catchError(() => {
+            this._notificationService.notify(
+              NotificationType.ERROR,
+              'Some problems occurred, please refresh the page!'
+            );
+            return EMPTY;
+          })
         );
+      })
+    )
+  );
+
+  loadProduct$ = createEffect(() =>
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromState.getRouterParams)),
+      this.store.pipe(select(fromPlatform.getCurrentProduct)),
+    ]).pipe(
+      debounceTime(500),
+      filter(
+        ([url, params, selectedProduct]) =>
+          (url.startsWith(`/product/`) || url.startsWith(`/edit/`)) &&
+          !!params &&
+          selectedProduct === null
+      ),
+      mergeMap(([, params]) => {
+        console.log('loadProduct');
+        return this._productService.getProductById(+params['productId']).pipe(
+          first(),
+          map((product) => {
+            return PlatformActions.changeSelectedProduct({
+              selectedProduct: product,
+            });
+          }),
+          catchError(() => {
+            this._notificationService.notify(
+              NotificationType.ERROR,
+              'Some problems occurred, please refresh the page!'
+            );
+            return EMPTY;
+          })
+        );
+      })
+    )
+  );
+
+  loadCategories$ = createEffect(() =>
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromState.getRouterParams)),
+      this.store.pipe(select(fromPlatform.getAllCategories)),
+    ]).pipe(
+      debounceTime(500),
+      filter(([, , categories]) => categories.length === 0),
+      mergeMap(([, params]) =>
+        this._categoryService.getCategories().pipe(
+          map((categories) => {
+            const category = categories.find(
+              (c) => c.name === params['categoryName']
+            );
+            this.store.dispatch(
+              PlatformActions.changeSelectedCategory({
+                selectedCategory: category ? category : categories[0],
+              })
+            );
+
+            return PlatformActions.loadCategories({ categories });
+          }),
+          catchError(() => {
+            this._notificationService.notify(
+              NotificationType.ERROR,
+              'Some problems occurred, please refresh the page!'
+            );
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
+
+  changeCategory$ = createEffect(() =>
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromState.getRouterParams)),
+      this.store.pipe(select(fromPlatform.getAllCategories)),
+      this.store.pipe(select(fromPlatform.getSelectedCategory)),
+    ]).pipe(
+      debounceTime(200),
+      filter(([url, params, , selectedCategory]) => {
+        return (
+          url.startsWith(`/products`) &&
+          selectedCategory &&
+          params &&
+          params['name'] !== selectedCategory.name
+        );
+      }),
+      map(([, params, categories]) => {
+        const category = categories.find(
+          (c) => c.name === params['categoryName']
+        );
+
+        return PlatformActions.changeSelectedCategory({
+          selectedCategory: category,
+        });
       })
     )
   );
@@ -92,10 +170,11 @@ export class PlatformEffects {
     return this.actions$.pipe(
       ofType(PlatformActions.editProduct),
       concatMap((action) =>
-        this._productService.editProduct(action.product).pipe(
-          map((product) => PlatformActions.editProductSuccess({ product })),
-          catchError((error) => of(PlatformActions.editProductFailure()))
-        )
+        this._productService
+          .editProduct(action.product)
+          .pipe(
+            map((product) => PlatformActions.editProductSuccess({ product }))
+          )
       )
     );
   });
@@ -114,24 +193,6 @@ export class PlatformEffects {
   //       )
   //     )
   // });
-
-  loadCategories$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(PlatformActions.loadCategories),
-      mergeMap(() =>
-        this._categoryService.getCategories().pipe(
-          map((categories) => {
-            this.store.dispatch(
-              PlatformActions.setCurrentCategory({ category: categories[0] })
-            );
-
-            return PlatformActions.loadCategoriesSuccess({ categories });
-          }),
-          catchError((error) => of(null))
-        )
-      )
-    );
-  });
 
   // loadOrders$ = createEffect(() => {
   //   return this.actions$.pipe(

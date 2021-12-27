@@ -20,8 +20,7 @@ export class AddProductComponent implements OnInit {
   selectedCategory: any;
   edited: boolean = false;
   selectedFile: any = '/assets/images/no-image.png';
-  categories$: Observable<Category[]>;
-  errorMessage$: Observable<string>;
+  categories$ = this.store.select(fromPlatform.getAllCategories);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,9 +28,6 @@ export class AddProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(PlatformActions.loadCategories());
-    this.categories$ = this.store.select(fromPlatform.getAllCategories);
-
     this.productForm = this.formBuilder.group({
       name: [
         '',

@@ -9,7 +9,7 @@ import * as NavigationActions from './navigation.actions';
 export class NavigationEffects {
   constructor(private actions$: Actions, private router: Router) {}
 
-  goTo$ = createEffect(
+  navigateTo$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(NavigationActions.navigateTo),

@@ -55,7 +55,6 @@ export class CartDetailsComponent implements OnInit {
       this.user = user;
     });
 
-    this.store.dispatch(PlatformActions.loadProducts());
     this.products$ = this.store.select(fromPlatform.getAllProducts);
 
     this.products$.subscribe((products) => {

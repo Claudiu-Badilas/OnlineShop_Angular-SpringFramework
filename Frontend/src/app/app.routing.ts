@@ -14,8 +14,11 @@ import { AuthenticationGuard } from './authentication/guard/authentication.guard
 const routes: Routes = [
   { path: 'login', component: LogInComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'products/category/:name', component: ProductListComponent },
-  { path: 'product/:id', component: ProductDetailsComponent },
+  { path: 'products/category/:categoryName', component: ProductListComponent },
+  {
+    path: 'product/:productName/:productId',
+    component: ProductDetailsComponent,
+  },
   { path: 'cart-details', component: CartDetailsComponent, children: [] },
   {
     path: 'orders/:id',

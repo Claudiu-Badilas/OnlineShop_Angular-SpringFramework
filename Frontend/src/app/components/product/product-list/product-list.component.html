@@ -27,10 +27,7 @@
       class="product-box col-md-3"
     >
       <div class="">
-        <a
-          (click)="initStateForEditMode(product)"
-          [routerLink]="['/product/', product.id]"
-        >
+        <a (click)="onProductDetails(product)">
           <img class="image-pic img-responsive" [src]="product.image"
         /></a>
         <button
@@ -44,7 +41,7 @@
       </div>
       <div class="text-left">
         <br />
-        <p class="product-title">{{ product.name ? product.name : "AAAS" }}</p>
+        <p class="product-title">{{ product.name ? product.name : "-" }}</p>
         <p class="product-price">{{ product.price | currency: "USD" }}</p>
       </div>
 

@@ -12,22 +12,16 @@ import * as fromPlatform from '../../../store/platform-state/platform.reducer';
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
-  product: Product;
-  product$: Observable<Product>;
+  product$ = this.store.select(fromPlatform.getCurrentProduct);
 
   constructor(
     private cartService: CartService,
     private store: Store<AppState>
   ) {}
 
-  ngOnInit(): void {
-    this.product$ = this.store.select(fromPlatform.getCurrentProduct);
-    this.product$.subscribe((product) => {
-      this.product = product;
-    });
-  }
+  ngOnInit(): void {}
 
-  addToCart() {
-    this.cartService.addToCart(new CartItem(this.product));
+  addToCart(product: Product) {
+    this.cartService.addToCart(new CartItem(product));
   }
 }

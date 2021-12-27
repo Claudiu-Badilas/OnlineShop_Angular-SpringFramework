@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import * as fromPlatform from '../../../store/platform-state/platform.reducer';
 import * as PlatformActions from '../../../store/platform-state/platform.actions';
+import * as NavigationActions from '../../../store/navigation-state/navigation.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { ProductTypeAction } from '../utils/product-type-action.util';
@@ -39,10 +40,7 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(PlatformActions.setSpinnerLoading({ isLoading: true }));
     this.store.dispatch(PlatformActions.loadUser());
-    this.store.dispatch(PlatformActions.loadCategories());
-    this.store.dispatch(PlatformActions.loadProducts());
   }
 
   deleteProduct(id: number) {
@@ -60,12 +58,29 @@ export class ProductListComponent implements OnInit {
     );
   }
 
+  onProductDetails(product) {
+    this.store.dispatch(
+      PlatformActions.changeSelectedProduct({ selectedProduct: product })
+    );
+    const productNameSplited = product.name.toLowerCase().split(' ');
+    let name = '';
+    productNameSplited.forEach((part, i) => {
+      name += part;
+      name += i !== productNameSplited.length - 1 ? '-' : '';
+    });
+    this.store.dispatch(
+      NavigationActions.navigateTo({
+        route: `product/${name}/${product.id}`,
+      })
+    );
+  }
+
   initStateForEditMode(product: Product) {
     this.store.dispatch(
-      PlatformActions.setCurrentProduct({ setCurrentProduct: product })
+      PlatformActions.changeSelectedProduct({ selectedProduct: product })
     );
     this.store.dispatch(
-      PlatformActions.setTypeAction({ typeAction: ProductTypeAction.UPDATE })
+      PlatformActions.setTypeAction({ typeAction: ProductTypeAction.EDIT })
     );
   }
 
@@ -74,10 +89,8 @@ export class ProductListComponent implements OnInit {
   }
 
   changeCategory(category) {
-    this.store.dispatch(PlatformActions.setSpinnerLoading({ isLoading: true }));
-    this.store.dispatch(PlatformActions.setCurrentCategory({ category }));
     this.store.dispatch(
-      PlatformActions.setSpinnerLoading({ isLoading: false })
+      PlatformActions.changeSelectedCategory({ selectedCategory: category })
     );
   }
 }

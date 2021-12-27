@@ -1,19 +1,3 @@
-const user: User = {
-  id: '1',
-  firstName: 'Test',
-  lastName: 'Test',
-  email: 'admin',
-  username: 'admin',
-  profileImageUrl: 'http://localhost:8080/user/image/profile/admin',
-  lastLoginDate: '2021-08-31T18:57:40.000+00:00',
-  lastLoginDateDisplay: '2021-08-29T18:20:15.000+00:00',
-  joinDate: '2021-08-29T18:20:10.000+00:00',
-  role: 'ROLE_ADMIN',
-  authorities: ['user:read'],
-  active: true,
-  notLocked: true,
-};
-
 import {
   Action,
   createFeatureSelector,
@@ -22,6 +6,7 @@ import {
   on,
 } from '@ngrx/store';
 import { User } from 'src/app/models/user';
+import { USER } from 'src/app/shared/mocked-data/mocked-data';
 import { ProductTypeAction } from '../../components/product/utils/product-type-action.util';
 import { Category } from '../../models/category';
 import { Product } from '../../models/product';
@@ -31,20 +16,20 @@ export interface PlatformState {
   user: User;
   products: Product[];
   selectedProduct: Product;
-  typeAction: string;
+  typeAction: ProductTypeAction;
   categories: Category[];
-  currentCategory: Category;
+  selectedCategory: Category;
   isLoading: boolean;
 }
 
 const initialState: PlatformState = {
-  user: user,
+  user: USER,
   products: [],
-  selectedProduct: new Product(),
+  selectedProduct: null,
   typeAction: ProductTypeAction.SAVE,
   categories: [],
-  currentCategory: null,
-  isLoading: true,
+  selectedCategory: null,
+  isLoading: false,
 };
 
 const userReducer = createReducer(
@@ -55,44 +40,25 @@ const userReducer = createReducer(
       user: state.user,
     };
   }),
+
   on(PlatformActions.loadUserSuccess, (state, action) => {
     return {
       ...state,
       user: action.user,
     };
   }),
-  on(PlatformActions.loadProducts, (state) => {
-    return {
-      ...state,
-      products: state.products,
-    };
-  }),
 
-  on(PlatformActions.loadProductsSuccess, (state, action) => {
+  on(PlatformActions.loadProducts, (state, action) => {
     return {
       ...state,
       products: action.products,
     };
   }),
 
-  on(PlatformActions.setCurrentProduct, (state, action) => {
+  on(PlatformActions.changeSelectedProduct, (state, action) => {
     return {
       ...state,
-      selectedProduct: action.setCurrentProduct,
-    };
-  }),
-
-  on(PlatformActions.clearCurrentProduct, (state) => {
-    return {
-      ...state,
-      selectedProduct: null,
-    };
-  }),
-
-  on(PlatformActions.initializeCurrentProduct, (state) => {
-    return {
-      ...state,
-      selectedProduct: null,
+      selectedProduct: action.selectedProduct,
     };
   }),
 
@@ -132,22 +98,17 @@ const userReducer = createReducer(
     };
   }),
 
-  on(PlatformActions.loadCategories, (state) => {
-    return {
-      ...state,
-      categories: state.categories,
-    };
-  }),
-  on(PlatformActions.loadCategoriesSuccess, (state, action) => {
+  on(PlatformActions.loadCategories, (state, action) => {
     return {
       ...state,
       categories: action.categories,
     };
   }),
-  on(PlatformActions.setCurrentCategory, (state, action) => {
+
+  on(PlatformActions.changeSelectedCategory, (state, action) => {
     return {
       ...state,
-      currentCategory: action.category,
+      selectedCategory: action.selectedCategory,
     };
   }),
 
@@ -172,16 +133,21 @@ export const getAllProducts = createSelector(
   (state) => state.products
 );
 
-export const getCurrentCategory = createSelector(
+export const getAllCategories = createSelector(
   getPlatformFeatureState,
-  (state) => state.currentCategory
+  (state) => state.categories
+);
+
+export const getSelectedCategory = createSelector(
+  getPlatformFeatureState,
+  (state) => state.selectedCategory
 );
 
 export const getAllProductsByCategory = createSelector(
   getPlatformFeatureState,
-  getCurrentCategory,
-  (state, currentCategory) =>
-    state.products.filter((p) => p.category.name === currentCategory.name)
+  getSelectedCategory,
+  (state, selectedCategory) =>
+    state.products.filter((p) => p.category.name === selectedCategory.name)
 );
 
 export const getCurrentProduct = createSelector(
@@ -192,11 +158,6 @@ export const getCurrentProduct = createSelector(
 export const getTypeAction = createSelector(
   getPlatformFeatureState,
   (state) => state.typeAction
-);
-
-export const getAllCategories = createSelector(
-  getPlatformFeatureState,
-  (state) => state.categories
 );
 
 export const getSpinnerLoading = createSelector(
