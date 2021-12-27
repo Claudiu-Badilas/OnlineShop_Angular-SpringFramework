@@ -1,7 +1,7 @@
 import { PlatformEffects } from './store/platform-state/platform.effects';
 import { OrderEffects } from './components/order-list/order-state/order.effects';
 import { NotificationModule } from './shared/Notification/notification.module';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app.routing';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
