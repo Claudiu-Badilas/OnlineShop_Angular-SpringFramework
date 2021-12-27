@@ -25,12 +25,18 @@ import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
   styleUrls: ['./edit-product.component.scss'],
 })
 export class EditProductComponent implements OnInit {
-  productForm: FormGroup;
-  categories$: Observable<Category[]>;
-  product$: Observable<Product>;
-  errorMessage$: Observable<string>;
+  categories$ = this.store.select(fromPlatform.getAllCategories);
+  product$ = this.store.select(fromPlatform.getCurrentProduct);
 
-  product: Product;
+  productForm: FormGroup;
+  product: Product = {
+    id: 1,
+    name: 'AAAAAAAAAA',
+    description: 'AAAAAAAAAA',
+    price: 22,
+    image: 'AAAAAAAAAA',
+    category: new Category(1, 'ovaz'),
+  };
   typeAction: string;
   selectedCategory: Category;
   edited: boolean = false;
@@ -44,23 +50,16 @@ export class EditProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categories$ = this.store.select(fromPlatform.getAllCategories);
-
-    this.product$ = this.store.select(fromPlatform.getCurrentProduct);
-    this.product$.subscribe((product) => {
-      this.product = product;
-    });
-
     this.store.select(fromPlatform.getTypeAction).subscribe((typeAction) => {
       this.typeAction = typeAction;
     });
 
-    this.isEditMode = this.typeAction === ProductTypeAction.UPDATE;
+    this.isEditMode = this.typeAction === ProductTypeAction.EDIT;
 
-    if (this.isEditMode) {
-      this.selectedFile = this.product.image;
-      this.selectedCategory = this.product.category;
-    }
+    // if (this.isEditMode) {
+    //   this.selectedFile = this.product.image;
+    //   this.selectedCategory = this.product.category;
+    // }
 
     this.productForm = this.formBuilder.group({
       name: [
@@ -96,7 +95,7 @@ export class EditProductComponent implements OnInit {
     );
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
-        if (this.typeAction === ProductTypeAction.UPDATE) {
+        if (this.typeAction === ProductTypeAction.EDIT) {
           const payload = this.productForm.value;
           payload.id = this.product.id;
           payload.image = this.selectedFile;

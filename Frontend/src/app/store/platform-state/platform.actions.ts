@@ -21,14 +21,6 @@ export const setCurrentProduct = createAction(
   props<{ setCurrentProduct: Product }>()
 );
 
-export const clearCurrentProduct = createAction(
-  '[Platform] Clear Current Product'
-);
-
-export const initializeCurrentProduct = createAction(
-  '[Platform] Initialize Product'
-);
-
 export const saveProduct = createAction(
   '[Platform] Save Product',
   props<{ product: Product }>()
@@ -69,10 +61,6 @@ export const loadCategories = createAction(
 export const setCurrentCategory = createAction(
   '[Platform]Set Current Category',
   props<{ category: Category }>()
-);
-
-export const clearCurrentCategory = createAction(
-  '[Platform]Clear Current Category'
 );
 
 export const setSpinnerLoading = createAction(

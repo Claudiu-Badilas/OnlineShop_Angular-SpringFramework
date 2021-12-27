@@ -1,19 +1,3 @@
-const user: User = {
-  id: '1',
-  firstName: 'Test',
-  lastName: 'Test',
-  email: 'admin',
-  username: 'admin',
-  profileImageUrl: 'http://localhost:8080/user/image/profile/admin',
-  lastLoginDate: '2021-08-31T18:57:40.000+00:00',
-  lastLoginDateDisplay: '2021-08-29T18:20:15.000+00:00',
-  joinDate: '2021-08-29T18:20:10.000+00:00',
-  role: 'ROLE_ADMIN',
-  authorities: ['user:read'],
-  active: true,
-  notLocked: true,
-};
-
 import {
   Action,
   createFeatureSelector,
@@ -22,6 +6,7 @@ import {
   on,
 } from '@ngrx/store';
 import { User } from 'src/app/models/user';
+import { USER } from 'src/app/shared/mocked-data/mocked-data';
 import { ProductTypeAction } from '../../components/product/utils/product-type-action.util';
 import { Category } from '../../models/category';
 import { Product } from '../../models/product';
@@ -38,7 +23,7 @@ export interface PlatformState {
 }
 
 const initialState: PlatformState = {
-  user: user,
+  user: USER,
   products: [],
   selectedProduct: null,
   typeAction: ProductTypeAction.SAVE,
@@ -73,20 +58,6 @@ const userReducer = createReducer(
     return {
       ...state,
       selectedProduct: action.setCurrentProduct,
-    };
-  }),
-
-  on(PlatformActions.clearCurrentProduct, (state) => {
-    return {
-      ...state,
-      selectedProduct: null,
-    };
-  }),
-
-  on(PlatformActions.initializeCurrentProduct, (state) => {
-    return {
-      ...state,
-      selectedProduct: null,
     };
   }),
 

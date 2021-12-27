@@ -48,7 +48,7 @@ export class PlatformEffects {
           catchError(() => {
             this._notificationService.notify(
               NotificationType.ERROR,
-              'some problems occurred please refresh the page again!'
+              'Some problems occurred, please refresh the page!'
             );
             return EMPTY;
           })
@@ -66,11 +66,13 @@ export class PlatformEffects {
       debounceTime(500),
       filter(
         ([url, params, selectedProduct]) =>
-          url.startsWith(`/product/`) && !!params && selectedProduct === null
+          (url.startsWith(`/product/`) || url.startsWith(`/edit/`)) &&
+          !!params &&
+          selectedProduct === null
       ),
       mergeMap(([, params]) => {
         console.log('loadProduct');
-        return this._productService.getProductById(+params['id']).pipe(
+        return this._productService.getProductById(+params['productId']).pipe(
           first(),
           map((product) => {
             return PlatformActions.setCurrentProduct({
@@ -80,7 +82,7 @@ export class PlatformEffects {
           catchError(() => {
             this._notificationService.notify(
               NotificationType.ERROR,
-              'some problems occurred please refresh the page again!'
+              'Some problems occurred, please refresh the page!'
             );
             return EMPTY;
           })
@@ -100,7 +102,9 @@ export class PlatformEffects {
       mergeMap(([, params]) =>
         this._categoryService.getCategories().pipe(
           map((categories) => {
-            const category = categories.find((c) => c.name === params['name']);
+            const category = categories.find(
+              (c) => c.name === params['categoryName']
+            );
             this.store.dispatch(
               PlatformActions.setCurrentCategory({
                 category: category ? category : categories[0],
@@ -112,7 +116,7 @@ export class PlatformEffects {
           catchError(() => {
             this._notificationService.notify(
               NotificationType.ERROR,
-              'some problems occurred please refresh the page again!'
+              'Some problems occurred, please refresh the page!'
             );
             return EMPTY;
           })
@@ -138,7 +142,9 @@ export class PlatformEffects {
         );
       }),
       map(([, params, categories]) => {
-        const category = categories.find((c) => c.name === params['name']);
+        const category = categories.find(
+          (c) => c.name === params['categoryName']
+        );
 
         return PlatformActions.setCurrentCategory({ category });
       })
