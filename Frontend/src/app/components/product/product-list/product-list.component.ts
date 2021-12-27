@@ -82,15 +82,22 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(
       PlatformActions.setTypeAction({ typeAction: ProductTypeAction.EDIT })
     );
+    this.store.dispatch(
+      NavigationActions.navigateTo({
+        route: `edit-mode/${ProductTypeAction.EDIT}/${product.id}`,
+      })
+    );
   }
 
   addToCart(product: Product) {
     this._cartService.addToCart(new CartItem(product));
   }
 
-  changeCategory(category) {
+  onChangeCategory(category) {
     this.store.dispatch(
-      PlatformActions.changeSelectedCategory({ selectedCategory: category })
+      NavigationActions.navigateTo({
+        route: `products/category/${category.name}`,
+      })
     );
   }
 }

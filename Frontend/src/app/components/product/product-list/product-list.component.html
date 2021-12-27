@@ -6,8 +6,7 @@
       <tr>
         <th *ngFor="let category of categories$ | async" class="pl-4 pr-4">
           <p
-            [routerLink]="['/products/category/', category.name]"
-            (click)="changeCategory(category)"
+            (click)="onChangeCategory(category)"
             routerLinkActive="active-link"
           >
             {{ category.name | uppercase }}
@@ -49,7 +48,6 @@
         <button
           *ngIf="(user$ | async).role === ADMIN"
           class="btn-edit"
-          [routerLink]="['/edit/', product.id]"
           (click)="initStateForEditMode(product)"
         >
           EDIT

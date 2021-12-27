@@ -29,19 +29,11 @@ export class EditProductComponent implements OnInit {
   product$ = this.store.select(fromPlatform.getCurrentProduct);
 
   productForm: FormGroup;
-  product: Product = {
-    id: 1,
-    name: 'AAAAAAAAAA',
-    description: 'AAAAAAAAAA',
-    price: 22,
-    image: 'AAAAAAAAAA',
-    category: new Category(1, 'ovaz'),
-  };
+  product: Product;
   typeAction: string;
   selectedCategory: Category;
   edited: boolean = false;
   selectedFile: any = '/assets/images/no-image.png';
-  isEditMode: boolean;
 
   constructor(
     private store: Store<AppState>,
@@ -50,16 +42,18 @@ export class EditProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.product$.subscribe((product) => {
+      if (!!product) this.product = product;
+    });
+
     this.store.select(fromPlatform.getTypeAction).subscribe((typeAction) => {
       this.typeAction = typeAction;
     });
 
-    this.isEditMode = this.typeAction === ProductTypeAction.EDIT;
-
-    // if (this.isEditMode) {
-    //   this.selectedFile = this.product.image;
-    //   this.selectedCategory = this.product.category;
-    // }
+    if (this.typeAction === ProductTypeAction.EDIT) {
+      this.selectedFile = this.product.image;
+      this.selectedCategory = this.product.category;
+    }
 
     this.productForm = this.formBuilder.group({
       name: [

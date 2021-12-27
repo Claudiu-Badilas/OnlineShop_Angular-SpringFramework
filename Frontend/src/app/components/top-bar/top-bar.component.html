@@ -16,7 +16,7 @@
           <div class="dropdown-content">
             <p
               *ngFor="let category of categories$ | async"
-              routerLink="/products/category/{{ category.name }}"
+              (click)="onChangeCategory(category)"
             >
               {{ category.name }}
             </p>
@@ -46,7 +46,7 @@
             <p *ngIf="!showButtons">
               My Account <i class="pl-2 fas fa-user"></i>
             </p>
-            <p (click)="initStateForSaveMode()" routerLink="/edit/0">
+            <p (click)="initStateForSaveMode()">
               Add Product<i class="pl-2 fas fa-plus"></i>
             </p>
             <p *ngIf="!showButtons" class="" (click)="logOutUser()">

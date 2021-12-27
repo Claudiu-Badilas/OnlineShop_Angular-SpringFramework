@@ -20,6 +20,7 @@ import { CategoryService } from '../../services/category.service';
 import * as fromState from '../app.state';
 import * as fromPlatform from '../platform-state/platform.reducer';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
+import { ProductTypeAction } from 'src/app/components/product/utils/product-type-action.util';
 @Injectable()
 export class PlatformEffects {
   constructor(
@@ -66,12 +67,16 @@ export class PlatformEffects {
       debounceTime(500),
       filter(
         ([url, params, selectedProduct]) =>
-          (url.startsWith(`/product/`) || url.startsWith(`/edit/`)) &&
+          (url.startsWith(`/product/`) ||
+            url.startsWith(`/edit-mode/${ProductTypeAction.EDIT}/`)) &&
           !!params &&
           selectedProduct === null
       ),
       mergeMap(([, params]) => {
         console.log('loadProduct');
+        this.store.dispatch(
+          PlatformActions.setTypeAction({ typeAction: ProductTypeAction.EDIT })
+        );
         return this._productService.getProductById(+params['productId']).pipe(
           first(),
           map((product) => {
