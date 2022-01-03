@@ -9,6 +9,7 @@ import {
   first,
   map,
   mergeMap,
+  withLatestFrom,
 } from 'rxjs/operators';
 import { combineLatest, EMPTY, of } from 'rxjs';
 import { ProductService } from '../../services/product.service';
@@ -184,20 +185,38 @@ export class PlatformEffects {
     );
   });
 
-  // deleteProduct$ = createEffect(() => {
-  //    this.actions$.pipe(
-  //     ofType(PlatformActions.deleteProduct),
-  //     withLatestFrom(this.store.select(fromProduct.getCurrentProduct))
-  //     ),
-  //     map((([, product])) =>
-  //       this._productService.deleteProduct(product.id).pipe(
-  //         map((product) => PlatformActions.editProductSuccess({ product })),
-  //         catchError((error) =>
-  //           of(PlatformActions.editProductFailure())
-  //         )
-  //       )
-  //     )
-  // });
+  deleteProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PlatformActions.deleteProduct),
+      withLatestFrom(
+        this.store.select(fromPlatform.getSelectedProduct),
+        this.store.select(fromPlatform.getAllProducts)
+      ),
+      concatMap(([, product, allProducts]) =>
+        this._productService.deleteProduct(product.id).pipe(
+          map(() => {
+            this._notificationService.notify(
+              NotificationType.SUCCESS,
+              'Your selected product was deleted successfully'
+            );
+            const remainingProducts = allProducts.filter(
+              (p) => p.id !== product.id
+            );
+
+            this.store.dispatch(
+              PlatformActions.changeSelectedProduct({
+                selectedProduct: null,
+              })
+            );
+
+            return PlatformActions.loadProducts({
+              products: remainingProducts,
+            });
+          })
+        )
+      )
+    )
+  );
 
   // loadOrders$ = createEffect(() => {
   //   return this.actions$.pipe(

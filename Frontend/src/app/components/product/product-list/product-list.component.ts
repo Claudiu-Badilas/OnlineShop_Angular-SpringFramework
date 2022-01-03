@@ -43,19 +43,11 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(PlatformActions.loadUser());
   }
 
-  deleteProduct(id: number) {
-    this.productService.deleteProduct(id).subscribe(
-      () => {
-        setTimeout(() => {
-          window.location.reload();
-        }, 100);
-        this._notificationService.notify(
-          NotificationType.SUCCESS,
-          'Your selected product was deleted successfully'
-        );
-      },
-      (error) => console.error('There was an error!', error)
+  deleteProduct(product) {
+    this.store.dispatch(
+      PlatformActions.changeSelectedProduct({ selectedProduct: product })
     );
+    this.store.dispatch(PlatformActions.deleteProduct());
   }
 
   onProductDetails(product) {

@@ -48,11 +48,6 @@ export const setTypeAction = createAction(
 
 export const deleteProduct = createAction('[Platform] Delete Product');
 
-export const deleteProductSuccess = createAction(
-  '[Platform] Delete Product Success',
-  props<{ product: Product }>()
-);
-
 export const loadCategories = createAction(
   '[Platform] Load Categories ',
   props<{ categories: Category[] }>()
