@@ -26,7 +26,7 @@ import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 })
 export class EditProductComponent implements OnInit {
   categories$ = this.store.select(fromPlatform.getAllCategories);
-  product$ = this.store.select(fromPlatform.getCurrentProduct);
+  product$ = this.store.select(fromPlatform.getSelectedProduct);
 
   productForm: FormGroup;
   product: Product;

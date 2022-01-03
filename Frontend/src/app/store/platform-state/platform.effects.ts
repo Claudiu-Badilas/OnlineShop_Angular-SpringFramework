@@ -62,7 +62,7 @@ export class PlatformEffects {
     combineLatest([
       this.store.pipe(select(fromState.getRouterUrl)),
       this.store.pipe(select(fromState.getRouterParams)),
-      this.store.pipe(select(fromPlatform.getCurrentProduct)),
+      this.store.pipe(select(fromPlatform.getSelectedProduct)),
     ]).pipe(
       debounceTime(500),
       filter(
@@ -70,7 +70,7 @@ export class PlatformEffects {
           (url.startsWith(`/product/`) ||
             url.startsWith(`/edit-mode/${ProductTypeAction.EDIT}/`)) &&
           !!params &&
-          selectedProduct === null
+          !selectedProduct
       ),
       mergeMap(([, params]) => {
         console.log('loadProduct');

@@ -25,7 +25,7 @@ export interface PlatformState {
 const initialState: PlatformState = {
   user: USER,
   products: [],
-  selectedProduct: new Product(),
+  selectedProduct: null,
   typeAction: ProductTypeAction.SAVE,
   categories: [],
   selectedCategory: null,
@@ -150,7 +150,7 @@ export const getAllProductsByCategory = createSelector(
     state.products.filter((p) => p.category.name === selectedCategory.name)
 );
 
-export const getCurrentProduct = createSelector(
+export const getSelectedProduct = createSelector(
   getPlatformFeatureState,
   (state) => state.selectedProduct
 );

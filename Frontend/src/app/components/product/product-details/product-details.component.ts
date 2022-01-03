@@ -12,7 +12,7 @@ import * as fromPlatform from '../../../store/platform-state/platform.reducer';
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
-  product$ = this.store.select(fromPlatform.getCurrentProduct);
+  product$ = this.store.select(fromPlatform.getSelectedProduct);
 
   constructor(
     private cartService: CartService,
