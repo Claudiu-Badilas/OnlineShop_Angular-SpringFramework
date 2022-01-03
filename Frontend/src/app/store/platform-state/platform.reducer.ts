@@ -62,13 +62,6 @@ const userReducer = createReducer(
     };
   }),
 
-  on(PlatformActions.deleteProductSuccess, (state) => {
-    return {
-      ...state,
-      selectedProduct: null,
-    };
-  }),
-
   on(PlatformActions.saveProductSuccess, (state, action) => {
     const saveProducts = state.products.map((item) =>
       action.product.id === item.id ? action.product : item

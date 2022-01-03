@@ -55,7 +55,7 @@ export class ProductService {
     );
   }
 
-  deleteProduct(id: number) {
-    return this.http.delete(`/server/product/delete/${id}`);
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`/server/product/delete/${id}`);
   }
 }

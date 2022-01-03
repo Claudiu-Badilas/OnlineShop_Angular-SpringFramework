@@ -31,8 +31,7 @@
         /></a>
         <button
           *ngIf="(user$ | async).role === ADMIN"
-          (click)="deleteProduct(product.id)"
-          [routerLink]="['/products/category/', product.category.id]"
+          (click)="deleteProduct(product)"
           class="btn-delete"
         >
           <i class="fa fa-trash"></i>
