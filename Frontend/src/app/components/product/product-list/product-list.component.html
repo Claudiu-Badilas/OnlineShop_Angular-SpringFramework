@@ -7,7 +7,11 @@
         <th *ngFor="let category of categories$ | async" class="pl-4 pr-4">
           <p
             (click)="onChangeCategory(category)"
-            routerLinkActive="active-link"
+            [ngClass]="
+              (selectedCategory$ | async).name === category.name
+                ? 'active-link'
+                : ''
+            "
           >
             {{ category.name | uppercase }}
           </p>
