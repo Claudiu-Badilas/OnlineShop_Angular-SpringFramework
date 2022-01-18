@@ -27,6 +27,14 @@ const cartReducer = createReducer(
       ...state,
       items: action.items,
     };
+  }),
+
+  on(CartActions.changeComputeCartTotals, (state, action) => {
+    return {
+      ...state,
+      price: action.price,
+      quantity: action.quantity,
+    };
   })
 );
 

@@ -12,7 +12,21 @@ export const addProduct = createAction(
   props<{ product: Product }>()
 );
 
+export const decreaseProduct = createAction(
+  '[Cart] Decrease Product',
+  props<{ product: Product }>()
+);
+
 export const removeProduct = createAction(
   '[Cart] Remove Product',
   props<{ product: Product }>()
+);
+
+export const updateComputeCartTotals = createAction(
+  '[Cart] Update Computed Cart Totals'
+);
+
+export const changeComputeCartTotals = createAction(
+  '[Cart] Change Computed Cart Totals',
+  props<{ price: number; quantity: number }>()
 );

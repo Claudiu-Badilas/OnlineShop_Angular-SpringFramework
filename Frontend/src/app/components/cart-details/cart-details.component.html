@@ -1,6 +1,6 @@
 <div class="container align-top">
   <div class="container-fluid">
-    <div>
+    <div *ngIf="(cartItems$ | async).length !== 0">
       <table class="table table-bordered">
         <thead style="background: #212f49; color: white">
           <tr>
@@ -63,10 +63,11 @@
         <tr>
           <td colspan="2"></td>
           <td>
-            <p>Total Quantity: {{ totalQuantity }}</p>
-            <p *ngIf="totalPrice <= 100">Shipping: 15$</p>
-            <p *ngIf="totalPrice > 100">Shipping: FREE</p>
-            <p>Total Price: {{ totalPrice | currency: "USD" }}</p>
+            <p>Total Quantity: {{ totalQuantity$ | async }}</p>
+            <p>Shipping: 15$</p>
+            <p *ngIf="totalPrice$ | async as totalPrice">
+              Total Price: {{ totalPrice | currency: "USD" }}
+            </p>
           </td>
         </tr>
       </table>

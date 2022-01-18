@@ -12,6 +12,7 @@ import * as PlatformActions from '../../store/platform-state/platform.actions';
 import { ProductTypeAction } from '../product/utils/product-type-action.util';
 import { Product } from 'src/app/models/product';
 import * as NavigationActions from '../../store/navigation-state/navigation.actions';
+import * as fromCart from '../../store/shopping-cart-state/shopping-cart.reducer';
 
 @Component({
   selector: 'app-top-bar',
@@ -22,7 +23,7 @@ export class TopBarComponent implements OnInit, OnChanges {
   categories$ = this.store.select(fromPlatform.getAllCategories);
 
   totalPrice: number = 0.0;
-  totalQuantity: number = 0;
+  totalQuantity$ = this.store.select(fromCart.getCartQuantity);
   cartItems: CartItem[] = [];
   categories: any;
   showButtons: boolean = true;
@@ -60,11 +61,10 @@ export class TopBarComponent implements OnInit, OnChanges {
     );
   }
   private updateCartStatus() {
-    this.cartService.totalPrice.subscribe((data) => (this.totalPrice = data));
-
-    this.cartService.totalQuantity.subscribe(
-      (data) => (this.totalQuantity = data)
-    );
+    // this.cartService.totalPrice.subscribe((data) => (this.totalPrice = data));
+    // this.cartService.totalQuantity.subscribe(
+    //   (data) => (this.totalQuantity = data)
+    // );
   }
 
   getCartItems() {

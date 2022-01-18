@@ -57,7 +57,7 @@
         <div class="second-option">
           <p routerLink="/cart-details">
             My Cart
-            <i class="fas fa-cart-plus pr-2"> {{ totalQuantity }}</i>
+            <i class="fas fa-cart-plus pr-2"> {{ totalQuantity$ | async }}</i>
           </p>
         </div>
         <div>

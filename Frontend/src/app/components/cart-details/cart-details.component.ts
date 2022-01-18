@@ -32,8 +32,8 @@ export class CartDetailsComponent implements OnInit {
   cartItems$ = this.store.select(fromCart.getCartItems);
 
   cartItems;
-  totalPrice: number = 0;
-  totalQuantity: number = 0;
+  totalPrice$ = this.store.select(fromCart.getCartPrice);
+  totalQuantity$ = this.store.select(fromCart.getCartQuantity);
   orders: any = [];
 
   //=======post
@@ -104,10 +104,14 @@ export class CartDetailsComponent implements OnInit {
   }
 
   decrementQuantity(cartItem: CartItem) {
-    this.cartService.decrementQuantity(cartItem);
+    this.store.dispatch(
+      CartActions.decreaseProduct({ product: cartItem.product })
+    );
   }
 
   remove(cartItem: CartItem) {
-    this.cartService.remove(cartItem);
+    this.store.dispatch(
+      CartActions.removeProduct({ product: cartItem.product })
+    );
   }
 }
