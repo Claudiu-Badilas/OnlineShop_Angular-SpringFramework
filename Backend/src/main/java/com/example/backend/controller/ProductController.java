@@ -17,7 +17,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 
 @Controller
-@RequestMapping(path={"/","/product"})
+@RequestMapping(path={"/","api/product"})
 public class ProductController extends ExceptionHandling {
     @Autowired
     private ProductService productService;

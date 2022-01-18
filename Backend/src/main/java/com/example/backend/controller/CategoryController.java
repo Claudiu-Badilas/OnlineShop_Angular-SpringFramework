@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping(path={"/","/category"})
+@RequestMapping(path={"/","api/category"})
 public class CategoryController extends ExceptionHandling {
     @Autowired
     private CategoryService categoryService;

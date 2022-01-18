@@ -15,7 +15,7 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`/server/product/products`).pipe(
+    return this.http.get<Product[]>(`/server/api/product/products`).pipe(
       first(),
       map((results) =>
         results.map(
@@ -34,28 +34,28 @@ export class ProductService {
   }
 
   getProductById(id: number): Observable<Product> {
-    return this.http.get<Product>(`/server/product/${id}`);
+    return this.http.get<Product>(`/server/api/product/${id}`);
   }
 
   getProductsByCategory(id: number) {
-    return this.http.get<Product[]>(`/server/product/category/${id}`);
+    return this.http.get<Product[]>(`/server/api/product/category/${id}`);
   }
 
   saveProduct(product: Product) {
     let body = JSON.stringify(product);
-    return this.http.post(`/server/product/save`, body, httpOption);
+    return this.http.post(`/server/api/product/save`, body, httpOption);
   }
 
   editProduct(product: Product) {
     let body = JSON.stringify(product);
     return this.http.put<Product>(
-      `/server/product/update/${product.id}`,
+      `/server/api/product/update/${product.id}`,
       body,
       httpOption
     );
   }
 
   deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`/server/product/delete/${id}`);
+    return this.http.delete<void>(`/server/api/product/delete/${id}`);
   }
 }

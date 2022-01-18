@@ -17,7 +17,7 @@ export class CategoryService {
 
   getCategories(): Observable<Category[]> {
     return this.httpClient
-      .get<Category[]>('/server/category/categories')
+      .get<Category[]>('/server/api/category/categories')
       .pipe(
         map((results) =>
           results.map((result) => new Category(result.id, result.name))
@@ -27,6 +27,6 @@ export class CategoryService {
 
   createCategory(category: Category) {
     let body = JSON.stringify(category);
-    return this.httpClient.post('/server/category/add', body, httpOption);
+    return this.httpClient.post('/server/api/category/add', body, httpOption);
   }
 }

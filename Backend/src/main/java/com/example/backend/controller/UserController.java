@@ -35,7 +35,7 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @Controller
-@RequestMapping(path = { "/", "/user" })
+@RequestMapping(path = { "/", "api/user" })
 public class UserController extends ExceptionHandling {
 
     private final UserService userService;
