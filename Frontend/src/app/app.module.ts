@@ -40,6 +40,7 @@ import {
 import { NavigationEffects } from './store/navigation-state/navigation.effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { RouterSerializer } from './store/navigation-state/router-serializer';
+import { ShoppingCartEffects } from './store/shopping-cart-state/shopping-cart.effects';
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
   show: false,
@@ -77,7 +78,12 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     FormsModule,
     NotificationModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([OrderEffects, PlatformEffects, NavigationEffects]),
+    EffectsModule.forRoot([
+      OrderEffects,
+      PlatformEffects,
+      NavigationEffects,
+      ShoppingCartEffects,
+    ]),
     NgbModule,
     NgxLoadingXModule.forRoot(ngxLoadingXConfig),
     StoreRouterConnectingModule.forRoot({

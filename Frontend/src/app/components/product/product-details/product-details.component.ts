@@ -22,6 +22,6 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {}
 
   addToCart(product: Product) {
-    this.cartService.addToCart(new CartItem(product));
+    //  this.cartService.addToCart(new CartItem(product));
   }
 }

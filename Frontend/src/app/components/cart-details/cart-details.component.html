@@ -10,15 +10,19 @@
           </tr>
         </thead>
         <tr
-          *ngFor="let item of cartItems"
+          *ngFor="let item of cartItems$ | async"
           style="border-bottom: 3px solid white; padding-bottom: 10px"
         >
           <td>
-            <img class="img-responsive" src="{{ item.image }}" width="200px" />
+            <img
+              class="img-responsive"
+              src="{{ item.product.image }}"
+              width="200px"
+            />
           </td>
           <td class="text-center">
-            <p>{{ item.name }}</p>
-            <p>{{ item.price | currency: "USD" }}</p>
+            <p>{{ item.product.name }}</p>
+            <p>{{ item.product.price | currency: "USD" }}</p>
           </td>
           <td>
             <div>
@@ -50,7 +54,8 @@
             </div>
 
             <p class="">
-              Subtotal: {{ item.quantity * item.price | currency: "USD" }}
+              Subtotal:
+              {{ item.quantity * item.product.price | currency: "USD" }}
             </p>
           </td>
           <br />
@@ -66,7 +71,7 @@
         </tr>
       </table>
     </div>
-    <div *ngIf="cartItems.length == 0" class="text-center">
+    <div *ngIf="(cartItems$ | async).length == 0" class="text-center">
       <p id="text">Your cart is empty!</p>
       <p id="text">
         Go fill with some
@@ -76,7 +81,7 @@
   </div>
 </div>
 <form (ngSubmit)="saveOrder()" [formGroup]="orderForm">
-  <div *ngIf="cartItems.length !== 0" class="container">
+  <div *ngIf="(cartItems$ | async).length !== 0" class="container">
     <div class="text-center">
       <button class="btn-place-order" type="submit">PLACE ORDER</button>
     </div>

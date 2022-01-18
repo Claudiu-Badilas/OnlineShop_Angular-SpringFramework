@@ -16,6 +16,7 @@ import { AppState } from 'src/app/store/app.state';
 import { Observable } from 'rxjs';
 import { ProductTypeAction } from '../utils/product-type-action.util';
 import { User } from 'src/app/models/user';
+import * as CartActions from '../../../store/shopping-cart-state/shopping-cart.actions';
 
 @Component({
   selector: 'app-product-list',
@@ -83,7 +84,8 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    this._cartService.addToCart(new CartItem(product));
+    this.store.dispatch(CartActions.addProduct({ product }));
+    // this._cartService.addToCart(new CartItem(product));
   }
 
   onChangeCategory(category) {

@@ -19,7 +19,7 @@ export class CartService {
 
     if (this.cartItems.length > 0) {
       for (let tempCartItem of this.cartItems) {
-        if (tempCartItem.id === theCartItem.id) {
+        if (tempCartItem.product.id === theCartItem.product.id) {
           existingCartItem = tempCartItem;
           break;
         }
@@ -39,7 +39,8 @@ export class CartService {
     let totalQuantityValue: number = 0;
 
     for (let currentCartItem of this.cartItems) {
-      totalPriceValue += currentCartItem.quantity * currentCartItem.price;
+      totalPriceValue +=
+        currentCartItem.quantity * currentCartItem.product.price;
       totalQuantityValue += currentCartItem.quantity;
     }
 
@@ -59,7 +60,7 @@ export class CartService {
 
   remove(cartItem: CartItem) {
     const itemIndex = this.cartItems.findIndex(
-      (tempCartItem) => tempCartItem.id === cartItem.id
+      (tempCartItem) => tempCartItem.product.id === cartItem.product.id
     );
 
     if (itemIndex > -1) {

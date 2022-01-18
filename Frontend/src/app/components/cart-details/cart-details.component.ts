@@ -18,7 +18,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { Product } from 'src/app/models/product';
 import * as fromPlatform from '../../store/platform-state/platform.reducer';
+import * as fromCart from '../../store/shopping-cart-state/shopping-cart.reducer';
 import * as PlatformActions from '../../store/platform-state/platform.actions';
+import * as CartActions from './../../store/shopping-cart-state/shopping-cart.actions';
 
 @Component({
   selector: 'app-cart-details',
@@ -27,7 +29,9 @@ import * as PlatformActions from '../../store/platform-state/platform.actions';
 })
 export class CartDetailsComponent implements OnInit {
   //========cart
-  cartItems: CartItem[] = [];
+  cartItems$ = this.store.select(fromCart.getCartItems);
+
+  cartItems;
   totalPrice: number = 0;
   totalQuantity: number = 0;
   orders: any = [];
@@ -86,17 +90,17 @@ export class CartDetailsComponent implements OnInit {
   getCartProducts() {
     this.cartItems = this.cartService.cartItems;
 
-    this.cartService.totalPrice.subscribe((data) => (this.totalPrice = data));
+    // this.cartService.totalPrice.subscribe((data) => (this.totalPrice = data));
 
-    this.cartService.totalQuantity.subscribe(
-      (data) => (this.totalQuantity = data)
-    );
+    // this.cartService.totalQuantity.subscribe(
+    //   (data) => (this.totalQuantity = data)
+    // );
 
     this.cartService.computeCartTotals();
   }
 
   incrementQuantity(cartItem: CartItem) {
-    this.cartService.addToCart(cartItem);
+    this.store.dispatch(CartActions.addProduct({ product: cartItem.product }));
   }
 
   decrementQuantity(cartItem: CartItem) {
