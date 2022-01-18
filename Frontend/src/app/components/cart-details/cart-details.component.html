@@ -1,6 +1,6 @@
 <div class="container align-top">
   <div class="container-fluid">
-    <div>
+    <div *ngIf="(cartItems$ | async).length !== 0">
       <table class="table table-bordered">
         <thead style="background: #212f49; color: white">
           <tr>
@@ -10,15 +10,19 @@
           </tr>
         </thead>
         <tr
-          *ngFor="let item of cartItems"
+          *ngFor="let item of cartItems$ | async"
           style="border-bottom: 3px solid white; padding-bottom: 10px"
         >
           <td>
-            <img class="img-responsive" src="{{ item.image }}" width="200px" />
+            <img
+              class="img-responsive"
+              src="{{ item.product.image }}"
+              width="200px"
+            />
           </td>
           <td class="text-center">
-            <p>{{ item.name }}</p>
-            <p>{{ item.price | currency: "USD" }}</p>
+            <p>{{ item.product.name }}</p>
+            <p>{{ item.product.price | currency: "USD" }}</p>
           </td>
           <td>
             <div>
@@ -50,7 +54,8 @@
             </div>
 
             <p class="">
-              Subtotal: {{ item.quantity * item.price | currency: "USD" }}
+              Subtotal:
+              {{ item.quantity * item.product.price | currency: "USD" }}
             </p>
           </td>
           <br />
@@ -58,15 +63,16 @@
         <tr>
           <td colspan="2"></td>
           <td>
-            <p>Total Quantity: {{ totalQuantity }}</p>
-            <p *ngIf="totalPrice <= 100">Shipping: 15$</p>
-            <p *ngIf="totalPrice > 100">Shipping: FREE</p>
-            <p>Total Price: {{ totalPrice | currency: "USD" }}</p>
+            <p>Total Quantity: {{ totalQuantity$ | async }}</p>
+            <p>Shipping: 15$</p>
+            <p *ngIf="totalPrice$ | async as totalPrice">
+              Total Price: {{ totalPrice | currency: "USD" }}
+            </p>
           </td>
         </tr>
       </table>
     </div>
-    <div *ngIf="cartItems.length == 0" class="text-center">
+    <div *ngIf="(cartItems$ | async).length == 0" class="text-center">
       <p id="text">Your cart is empty!</p>
       <p id="text">
         Go fill with some
@@ -76,7 +82,7 @@
   </div>
 </div>
 <form (ngSubmit)="saveOrder()" [formGroup]="orderForm">
-  <div *ngIf="cartItems.length !== 0" class="container">
+  <div *ngIf="(cartItems$ | async).length !== 0" class="container">
     <div class="text-center">
       <button class="btn-place-order" type="submit">PLACE ORDER</button>
     </div>

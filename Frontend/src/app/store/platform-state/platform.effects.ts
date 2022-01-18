@@ -41,7 +41,6 @@ export class PlatformEffects {
       debounceTime(500),
       filter(([, products]) => products.length === 0),
       mergeMap(([,]) => {
-        console.log('loadProductSSSSSS');
         return this._productService.getProducts().pipe(
           first(),
           map((products) => {
@@ -74,7 +73,6 @@ export class PlatformEffects {
           !selectedProduct
       ),
       mergeMap(([, params]) => {
-        console.log('loadProduct');
         this.store.dispatch(
           PlatformActions.setTypeAction({ typeAction: ProductTypeAction.EDIT })
         );

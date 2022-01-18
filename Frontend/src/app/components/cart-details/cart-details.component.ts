@@ -1,16 +1,9 @@
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
-import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/cart-item';
 import { OrderService } from '../../services/order.service';
 import { User } from '../../models/user';
@@ -18,7 +11,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { Product } from 'src/app/models/product';
 import * as fromPlatform from '../../store/platform-state/platform.reducer';
+import * as fromCart from '../../store/shopping-cart-state/shopping-cart.reducer';
 import * as PlatformActions from '../../store/platform-state/platform.actions';
+import * as CartActions from './../../store/shopping-cart-state/shopping-cart.actions';
 
 @Component({
   selector: 'app-cart-details',
@@ -27,9 +22,11 @@ import * as PlatformActions from '../../store/platform-state/platform.actions';
 })
 export class CartDetailsComponent implements OnInit {
   //========cart
-  cartItems: CartItem[] = [];
-  totalPrice: number = 0;
-  totalQuantity: number = 0;
+  cartItems$ = this.store.select(fromCart.getCartItems);
+
+  cartItems;
+  totalPrice$ = this.store.select(fromCart.getCartPrice);
+  totalQuantity$ = this.store.select(fromCart.getCartQuantity);
   orders: any = [];
 
   //=======post
@@ -40,16 +37,12 @@ export class CartDetailsComponent implements OnInit {
   user: User;
 
   constructor(
-    private cartService: CartService,
     private orderService: OrderService,
     private formBuilder: FormBuilder,
-    private store: Store<AppState>,
-    private authService: AuthenticationService
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    this.getCartProducts();
-
     this.store.dispatch(PlatformActions.loadUser());
     this.store.select(fromPlatform.getUser).subscribe((user) => {
       this.user = user;
@@ -83,27 +76,19 @@ export class CartDetailsComponent implements OnInit {
     this.orderService.saveOrder(this.orderForm.value);
   }
 
-  getCartProducts() {
-    this.cartItems = this.cartService.cartItems;
-
-    this.cartService.totalPrice.subscribe((data) => (this.totalPrice = data));
-
-    this.cartService.totalQuantity.subscribe(
-      (data) => (this.totalQuantity = data)
-    );
-
-    this.cartService.computeCartTotals();
-  }
-
   incrementQuantity(cartItem: CartItem) {
-    this.cartService.addToCart(cartItem);
+    this.store.dispatch(CartActions.addProduct({ product: cartItem.product }));
   }
 
   decrementQuantity(cartItem: CartItem) {
-    this.cartService.decrementQuantity(cartItem);
+    this.store.dispatch(
+      CartActions.decreaseProduct({ product: cartItem.product })
+    );
   }
 
   remove(cartItem: CartItem) {
-    this.cartService.remove(cartItem);
+    this.store.dispatch(
+      CartActions.removeProduct({ product: cartItem.product })
+    );
   }
 }
