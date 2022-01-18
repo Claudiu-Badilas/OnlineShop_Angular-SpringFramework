@@ -1,9 +1,5 @@
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CartItem } from 'src/app/models/cart-item';
-import { CartService } from 'src/app/services/cart.service';
-import { CategoryService } from 'src/app/services/category.service';
 import { User } from 'src/app/models/user';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
@@ -21,26 +17,19 @@ import * as fromCart from '../../store/shopping-cart-state/shopping-cart.reducer
 })
 export class TopBarComponent implements OnInit, OnChanges {
   categories$ = this.store.select(fromPlatform.getAllCategories);
-
-  totalPrice: number = 0.0;
   totalQuantity$ = this.store.select(fromCart.getCartQuantity);
-  cartItems: CartItem[] = [];
-  categories: any;
+  cartItems$ = this.store.select(fromCart.getCartItems);
+
   showButtons: boolean = true;
   public user: User = new User();
 
   constructor(
-    private cartService: CartService,
-    private categoryService: CategoryService,
-    private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
     // this.user = this.authenticationService.getUserFromLocalCache();
-
-    this.updateCartStatus();
 
     this.checkIsUserLoggedIn();
   }
@@ -59,16 +48,6 @@ export class TopBarComponent implements OnInit, OnChanges {
         route: `edit-mode/${ProductTypeAction.SAVE}/0`,
       })
     );
-  }
-  private updateCartStatus() {
-    // this.cartService.totalPrice.subscribe((data) => (this.totalPrice = data));
-    // this.cartService.totalQuantity.subscribe(
-    //   (data) => (this.totalQuantity = data)
-    // );
-  }
-
-  getCartItems() {
-    this.cartItems = this.cartService.cartItems;
   }
 
   checkIsUserLoggedIn() {

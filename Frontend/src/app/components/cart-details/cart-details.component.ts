@@ -1,16 +1,9 @@
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
-import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/cart-item';
 import { OrderService } from '../../services/order.service';
 import { User } from '../../models/user';
@@ -44,16 +37,12 @@ export class CartDetailsComponent implements OnInit {
   user: User;
 
   constructor(
-    private cartService: CartService,
     private orderService: OrderService,
     private formBuilder: FormBuilder,
-    private store: Store<AppState>,
-    private authService: AuthenticationService
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    this.getCartProducts();
-
     this.store.dispatch(PlatformActions.loadUser());
     this.store.select(fromPlatform.getUser).subscribe((user) => {
       this.user = user;
@@ -85,18 +74,6 @@ export class CartDetailsComponent implements OnInit {
 
     console.log(this.orderForm.value);
     this.orderService.saveOrder(this.orderForm.value);
-  }
-
-  getCartProducts() {
-    this.cartItems = this.cartService.cartItems;
-
-    // this.cartService.totalPrice.subscribe((data) => (this.totalPrice = data));
-
-    // this.cartService.totalQuantity.subscribe(
-    //   (data) => (this.totalQuantity = data)
-    // );
-
-    this.cartService.computeCartTotals();
   }
 
   incrementQuantity(cartItem: CartItem) {
