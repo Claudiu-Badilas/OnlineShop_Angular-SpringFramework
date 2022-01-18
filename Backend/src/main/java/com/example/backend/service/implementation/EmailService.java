@@ -1,5 +1,6 @@
 package com.example.backend.service.implementation;
 
+import com.example.backend.service.interfaces.IEmailService;
 import com.sun.mail.smtp.SMTPTransport;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,9 @@ import static javax.mail.Message.RecipientType.CC;
 import static javax.mail.Message.RecipientType.TO;
 
 @Service
-public class EmailService {
+public class EmailService implements IEmailService {
 
+    @Override
     public void sendNewPasswordEmail(String firstName, String email) throws MessagingException {
         Message message = createEmail(firstName, email);
         SMTPTransport smtpTransport = (SMTPTransport) getEmailSession().getTransport(SIMPLE_MAIL_TRANSFER_PROTOCOL);

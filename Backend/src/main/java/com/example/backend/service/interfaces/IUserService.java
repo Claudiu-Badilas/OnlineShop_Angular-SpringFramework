@@ -10,25 +10,25 @@ import java.util.List;
 
 public interface IUserService {
 
-        User register(String firstName, String lastName, String username, String email, String password)
-                        throws UserNotFoundException, UsernameExistException, EmailExistException,
-                        javax.mail.MessagingException;
+    User register(String firstName, String lastName, String username, String email, String password)
+            throws UserNotFoundException, UsernameExistException, EmailExistException,
+            javax.mail.MessagingException;
 
-        List<User> getUsers();
+    List<User> getUsers();
 
-        User findUserByUsername(String username);
+    User findUserByUsername(String username);
 
-        User findUserByEmail(String email);
+    User findUserByEmail(String email);
 
-        User updateUser(String currentUsername, String newFirstName, String newLastName, String newUsername,
-                        String newEmail, MultipartFile profileImage) throws UserNotFoundException,
-                        UsernameExistException, EmailExistException, IOException, NotAnImageFileException;
+    User updateUser(String currentUsername, String newFirstName, String newLastName, String newUsername,
+                    String newEmail, MultipartFile profileImage) throws UserNotFoundException,
+            UsernameExistException, EmailExistException, IOException, NotAnImageFileException;
 
-        void deleteUser(String username) throws IOException;
+    void deleteUser(String username) throws IOException;
 
-        void resetPassword(String email, String password) throws javax.mail.MessagingException, EmailNotFoundException;
+    void resetPassword(String email, String password) throws javax.mail.MessagingException, EmailNotFoundException;
 
-        User updateProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException,
-                        UsernameExistException, EmailExistException, IOException, NotAnImageFileException;
+    User updateProfileImage(String username, MultipartFile profileImage) throws UserNotFoundException,
+            UsernameExistException, EmailExistException, IOException, NotAnImageFileException;
 
 }

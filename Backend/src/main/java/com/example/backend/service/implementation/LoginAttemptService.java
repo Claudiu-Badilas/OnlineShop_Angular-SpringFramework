@@ -1,5 +1,6 @@
 package com.example.backend.service.implementation;
 
+import com.example.backend.service.interfaces.ILoginAttemptService;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -10,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 @Service
-public class LoginAttemptService {
+public class LoginAttemptService implements ILoginAttemptService {
     private static final int MAXIMUM_NUMBER_OF_ATTEMPTS = 5;
     private static final int ATTEMPT_INCREMENT = 1;
     private final LoadingCache<String, Integer> loginAttemptCache;
@@ -25,10 +26,12 @@ public class LoginAttemptService {
                 });
     }
 
+    @Override
     public void evictUserFromLoginAttemptCache(String username) {
         loginAttemptCache.invalidate(username);
     }
 
+    @Override
     public void addUserToLoginAttemptCache(String username) {
         int attempts = 0;
         try {
@@ -39,6 +42,7 @@ public class LoginAttemptService {
         loginAttemptCache.put(username, attempts);
     }
 
+    @Override
     public boolean hasExceededMaxAttempts(String username) {
         try {
             return loginAttemptCache.get(username) >= MAXIMUM_NUMBER_OF_ATTEMPTS;
@@ -47,5 +51,4 @@ public class LoginAttemptService {
         }
         return false;
     }
-
 }
