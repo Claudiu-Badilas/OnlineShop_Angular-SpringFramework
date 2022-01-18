@@ -16,29 +16,33 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   public getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`server/user/list`);
+    return this.http.get<User[]>(`server/api/apiuser/list`);
   }
 
   public updateUser(formData: FormData): Observable<User> {
-    return this.http.post<User>(`server/user/update`, formData);
+    return this.http.post<User>(`server/api/apiuser/update`, formData);
   }
 
   public resetPassword(email: string): Observable<CustomHttpResponse> {
     return this.http.get<CustomHttpResponse>(
-      `server/user/reset-password/${email}`
+      `server/api/apiuser/reset-password/${email}`
     );
   }
 
   public updateProfileImage(formData: FormData): Observable<HttpEvent<User>> {
-    return this.http.post<User>(`server/user/updateProfileImage`, formData, {
-      reportProgress: true,
-      observe: 'events',
-    });
+    return this.http.post<User>(
+      `server/api/apiuser/updateProfileImage`,
+      formData,
+      {
+        reportProgress: true,
+        observe: 'events',
+      }
+    );
   }
 
   public deleteUser(username: string): Observable<CustomHttpResponse> {
     return this.http.delete<CustomHttpResponse>(
-      `server/user/delete/${username}`
+      `server/api/apiuser/delete/${username}`
     );
   }
 

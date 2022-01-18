@@ -18,15 +18,15 @@ export class OrderService {
   }
 
   getOrdersByUserId(id: number): Observable<Order[]> {
-    return this.httpClient.get<Order[]>('/server/user-orders/' + id);
+    return this.httpClient.get<Order[]>('/server/api/user-orders/' + id);
   }
 
   saveOrder(order: Order) {
     const body = JSON.stringify(order);
-    return this.httpClient.post('/server/order/save', body, httpOption);
+    return this.httpClient.post('/server/api/order/save', body, httpOption);
   }
 
   deleteOrder(id: number) {
-    return this.httpClient.delete('/server/order/deleteOrderById/' + id);
+    return this.httpClient.delete('/server/api/order/deleteOrderById/' + id);
   }
 }

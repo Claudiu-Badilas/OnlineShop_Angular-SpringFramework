@@ -4,7 +4,7 @@ import com.example.backend.exception.model.*;
 import com.example.backend.model.user.User;
 import com.example.backend.model.user.UserPrincipal;
 import com.example.backend.repository.UserRepository;
-import com.example.backend.service.interfaces.UserService;
+import com.example.backend.service.interfaces.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
@@ -40,17 +40,17 @@ import static org.springframework.http.MediaType.*;
 @Service
 @Transactional
 @Qualifier("UserDetailsService")
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserService implements IUserService, UserDetailsService {
 
-    private Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final LoginAttemptService loginAttemptService;
     private final EmailService emailService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,
-            LoginAttemptService loginAttemptService, EmailService emailService) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,
+                       LoginAttemptService loginAttemptService, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.loginAttemptService = loginAttemptService;

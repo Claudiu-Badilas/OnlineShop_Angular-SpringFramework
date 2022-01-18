@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping(path={"/","/order"})
+@RequestMapping(path={"/","api/order"})
 public class OrderController extends ExceptionHandling {
 
     @Autowired

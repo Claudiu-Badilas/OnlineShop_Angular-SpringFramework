@@ -5,7 +5,7 @@ import com.example.backend.exception.model.*;
 import com.example.backend.model.httpResponse.HttpResponse;
 import com.example.backend.model.user.User;
 import com.example.backend.model.user.UserPrincipal;
-import com.example.backend.service.implementation.UserServiceImpl;
+import com.example.backend.service.implementation.UserService;
 import com.example.backend.utils.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -35,15 +35,15 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @Controller
-@RequestMapping(path = { "/", "/user" })
+@RequestMapping(path = { "/", "api/user" })
 public class UserController extends ExceptionHandling {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JWTTokenProvider jwtTokenProvider;
 
     @Autowired
-    public UserController(UserServiceImpl userService, AuthenticationManager authenticationManager,
+    public UserController(UserService userService, AuthenticationManager authenticationManager,
                           JWTTokenProvider jwtTokenProvider) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
