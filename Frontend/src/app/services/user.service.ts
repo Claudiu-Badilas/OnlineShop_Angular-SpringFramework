@@ -16,22 +16,22 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   public getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`server/api/apiuser/list`);
+    return this.http.get<User[]>(`server/api/user/list`);
   }
 
   public updateUser(formData: FormData): Observable<User> {
-    return this.http.post<User>(`server/api/apiuser/update`, formData);
+    return this.http.post<User>(`server/api/user/update`, formData);
   }
 
   public resetPassword(email: string): Observable<CustomHttpResponse> {
     return this.http.get<CustomHttpResponse>(
-      `server/api/apiuser/reset-password/${email}`
+      `server/api/user/reset-password/${email}`
     );
   }
 
   public updateProfileImage(formData: FormData): Observable<HttpEvent<User>> {
     return this.http.post<User>(
-      `server/api/apiuser/updateProfileImage`,
+      `server/api/user/updateProfileImage`,
       formData,
       {
         reportProgress: true,
@@ -42,7 +42,7 @@ export class UserService {
 
   public deleteUser(username: string): Observable<CustomHttpResponse> {
     return this.http.delete<CustomHttpResponse>(
-      `server/api/apiuser/delete/${username}`
+      `server/api/user/delete/${username}`
     );
   }
 

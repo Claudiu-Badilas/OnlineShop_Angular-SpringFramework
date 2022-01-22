@@ -17,13 +17,13 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {}
 
   public login(user: User): Observable<HttpResponse<User>> {
-    return this.http.post<User>(`server/api/apiuser/login`, user, {
+    return this.http.post<User>(`server/api/user/login`, user, {
       observe: 'response',
     });
   }
 
   public register(user: User): Observable<User> {
-    return this.http.post<User>(`server/api/apiuser/register`, user);
+    return this.http.post<User>(`server/api/user/register`, user);
   }
 
   public logOut(): void {
