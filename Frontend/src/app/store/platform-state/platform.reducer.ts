@@ -36,34 +36,25 @@ const initialState: PlatformState = {
 
 const userReducer = createReducer(
   initialState,
-  on(PlatformActions.loadUser, (state, action) => {
-    console.log('new user', action.user);
-    return {
-      ...state,
-      user: action.user,
-    };
-  }),
+  on(PlatformActions.loadUser, (state, action) => ({
+    ...state,
+    user: action.user,
+  })),
 
-  on(PlatformActions.isUserAdmin, (state, action) => {
-    return {
-      ...state,
-      isUserAdmin: action.isUserAdmin,
-    };
-  }),
+  on(PlatformActions.isUserAdmin, (state, action) => ({
+    ...state,
+    isUserAdmin: action.isUserAdmin,
+  })),
 
-  on(PlatformActions.loadProducts, (state, action) => {
-    return {
-      ...state,
-      products: action.products,
-    };
-  }),
+  on(PlatformActions.loadProducts, (state, action) => ({
+    ...state,
+    products: action.products,
+  })),
 
-  on(PlatformActions.changeSelectedProduct, (state, action) => {
-    return {
-      ...state,
-      selectedProduct: action.selectedProduct,
-    };
-  }),
+  on(PlatformActions.changeSelectedProduct, (state, action) => ({
+    ...state,
+    selectedProduct: action.selectedProduct,
+  })),
 
   on(PlatformActions.saveProductSuccess, (state, action) => {
     const saveProducts = state.products.map((item) =>
@@ -87,33 +78,25 @@ const userReducer = createReducer(
     };
   }),
 
-  on(PlatformActions.setTypeAction, (state, action) => {
-    return {
-      ...state,
-      typeAction: action.typeAction,
-    };
-  }),
+  on(PlatformActions.setTypeAction, (state, action) => ({
+    ...state,
+    typeAction: action.typeAction,
+  })),
 
-  on(PlatformActions.loadCategories, (state, action) => {
-    return {
-      ...state,
-      categories: action.categories,
-    };
-  }),
+  on(PlatformActions.loadCategories, (state, action) => ({
+    ...state,
+    categories: action.categories,
+  })),
 
-  on(PlatformActions.changeSelectedCategory, (state, action) => {
-    return {
-      ...state,
-      selectedCategory: action.selectedCategory,
-    };
-  }),
+  on(PlatformActions.changeSelectedCategory, (state, action) => ({
+    ...state,
+    selectedCategory: action.selectedCategory,
+  })),
 
-  on(PlatformActions.setSpinnerLoading, (state, action) => {
-    return {
-      ...state,
-      isLoading: action.isLoading,
-    };
-  })
+  on(PlatformActions.setSpinnerLoading, (state, action) => ({
+    ...state,
+    isLoading: action.isLoading,
+  }))
 );
 
 const getPlatformFeatureState =

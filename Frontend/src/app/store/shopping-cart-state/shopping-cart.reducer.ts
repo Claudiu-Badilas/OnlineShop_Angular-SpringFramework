@@ -22,20 +22,16 @@ const initialState: CartState = {
 
 const cartReducer = createReducer(
   initialState,
-  on(CartActions.changeCartItems, (state, action) => {
-    return {
-      ...state,
-      items: action.items,
-    };
-  }),
+  on(CartActions.changeCartItems, (state, action) => ({
+    ...state,
+    items: action.items,
+  })),
 
-  on(CartActions.changeComputeCartTotals, (state, action) => {
-    return {
-      ...state,
-      price: action.price,
-      quantity: action.quantity,
-    };
-  })
+  on(CartActions.changeComputeCartTotals, (state, action) => ({
+    ...state,
+    price: action.price,
+    quantity: action.quantity,
+  }))
 );
 
 const getPlatformFeatureState = createFeatureSelector<CartState>('cart');
