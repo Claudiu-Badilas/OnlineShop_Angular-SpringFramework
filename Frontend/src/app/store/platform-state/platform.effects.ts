@@ -23,6 +23,7 @@ import * as fromPlatform from '../platform-state/platform.reducer';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import { ProductTypeAction } from 'src/app/components/product/utils/product-type-action.util';
 import { Role } from 'src/app/shared/enum/role.enum';
+import { OrderService } from 'src/app/services/order.service';
 @Injectable()
 export class PlatformEffects {
   constructor(
@@ -31,7 +32,8 @@ export class PlatformEffects {
     private _productService: ProductService,
     private store: Store<AppState>,
     private _categoryService: CategoryService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _orderService: OrderService
   ) {}
 
   loadUser$ = createEffect(() =>
@@ -247,15 +249,27 @@ export class PlatformEffects {
     )
   );
 
-  // loadOrders$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(UserActions.loadUser),
-  //     mergeMap(() =>
-  //       this._authService.getUserFromLocalCache().pipe(
-  //         map((user) => UserActions.loadUserSuccess({ user })),
-  //         catchError((error) => of(null))
-  //       )
-  //     )
-  //   );
-  // });
+  loadOrders$ = createEffect(() =>
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromPlatform.getUser)),
+    ]).pipe(
+      debounceTime(500),
+      filter(([url]) => {
+        return url.startsWith('/orders');
+      }),
+      mergeMap(([, user]) =>
+        this._orderService.getOrdersByUserId(+user.id).pipe(
+          map((orders) => PlatformActions.loadOrders({ orders })),
+          catchError(() => {
+            this._notificationService.notify(
+              NotificationType.ERROR,
+              'Some problems occurred, please refresh the page!'
+            );
+            return EMPTY;
+          })
+        )
+      )
+    )
+  );
 }

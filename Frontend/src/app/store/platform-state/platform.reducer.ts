@@ -5,8 +5,8 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
+import { Order } from 'src/app/models/order';
 import { User } from 'src/app/models/user';
-import { USER } from 'src/app/shared/mocked-data/mocked-data';
 import { ProductTypeAction } from '../../components/product/utils/product-type-action.util';
 import { Category } from '../../models/category';
 import { Product } from '../../models/product';
@@ -20,6 +20,7 @@ export interface PlatformState {
   typeAction: ProductTypeAction;
   categories: Category[];
   selectedCategory: Category;
+  orders: Order[];
   isLoading: boolean;
 }
 
@@ -31,6 +32,7 @@ const initialState: PlatformState = {
   typeAction: ProductTypeAction.SAVE,
   categories: [],
   selectedCategory: null,
+  orders: [],
   isLoading: false,
 };
 
@@ -93,6 +95,11 @@ const userReducer = createReducer(
     selectedCategory: action.selectedCategory,
   })),
 
+  on(PlatformActions.loadOrders, (state, action) => ({
+    ...state,
+    orders: action.orders,
+  })),
+
   on(PlatformActions.setSpinnerLoading, (state, action) => ({
     ...state,
     isLoading: action.isLoading,
@@ -146,6 +153,11 @@ export const getTypeAction = createSelector(
 export const getSpinnerLoading = createSelector(
   getPlatformFeatureState,
   (state) => state.isLoading
+);
+
+export const getAllOrders = createSelector(
+  getPlatformFeatureState,
+  (state) => state.orders
 );
 
 export function reducer(state: PlatformState, action: Action) {
