@@ -5,7 +5,7 @@ import {
   HttpResponse,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
@@ -40,11 +40,12 @@ export class AuthenticationService {
   }
 
   public addUserToLocalCache(user: User): void {
+    console.log('addUserToLocalCache');
     localStorage.setItem('user', JSON.stringify(user));
   }
 
   public getUserFromLocalCache(): Observable<User> {
-    return JSON.parse(localStorage.getItem('user'));
+    return of(JSON.parse(localStorage.getItem('user')));
   }
 
   public loadToken(): void {

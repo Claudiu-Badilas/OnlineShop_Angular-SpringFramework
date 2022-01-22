@@ -22,6 +22,7 @@ import * as fromState from '../app.state';
 import * as fromPlatform from '../platform-state/platform.reducer';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import { ProductTypeAction } from 'src/app/components/product/utils/product-type-action.util';
+import { Role } from 'src/app/shared/enum/role.enum';
 @Injectable()
 export class PlatformEffects {
   constructor(
@@ -32,6 +33,36 @@ export class PlatformEffects {
     private _categoryService: CategoryService,
     private _notificationService: NotificationService
   ) {}
+
+  loadUser$ = createEffect(() =>
+    combineLatest([
+      this.store.pipe(select(fromState.getRouterUrl)),
+      this.store.pipe(select(fromPlatform.getUser)),
+    ]).pipe(
+      debounceTime(500),
+      filter(([, user]) => user === null),
+      mergeMap(([,]) => {
+        return this._authService.getUserFromLocalCache().pipe(
+          first(),
+          map((user) => {
+            if (user.role === Role.ADMIN) {
+              this.store.dispatch(
+                PlatformActions.isUserAdmin({ isUserAdmin: true })
+              );
+            }
+            return PlatformActions.loadUser({ user });
+          }),
+          catchError(() => {
+            this._notificationService.notify(
+              NotificationType.ERROR,
+              'Some problems occurred, please refresh the page!'
+            );
+            return EMPTY;
+          })
+        );
+      })
+    )
+  );
 
   loadProducts$ = createEffect(() =>
     combineLatest([

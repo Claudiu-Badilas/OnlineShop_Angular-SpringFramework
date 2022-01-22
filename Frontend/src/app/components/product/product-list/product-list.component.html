@@ -34,7 +34,7 @@
           <img class="image-pic img-responsive" [src]="product.image"
         /></a>
         <button
-          *ngIf="(user$ | async).role === ADMIN"
+          *ngIf="isUserAdmin$ | async"
           (click)="deleteProduct(product)"
           class="btn-delete"
         >
@@ -49,7 +49,7 @@
 
       <div class="row">
         <button
-          *ngIf="(user$ | async).role === ADMIN"
+          *ngIf="isUserAdmin$ | async"
           class="btn-edit"
           (click)="initStateForEditMode(product)"
         >

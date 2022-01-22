@@ -43,7 +43,6 @@ export class CartDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(PlatformActions.loadUser());
     this.store.select(fromPlatform.getUser).subscribe((user) => {
       this.user = user;
     });

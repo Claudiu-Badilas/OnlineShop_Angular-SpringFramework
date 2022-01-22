@@ -19,7 +19,6 @@ export class OrderEffects {
     private _orderService: OrderService,
     private store: Store<AppState>
   ) {
-    this.store.dispatch(PlatformActions.loadUser());
     this.store.select(fromPlatform.getUser).subscribe((user) => {
       this.user = user;
     });

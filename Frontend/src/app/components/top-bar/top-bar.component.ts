@@ -9,6 +9,7 @@ import { ProductTypeAction } from '../product/utils/product-type-action.util';
 import { Product } from 'src/app/models/product';
 import * as NavigationActions from '../../store/navigation-state/navigation.actions';
 import * as fromCart from '../../store/shopping-cart-state/shopping-cart.reducer';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-top-bar',
@@ -16,12 +17,12 @@ import * as fromCart from '../../store/shopping-cart-state/shopping-cart.reducer
   styleUrls: ['./top-bar.component.scss'],
 })
 export class TopBarComponent implements OnInit, OnChanges {
+  user$ = this.store.select(fromPlatform.getUser);
   categories$ = this.store.select(fromPlatform.getAllCategories);
   totalQuantity$ = this.store.select(fromCart.getCartQuantity);
   cartItems$ = this.store.select(fromCart.getCartItems);
 
   showButtons: boolean = true;
-  public user: User = new User();
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -29,8 +30,6 @@ export class TopBarComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    // this.user = this.authenticationService.getUserFromLocalCache();
-
     this.checkIsUserLoggedIn();
   }
 

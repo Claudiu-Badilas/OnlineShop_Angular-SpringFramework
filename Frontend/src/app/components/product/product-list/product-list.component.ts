@@ -17,11 +17,11 @@ import * as CartActions from '../../../store/shopping-cart-state/shopping-cart.a
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit {
-  user$ = this.store.select(fromPlatform.getUser);
   products$ = this.store.select(fromPlatform.getAllProductsByCategory);
   categories$ = this.store.select(fromPlatform.getAllCategories);
   selectedCategory$ = this.store.select(fromPlatform.getSelectedCategory);
   isLoading$ = this.store.select(fromPlatform.getSpinnerLoading);
+  isUserAdmin$ = this.store.select(fromPlatform.getIsUserAdmin);
 
   ADMIN = Role.ADMIN;
   page = 1;
@@ -29,9 +29,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(private store: Store<AppState>) {}
 
-  ngOnInit(): void {
-    this.store.dispatch(PlatformActions.loadUser());
-  }
+  ngOnInit(): void {}
 
   deleteProduct(product) {
     this.store.dispatch(

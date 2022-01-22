@@ -4,11 +4,14 @@ import { Category } from '../../models/category';
 import { Product } from '../../models/product';
 import { ProductTypeAction } from 'src/app/components/product/utils/product-type-action.util';
 
-export const loadUser = createAction('[User] Load User');
-
-export const loadUserSuccess = createAction(
-  '[Platform] Load User Success',
+export const loadUser = createAction(
+  '[Platform] Load User',
   props<{ user: User }>()
+);
+
+export const isUserAdmin = createAction(
+  '[Platform] Is User Admin',
+  props<{ isUserAdmin: boolean }>()
 );
 
 export const loadProducts = createAction(
