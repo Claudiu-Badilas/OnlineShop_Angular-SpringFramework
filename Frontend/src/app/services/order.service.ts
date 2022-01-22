@@ -14,19 +14,19 @@ export class OrderService {
   constructor(private httpClient: HttpClient) {}
 
   getOrders(): Observable<Order[]> {
-    return this.httpClient.get<Order[]>('/serve/orders/orders');
+    return this.httpClient.get<Order[]>(`/server/orders/orders`);
   }
 
   getOrdersByUserId(id: number): Observable<Order[]> {
-    return this.httpClient.get<Order[]>('/server/api/user-orders/' + id);
+    return this.httpClient.get<Order[]>(`/server/api/order/user-orders/${id}`);
   }
 
   saveOrder(order: Order) {
     const body = JSON.stringify(order);
-    return this.httpClient.post('/server/api/order/save', body, httpOption);
+    return this.httpClient.post(`/server/api/order/save`, body, httpOption);
   }
 
   deleteOrder(id: number) {
-    return this.httpClient.delete('/server/api/order/deleteOrderById/' + id);
+    return this.httpClient.delete(`/server/api/order/deleteOrderById/${id}`);
   }
 }

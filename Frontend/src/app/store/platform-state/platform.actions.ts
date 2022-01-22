@@ -3,6 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { Category } from '../../models/category';
 import { Product } from '../../models/product';
 import { ProductTypeAction } from 'src/app/components/product/utils/product-type-action.util';
+import { Order } from 'src/app/models/order';
 
 export const loadUser = createAction(
   '[Platform] Load User',
@@ -64,4 +65,9 @@ export const changeSelectedCategory = createAction(
 export const setSpinnerLoading = createAction(
   '[Platform] Set Spinner Loading',
   props<{ isLoading: boolean }>()
+);
+
+export const loadOrders = createAction(
+  '[Orders] Load Orders',
+  props<{ orders: Order[] }>()
 );

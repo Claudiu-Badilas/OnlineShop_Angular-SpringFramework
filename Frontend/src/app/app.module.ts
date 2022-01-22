@@ -1,5 +1,4 @@
 import { PlatformEffects } from './store/platform-state/platform.effects';
-import { OrderEffects } from './components/order-list/order-state/order.effects';
 import { NotificationModule } from './shared/Notification/notification.module';
 import { AppRoutingModule } from './app.routing';
 import { NgModule } from '@angular/core';
@@ -79,7 +78,6 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     NotificationModule,
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([
-      OrderEffects,
       PlatformEffects,
       NavigationEffects,
       ShoppingCartEffects,
