@@ -9,6 +9,7 @@ import {
   first,
   map,
   mergeMap,
+  skipWhile,
   withLatestFrom,
 } from 'rxjs/operators';
 import { combineLatest, EMPTY, of } from 'rxjs';
@@ -46,6 +47,7 @@ export class PlatformEffects {
       mergeMap(([,]) => {
         return this._authService.getUserFromLocalCache().pipe(
           first(),
+          skipWhile((user) => !user),
           map((user) => {
             if (user.role === Role.ADMIN) {
               this.store.dispatch(
