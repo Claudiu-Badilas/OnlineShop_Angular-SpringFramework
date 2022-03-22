@@ -61,13 +61,17 @@
           </p>
         </div>
         <div>
-          <button *ngIf="showButtons" class="btn-login" routerLink="/login">
+          <button
+            *ngIf="showButtons"
+            class="btn-login"
+            (click)="openLoginModal(userAction.LOGIN)"
+          >
             LOGIN
           </button>
           <button
             *ngIf="showButtons"
             class="btn-register ml-2"
-            routerLink="/register"
+            (click)="openLoginModal(userAction.REGISTER)"
           >
             REGISTER
           </button>

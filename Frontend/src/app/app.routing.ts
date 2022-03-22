@@ -12,8 +12,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthenticationGuard } from './authentication/guard/authentication.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LogInComponent },
-  { path: 'register', component: RegisterComponent },
+  // { path: 'login', component: LogInComponent },
+  // { path: 'register', component: RegisterComponent },
   { path: 'products/category/:categoryName', component: ProductListComponent },
   {
     path: 'product/:productName/:productId',
