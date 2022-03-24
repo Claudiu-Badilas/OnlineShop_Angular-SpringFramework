@@ -7,11 +7,9 @@
         <th *ngFor="let category of categories$ | async" class="pl-4 pr-4">
           <p
             (click)="onChangeCategory(category)"
-            [ngClass]="
-              (selectedCategory$ | async).name === category.name
-                ? 'active-link'
-                : ''
-            "
+            [ngClass]="{
+              'active-link': (selectedCategory$ | async).name === category.name
+            }"
           >
             {{ category.name | uppercase }}
           </p>

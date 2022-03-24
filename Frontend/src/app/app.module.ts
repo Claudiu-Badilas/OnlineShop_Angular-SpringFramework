@@ -40,6 +40,7 @@ import { NavigationEffects } from './store/navigation-state/navigation.effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { RouterSerializer } from './store/navigation-state/router-serializer';
 import { ShoppingCartEffects } from './store/shopping-cart-state/shopping-cart.effects';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
   show: false,
@@ -87,6 +88,7 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     StoreRouterConnectingModule.forRoot({
       serializer: RouterSerializer,
     }),
+    ModalModule.forRoot(),
   ],
   providers: [
     AuthenticationService,

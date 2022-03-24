@@ -5,11 +5,16 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import * as fromPlatform from '../../store/platform-state/platform.reducer';
 import * as PlatformActions from '../../store/platform-state/platform.actions';
-import { ProductTypeAction } from '../product/utils/product-type-action.util';
+import {
+  ProductTypeAction,
+  UserAuthenticationAction,
+} from '../product/utils/product-type-action.util';
 import { Product } from 'src/app/models/product';
 import * as NavigationActions from '../../store/navigation-state/navigation.actions';
 import * as fromCart from '../../store/shopping-cart-state/shopping-cart.reducer';
-import { Observable } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { LogInComponent } from '../log-in/log-in.component';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-top-bar',
@@ -23,8 +28,11 @@ export class TopBarComponent implements OnInit, OnChanges {
   cartItems$ = this.store.select(fromCart.getCartItems);
 
   showButtons: boolean = true;
+  bsModalRef: BsModalRef;
+  userAction = UserAuthenticationAction;
 
   constructor(
+    private modalService: BsModalService,
     private authenticationService: AuthenticationService,
     private store: Store<AppState>
   ) {}
@@ -61,6 +69,17 @@ export class TopBarComponent implements OnInit, OnChanges {
         route: `products/category/${category.name}`,
       })
     );
+  }
+  openLoginModal(userAction: UserAuthenticationAction) {
+    const config = {
+      class: '',
+      initialState: {},
+    };
+    if (userAction === UserAuthenticationAction.LOGIN) {
+      this.bsModalRef = this.modalService.show(LogInComponent, config);
+    } else {
+      this.bsModalRef = this.modalService.show(RegisterComponent, config);
+    }
   }
 
   logOutUser() {

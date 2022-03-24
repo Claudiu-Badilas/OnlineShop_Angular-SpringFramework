@@ -16,15 +16,21 @@ export class AuthInterceptor implements HttpInterceptor {
     httpRequest: HttpRequest<any>,
     httpHandler: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (httpRequest.url.includes(`server/api/user/login`)) {
+    if (httpRequest.url.includes(`server/api/user/login`))
       return httpHandler.handle(httpRequest);
-    }
-    if (httpRequest.url.includes(`server/api/user/register`)) {
+
+    if (httpRequest.url.includes(`server/api/user/register`))
       return httpHandler.handle(httpRequest);
-    }
-    if (httpRequest.url.includes(`server/api/user/reset-password`)) {
+
+    if (httpRequest.url.includes(`server/api/user/reset-password`))
       return httpHandler.handle(httpRequest);
-    }
+
+    if (httpRequest.url.includes(`server/api/product/products`))
+      return httpHandler.handle(httpRequest);
+
+    if (httpRequest.url.includes(`server/api/category/categories`))
+      return httpHandler.handle(httpRequest);
+
     this.authenticationService.loadToken();
     const token = this.authenticationService.getToken();
     const request = httpRequest.clone({
