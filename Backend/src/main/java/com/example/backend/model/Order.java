@@ -3,6 +3,7 @@ package com.example.backend.model;
 import com.example.backend.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -27,10 +28,10 @@ public class Order {
     @ManyToOne
     private User user;
 
-    @ManyToMany//(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.ALL})//(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     //@JsonManagedReference
     @JoinTable(name = "orders_products",
-            joinColumns = {@JoinColumn(name = "order_id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id")})
+            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
     private List<Product> products = new ArrayList<>();
 }
