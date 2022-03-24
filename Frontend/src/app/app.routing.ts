@@ -35,8 +35,8 @@ const routes: Routes = [
     component: EditProductComponent,
     canActivate: [AuthenticationGuard],
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'products/category/Ovaz', pathMatch: 'full' },
+  { path: '**', redirectTo: 'products/category/Ovaz', pathMatch: 'full' },
 ];
 
 @NgModule({

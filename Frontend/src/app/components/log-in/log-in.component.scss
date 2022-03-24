@@ -1,6 +1,6 @@
-.user_card {
+.user-card {
   width: 640px;
-  height: 485px;
+  height: 400px;
   margin-top: auto;
   margin-bottom: auto;
   background: white;
@@ -12,32 +12,48 @@
   border-radius: 5px;
 }
 
-.form_container {
-  margin-top: 100px;
+.close-btn {
+  height: 45px;
+  width: 45px;
+  color: white;
+  font-size: 13px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background-color: #ff3c00;
+  color: #ffffff;
+  &:hover {
+    background-color: #fddd07;
+    color: black;
+  }
 }
-.login_btn {
-  width: 100%;
-  background: #1b4f72 !important;
-  color: white !important;
+
+.login-btn {
+  width: 160px;
+  height: 45px;
+  border-radius: 30px;
+  background: #ff3c00;
+  color: white;
+  font-weight: 700;
+  border: none;
+  &:hover {
+    background-color: #fddd07;
+    color: black;
+  }
 }
-.login_btn:focus {
-  box-shadow: none !important;
-  outline: 0px !important;
-}
-.login_container {
-  padding: 0 2rem;
-}
+
 .input-group-text {
   background: #1b4f72 !important;
   color: white !important;
   border: 0 !important;
   border-radius: 0.25rem 0 0 0.25rem !important;
 }
-.input_user,
-.input_pass:focus {
-  box-shadow: none !important;
-  outline: 0px !important;
-}
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: #1b4f72 !important;
+
+.info-text {
+  font-weight: 700;
+  color: #ff3c00;
+  cursor: pointer;
+  &:hover {
+    color: #fddd07;
+  }
 }

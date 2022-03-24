@@ -72,7 +72,7 @@ export class TopBarComponent implements OnInit, OnChanges {
   }
   openLoginModal(userAction: UserAuthenticationAction) {
     const config = {
-      class: 'modal-dialog-centered',
+      class: '',
       initialState: {},
     };
     if (userAction === UserAuthenticationAction.LOGIN) {
