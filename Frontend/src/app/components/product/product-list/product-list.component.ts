@@ -10,6 +10,7 @@ import { AppState } from 'src/app/store/app.state';
 import { ProductTypeAction } from '../utils/product-type-action.util';
 import { User } from 'src/app/models/user';
 import * as CartActions from '../../../store/shopping-cart-state/shopping-cart.actions';
+import { Category } from 'src/app/models/category';
 
 @Component({
   selector: 'app-product-list',
@@ -73,7 +74,7 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(CartActions.addProduct({ product }));
   }
 
-  onChangeCategory(category) {
+  changedCategory(category: Category) {
     this.store.dispatch(
       NavigationActions.navigateTo({
         route: `products/category/${category.name}`,

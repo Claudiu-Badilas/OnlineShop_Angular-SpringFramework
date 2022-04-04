@@ -1,22 +1,13 @@
 <ngx-loading-x [show]="isLoading$ | async"></ngx-loading-x>
 <div class="container align-top">
   <div class="title text-center p-3">You eat better, you feel better!</div>
-  <div class="form-inline justify-content-center">
-    <table>
-      <tr>
-        <th *ngFor="let category of categories$ | async" class="pl-4 pr-4">
-          <p
-            (click)="onChangeCategory(category)"
-            [ngClass]="{
-              'active-link': (selectedCategory$ | async).name === category.name
-            }"
-          >
-            {{ category.name | uppercase }}
-          </p>
-        </th>
-      </tr>
-    </table>
-  </div>
+
+  <app-category
+    [categories]="categories$ | async"
+    [selectedCategory]="selectedCategory$ | async"
+    (emitedCategory)="changedCategory($event)"
+  >
+  </app-category>
 
   <div class="row pt-5">
     <div
