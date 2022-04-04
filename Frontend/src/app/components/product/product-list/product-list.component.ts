@@ -25,21 +25,20 @@ export class ProductListComponent implements OnInit {
   isUserAdmin$ = this.store.select(fromPlatform.getIsUserAdmin);
 
   ADMIN = Role.ADMIN;
-  page = 1;
-  pageSize = 9;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {}
 
-  deleteProduct(product) {
+  changedCategory(category: Category) {
     this.store.dispatch(
-      PlatformActions.changeSelectedProduct({ selectedProduct: product })
+      NavigationActions.navigateTo({
+        route: `products/category/${category.name}`,
+      })
     );
-    this.store.dispatch(PlatformActions.deleteProduct());
   }
 
-  onProductDetails(product) {
+  onViewDetails(product) {
     this.store.dispatch(
       PlatformActions.changeSelectedProduct({ selectedProduct: product })
     );
@@ -56,7 +55,11 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  initStateForEditMode(product: Product) {
+  onAddToCart(product: Product) {
+    this.store.dispatch(CartActions.addProduct({ product }));
+  }
+
+  onEdit(product: Product) {
     this.store.dispatch(
       PlatformActions.changeSelectedProduct({ selectedProduct: product })
     );
@@ -70,15 +73,10 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  addToCart(product: Product) {
-    this.store.dispatch(CartActions.addProduct({ product }));
-  }
-
-  changedCategory(category: Category) {
+  onDelete(product) {
     this.store.dispatch(
-      NavigationActions.navigateTo({
-        route: `products/category/${category.name}`,
-      })
+      PlatformActions.changeSelectedProduct({ selectedProduct: product })
     );
+    this.store.dispatch(PlatformActions.deleteProduct());
   }
 }

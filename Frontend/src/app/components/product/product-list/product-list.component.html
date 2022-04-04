@@ -9,54 +9,13 @@
   >
   </app-category>
 
-  <div class="row pt-5">
-    <div
-      *ngFor="
-        let product of products$
-          | async
-          | slice: (page - 1) * pageSize:page * pageSize
-      "
-      class="product-box col-md-3"
-    >
-      <div class="">
-        <a (click)="onProductDetails(product)">
-          <img class="image-pic img-responsive" [src]="product.image"
-        /></a>
-        <button
-          *ngIf="isUserAdmin$ | async"
-          (click)="deleteProduct(product)"
-          class="btn-delete"
-        >
-          <i class="fa fa-trash"></i>
-        </button>
-      </div>
-      <div class="text-left">
-        <br />
-        <p class="product-title">{{ product.name ? product.name : "-" }}</p>
-        <p class="product-price">{{ product.price | currency: "USD" }}</p>
-      </div>
-
-      <div class="row">
-        <button
-          *ngIf="isUserAdmin$ | async"
-          class="btn-edit"
-          (click)="initStateForEditMode(product)"
-        >
-          EDIT
-        </button>
-        <button (click)="addToCart(product)" class="btn-cart">
-          ADD TO CART
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="d-flex justify-content-center">
-  <ngb-pagination
-    *ngIf="(products$ | async).length > pageSize"
-    [(page)]="page"
-    [pageSize]="pageSize"
-    [collectionSize]="(products$ | async).length"
-    [maxSize]="3"
-  ></ngb-pagination>
+  <app-product
+    [products]="products$ | async"
+    [isUserAdmin]="isUserAdmin$ | async"
+    (viewDetailstClicked)="onViewDetails($event)"
+    (addToCartClicked)="onAddToCart($event)"
+    (editClicked)="onEdit($event)"
+    (deletetClicked)="onDelete($event)"
+  >
+  </app-product>
 </div>

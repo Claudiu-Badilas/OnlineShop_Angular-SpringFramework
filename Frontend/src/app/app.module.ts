@@ -42,6 +42,7 @@ import { RouterSerializer } from './store/navigation-state/router-serializer';
 import { ShoppingCartEffects } from './store/shopping-cart-state/shopping-cart.effects';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CategoryComponent } from './components/category/category.component';
+import { ProductComponent } from './components/product/product/product.component';
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
   show: false,
@@ -71,6 +72,7 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     TopBarComponent,
     DropdownDirective,
     CategoryComponent,
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
