@@ -9,11 +9,11 @@ import { Category } from 'src/app/models/category';
 export class CategoryComponent {
   @Input() categories: Category[];
   @Input() selectedCategory: Category;
-  @Output() emitedCategory = new EventEmitter<Category>();
+  @Output() emittedCategory = new EventEmitter<Category>();
 
   constructor() {}
 
   onCategoryChanged(category: Category) {
-    this.emitedCategory.emit(category);
+    this.emittedCategory.emit(category);
   }
 }
