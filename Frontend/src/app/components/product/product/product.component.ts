@@ -10,10 +10,10 @@ import { Role } from 'src/app/shared/enum/role.enum';
 export class ProductComponent {
   @Input() products: Product[];
   @Input() isUserAdmin: boolean;
-  @Output() viewDetailstClicked = new EventEmitter<Product>();
+  @Output() viewDetailsClicked = new EventEmitter<Product>();
   @Output() addToCartClicked = new EventEmitter<Product>();
   @Output() editClicked = new EventEmitter<Product>();
-  @Output() deletetClicked = new EventEmitter<Product>();
+  @Output() deleteClicked = new EventEmitter<Product>();
 
   constructor() {}
 
@@ -22,15 +22,15 @@ export class ProductComponent {
   pageSize = 9;
 
   onViewDetails(product: Product) {
-    this.viewDetailstClicked.emit(product);
+    this.viewDetailsClicked.emit(product);
   }
   onAddToCart(product: Product) {
     this.addToCartClicked.emit(product);
   }
-  onEdit(product: Product) {
+  onEdit(ev, product: Product) {
     this.editClicked.emit(product);
   }
-  onDelete(product: Product) {
-    this.deletetClicked.emit(product);
+  onDelete(ev, product: Product) {
+    this.deleteClicked.emit(product);
   }
 }

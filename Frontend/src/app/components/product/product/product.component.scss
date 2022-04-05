@@ -31,23 +31,6 @@
     cursor: pointer;
   }
 
-  .btn-delete {
-    position: absolute;
-    height: 45px;
-    width: 45px;
-    top: 0;
-    right: -1px;
-    color: white;
-    border-radius: 0px 15px 0px 15px;
-    border: none;
-    cursor: pointer;
-    background-color: red;
-
-    &:hover {
-      background-color: #fddd07;
-      color: black;
-    }
-  }
   .btn-edit {
     position: absolute;
     left: 0;
@@ -61,6 +44,12 @@
       background-color: #fddd07;
       color: black;
     }
+  }
+
+  .dropdown-placement {
+    position: absolute;
+    top: 10px;
+    left: 10px;
   }
 
   .outer-box {

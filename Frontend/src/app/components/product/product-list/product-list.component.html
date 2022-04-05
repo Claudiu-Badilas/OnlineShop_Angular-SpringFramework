@@ -5,17 +5,17 @@
   <app-category
     [categories]="categories$ | async"
     [selectedCategory]="selectedCategory$ | async"
-    (emitedCategory)="changedCategory($event)"
+    (emittedCategory)="changedCategory($event)"
   >
   </app-category>
 
   <app-product
     [products]="products$ | async"
     [isUserAdmin]="isUserAdmin$ | async"
-    (viewDetailstClicked)="onViewDetails($event)"
+    (viewDetailsClicked)="onViewDetails($event)"
     (addToCartClicked)="onAddToCart($event)"
     (editClicked)="onEdit($event)"
-    (deletetClicked)="onDelete($event)"
+    (deleteClicked)="onDelete($event)"
   >
   </app-product>
 </div>

@@ -6,16 +6,15 @@
     class="product-box col-md-3 p-0"
   >
     <div class="">
+      <app-dropdown
+        *ngIf="isUserAdmin"
+        class="dropdown-placement"
+        (editClicked)="onEdit($event, product)"
+        (deleteClicked)="onDelete($event, product)"
+      ></app-dropdown>
       <a (click)="onViewDetails(product)">
         <img class="image-pic img-responsive" [src]="product.image"
       /></a>
-      <button
-        *ngIf="isUserAdmin"
-        (click)="onDelete(product)"
-        class="btn-delete"
-      >
-        <i class="fa fa-trash"></i>
-      </button>
     </div>
     <div
       class="d-flex justify-content-between align-items-center px-2 place-row-one"

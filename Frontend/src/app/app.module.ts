@@ -24,7 +24,6 @@ import { CategoryService } from './services/category.service';
 import { OrderService } from './services/order.service';
 import { UserService } from './services/user.service';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
-import { DropdownDirective } from './shared/dropdown/dropdown.directive';
 import { NotificationService } from './services/notification.service';
 import { RegisterComponent } from './components/register/register.component';
 import * as fromApp from './store/app.state';
@@ -43,6 +42,7 @@ import { ShoppingCartEffects } from './store/shopping-cart-state/shopping-cart.e
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CategoryComponent } from './components/category/category.component';
 import { ProductComponent } from './components/product/product/product.component';
+import { DropdownComponent } from './shared/components/dropdown/dropdown.component';
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
   show: false,
@@ -70,9 +70,9 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     ProductListComponent,
     RegisterComponent,
     TopBarComponent,
-    DropdownDirective,
     CategoryComponent,
     ProductComponent,
+    DropdownComponent,
   ],
   imports: [
     BrowserModule,
