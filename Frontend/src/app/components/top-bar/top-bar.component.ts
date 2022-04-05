@@ -45,7 +45,9 @@ export class TopBarComponent implements OnInit, OnChanges {
 
   initStateForSaveMode() {
     this.store.dispatch(
-      PlatformActions.changeSelectedProduct({ selectedProduct: new Product() })
+      PlatformActions.changeSelectedProduct({
+        selectedProduct: new Product(null),
+      })
     );
     this.store.dispatch(
       PlatformActions.setTypeAction({ typeAction: ProductTypeAction.SAVE })

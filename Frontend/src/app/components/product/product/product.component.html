@@ -1,0 +1,61 @@
+<div class="row pt-5">
+  <div
+    *ngFor="
+      let product of products | slice: (page - 1) * pageSize:page * pageSize
+    "
+    class="product-box col-md-3 p-0"
+  >
+    <div class="">
+      <a (click)="onViewDetails(product)">
+        <img class="image-pic img-responsive" [src]="product.image"
+      /></a>
+      <button
+        *ngIf="isUserAdmin"
+        (click)="onDelete(product)"
+        class="btn-delete"
+      >
+        <i class="fa fa-trash"></i>
+      </button>
+    </div>
+    <div
+      class="d-flex justify-content-between align-items-center px-2 place-row-one"
+    >
+      <div class="product-title">
+        <p class="m-0">{{ product.name }}</p>
+      </div>
+
+      <div class="product-details">
+        <p class="m-0">300 gr.</p>
+        <p class="m-0">177kcal/100gr.</p>
+      </div>
+    </div>
+
+    <div
+      class="d-flex align-items-center justify-content-between place-row-two"
+    >
+      <!-- <button *ngIf="isUserAdmin" class="btn-edit" (click)="onEdit(product)">
+        EDIT
+      </button> -->
+      <div class="product-price text-center pl-3">
+        <p class="m-0">{{ product.price }} RON</p>
+      </div>
+      <div class="">
+        <button class="p-0 btn-details" (click)="onViewDetails(product)">
+          View Details
+        </button>
+      </div>
+      <button class="btn-cart" (click)="onAddToCart(product)">
+        ADD TO CART
+      </button>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <ngb-pagination
+      *ngIf="products.length > pageSize"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="products.length"
+      [maxSize]="3"
+    ></ngb-pagination>
+  </div>
+</div>

@@ -1,12 +1,19 @@
 import { Category } from './category';
 
 export class Product {
-  constructor(
-    public id?: number,
-    public name?: string,
-    public description?: string,
-    public price?: number,
-    public image?: string,
-    public category?: Category
-  ) {}
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: Category;
+
+  constructor(res: Product) {
+    this.id = res.id;
+    this.name = res.name;
+    this.description = res.description;
+    this.price = res.price;
+    this.image = res.image;
+    this.category = res.category;
+  }
 }

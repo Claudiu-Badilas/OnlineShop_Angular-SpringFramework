@@ -1,0 +1,122 @@
+.product-box {
+  min-width: 360px !important;
+  height: 460px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 1px 1px 10px 1px;
+  color: #f2e8df;
+  border: 1px solid #ffe1d9;
+  margin: 0 20px 35px 0;
+  font-size: 13px;
+  font-weight: 700;
+
+  &:hover {
+    box-shadow: 1px 1px 20px 1px;
+    color: #ffcdbf;
+  }
+
+  .product-title {
+    font-size: 19px;
+    font-weight: 650;
+    color: black;
+  }
+
+  .product-details {
+    font-size: 15px;
+    font-weight: 600;
+    color: black;
+  }
+
+  p {
+    cursor: pointer;
+  }
+
+  .btn-delete {
+    position: absolute;
+    height: 45px;
+    width: 45px;
+    top: 0;
+    right: -1px;
+    color: white;
+    border-radius: 0px 15px 0px 15px;
+    border: none;
+    cursor: pointer;
+    background-color: red;
+
+    &:hover {
+      background-color: #fddd07;
+      color: black;
+    }
+  }
+  .btn-edit {
+    position: absolute;
+    left: 0;
+    width: 130px;
+    height: 50px;
+    border-radius: 0px 15px 0px 15px;
+    background-color: darkblue;
+    color: #ffffff;
+    border: none;
+    &:hover {
+      background-color: #fddd07;
+      color: black;
+    }
+  }
+
+  .outer-box {
+    display: grid;
+    place-content: center;
+  }
+
+  .image-pic {
+    width: 360px !important;
+    height: 300px;
+    border-radius: 15px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    cursor: pointer;
+  }
+
+  .product-price {
+    font-size: 17px;
+    color: #212f49;
+  }
+
+  .btn-cart {
+    width: 130px;
+    height: 50px;
+    background-color: #ff3c00;
+    border-radius: 15px 0px 15px 0px;
+    color: #ffffff;
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+
+    &:hover {
+      background-color: #fddd07;
+      color: black;
+    }
+  }
+
+  .btn-details {
+    width: 130px;
+    height: 50px;
+    background-color: white;
+    // border-radius: 15px 0px 15px 0px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ff3c00;
+
+    &:hover {
+      color: #fddd07;
+    }
+  }
+
+  .place-row-one {
+    padding-top: 25px;
+  }
+  .place-row-two {
+    padding-top: 38px;
+  }
+}

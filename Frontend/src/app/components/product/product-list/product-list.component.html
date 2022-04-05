@@ -1,71 +1,21 @@
 <ngx-loading-x [show]="isLoading$ | async"></ngx-loading-x>
 <div class="container align-top">
   <div class="title text-center p-3">You eat better, you feel better!</div>
-  <div class="form-inline justify-content-center">
-    <table>
-      <tr>
-        <th *ngFor="let category of categories$ | async" class="pl-4 pr-4">
-          <p
-            (click)="onChangeCategory(category)"
-            [ngClass]="{
-              'active-link': (selectedCategory$ | async).name === category.name
-            }"
-          >
-            {{ category.name | uppercase }}
-          </p>
-        </th>
-      </tr>
-    </table>
-  </div>
 
-  <div class="row pt-5">
-    <div
-      *ngFor="
-        let product of products$
-          | async
-          | slice: (page - 1) * pageSize:page * pageSize
-      "
-      class="product-box col-md-3"
-    >
-      <div class="">
-        <a (click)="onProductDetails(product)">
-          <img class="image-pic img-responsive" [src]="product.image"
-        /></a>
-        <button
-          *ngIf="isUserAdmin$ | async"
-          (click)="deleteProduct(product)"
-          class="btn-delete"
-        >
-          <i class="fa fa-trash"></i>
-        </button>
-      </div>
-      <div class="text-left">
-        <br />
-        <p class="product-title">{{ product.name ? product.name : "-" }}</p>
-        <p class="product-price">{{ product.price | currency: "USD" }}</p>
-      </div>
+  <app-category
+    [categories]="categories$ | async"
+    [selectedCategory]="selectedCategory$ | async"
+    (emitedCategory)="changedCategory($event)"
+  >
+  </app-category>
 
-      <div class="row">
-        <button
-          *ngIf="isUserAdmin$ | async"
-          class="btn-edit"
-          (click)="initStateForEditMode(product)"
-        >
-          EDIT
-        </button>
-        <button (click)="addToCart(product)" class="btn-cart">
-          ADD TO CART
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="d-flex justify-content-center">
-  <ngb-pagination
-    *ngIf="(products$ | async).length > pageSize"
-    [(page)]="page"
-    [pageSize]="pageSize"
-    [collectionSize]="(products$ | async).length"
-    [maxSize]="3"
-  ></ngb-pagination>
+  <app-product
+    [products]="products$ | async"
+    [isUserAdmin]="isUserAdmin$ | async"
+    (viewDetailstClicked)="onViewDetails($event)"
+    (addToCartClicked)="onAddToCart($event)"
+    (editClicked)="onEdit($event)"
+    (deletetClicked)="onDelete($event)"
+  >
+  </app-product>
 </div>
