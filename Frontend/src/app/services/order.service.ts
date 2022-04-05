@@ -23,7 +23,7 @@ export class OrderService {
 
   saveOrder(order: Order) {
     const body = JSON.stringify(order);
-    return this.httpClient.post(`/server/api/order/save`, body, httpOption);
+    return this.httpClient.post(`/server/api/order/save`, order, httpOption);
   }
 
   deleteOrder(id: number) {

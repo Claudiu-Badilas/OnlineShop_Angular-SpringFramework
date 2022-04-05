@@ -42,12 +42,7 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(
       PlatformActions.changeSelectedProduct({ selectedProduct: product })
     );
-    const productNameSplited = product.name.toLowerCase().split(' ');
-    let name = '';
-    productNameSplited.forEach((part, i) => {
-      name += part;
-      name += i !== productNameSplited.length - 1 ? '-' : '';
-    });
+    const name = product.name.toLowerCase().replaceAll(' ', '-');
     this.store.dispatch(
       NavigationActions.navigateTo({
         route: `product/${name}/${product.id}`,

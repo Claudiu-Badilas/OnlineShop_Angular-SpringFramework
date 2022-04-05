@@ -17,19 +17,7 @@ export class ProductService {
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`/server/api/product/products`).pipe(
       first(),
-      map((results) =>
-        results.map(
-          (result) =>
-            new Product(
-              result.id,
-              result.name,
-              result.description,
-              result.price,
-              result.image,
-              result.category
-            )
-        )
-      )
+      map((results) => results.map((result: Product) => new Product(result)))
     );
   }
 

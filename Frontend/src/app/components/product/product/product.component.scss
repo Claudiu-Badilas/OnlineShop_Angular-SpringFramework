@@ -7,9 +7,24 @@
   color: #f2e8df;
   border: 1px solid #ffe1d9;
   margin: 0 20px 35px 0;
+  font-size: 13px;
+  font-weight: 700;
+
   &:hover {
     box-shadow: 1px 1px 20px 1px;
     color: #ffcdbf;
+  }
+
+  .product-title {
+    font-size: 19px;
+    font-weight: 650;
+    color: black;
+  }
+
+  .product-details {
+    font-size: 15px;
+    font-weight: 600;
+    color: black;
   }
 
   p {
@@ -23,12 +38,11 @@
     top: 0;
     right: -1px;
     color: white;
-    font-size: 16px;
     border-radius: 0px 15px 0px 15px;
     border: none;
     cursor: pointer;
     background-color: red;
-    color: #ffffff;
+
     &:hover {
       background-color: #fddd07;
       color: black;
@@ -41,7 +55,6 @@
     height: 50px;
     border-radius: 0px 15px 0px 15px;
     background-color: darkblue;
-    font-size: 13px;
     color: #ffffff;
     border: none;
     &:hover {
@@ -56,47 +69,54 @@
   }
 
   .image-pic {
-    left: 0;
-    width: 359px !important;
-    margin-left: -15px;
+    width: 360px !important;
     height: 300px;
     border-radius: 15px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     cursor: pointer;
   }
+
   .product-price {
     font-size: 17px;
     color: #212f49;
   }
 
   .btn-cart {
-    position: absolute;
-    right: 0;
     width: 130px;
     height: 50px;
     background-color: #ff3c00;
     border-radius: 15px 0px 15px 0px;
-    font-size: 13px;
     color: #ffffff;
     border: none;
+    font-size: 13px;
+    font-weight: 700;
+
     &:hover {
       background-color: #fddd07;
       color: black;
     }
   }
 
-  .btn-add {
-    width: 180px;
+  .btn-details {
+    width: 130px;
     height: 50px;
-    border-radius: 15px 0px 15px 0px;
-    background-color: lightseagreen;
-    font-size: 15px;
-    color: #ffffff;
+    background-color: white;
+    // border-radius: 15px 0px 15px 0px;
     border: none;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ff3c00;
+
     &:hover {
-      background-color: #fddd07;
-      color: black;
+      color: #fddd07;
     }
+  }
+
+  .place-row-one {
+    padding-top: 25px;
+  }
+  .place-row-two {
+    padding-top: 38px;
   }
 }

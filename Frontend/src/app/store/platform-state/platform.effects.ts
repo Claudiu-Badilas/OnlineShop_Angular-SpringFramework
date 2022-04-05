@@ -25,6 +25,7 @@ import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import { ProductTypeAction } from 'src/app/components/product/utils/product-type-action.util';
 import { Role } from 'src/app/shared/enum/role.enum';
 import { OrderService } from 'src/app/services/order.service';
+import { Product } from 'src/app/models/product';
 @Injectable()
 export class PlatformEffects {
   constructor(
@@ -199,7 +200,9 @@ export class PlatformEffects {
         this._productService
           .saveProduct(action.product)
           .pipe(
-            map((product) => PlatformActions.saveProductSuccess({ product }))
+            map((product: Product) =>
+              PlatformActions.saveProductSuccess({ product })
+            )
           )
       )
     );
