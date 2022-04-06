@@ -114,11 +114,11 @@ export class PlatformEffects {
         );
         return this._productService.getProductById(+params['productId']).pipe(
           first(),
-          map((product) => {
-            return PlatformActions.changeSelectedProduct({
+          map((product) =>
+            PlatformActions.changeSelectedProduct({
               selectedProduct: product,
-            });
-          }),
+            })
+          ),
           catchError(() => {
             this._notificationService.notify(
               NotificationType.ERROR,

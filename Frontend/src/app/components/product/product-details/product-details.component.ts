@@ -5,6 +5,7 @@ import { AppState } from 'src/app/store/app.state';
 import * as fromPlatform from '../../../store/platform-state/platform.reducer';
 import * as CartActions from '../../../store/shopping-cart-state/shopping-cart.actions';
 import * as NavigationActions from '../../../store/navigation-state/navigation.actions';
+import { first, skipWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-details',
@@ -17,8 +18,20 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   quantity: number = 1;
+  totalPrice: number = 0;
+  price: number = 0;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.product$
+      .pipe(
+        skipWhile((product) => product === null),
+        first()
+      )
+      .subscribe((product) => {
+        this.totalPrice = product.price;
+        this.price = product.price;
+      });
+  }
 
   navigateToHome(product: Product) {
     this.store.dispatch(
@@ -37,14 +50,28 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    const products = [product, product];
-    console.log('🚀 products', products);
-    this.store.dispatch(
-      CartActions.addMultipleProducts({ products: products })
-    );
+    const products = [];
+    let i = 1;
+    do {
+      products.push(product);
+      i++;
+    } while (i <= this.quantity);
+
+    this.store.dispatch(CartActions.addMultipleProducts({ products }));
   }
 
-  onIncrement() {}
+  onIncrement() {
+    this.quantity++;
+    this.totalPrice = this.price * this.quantity;
+  }
 
-  onDecrement() {}
+  onDecrement() {
+    if (this.quantity > 1) {
+      this.quantity--;
+      this.totalPrice = this.price * this.quantity;
+    } else if (this.quantity === 1) {
+      this.quantity = 1;
+      this.totalPrice = this.price;
+    }
+  }
 }
