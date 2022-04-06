@@ -32,6 +32,7 @@ export class CartDetailsComponent implements OnInit {
   //=======post
   orderForm: FormGroup;
   orderProductsForm: FormGroup;
+  detailsForm: FormGroup;
   products$: Observable<Product[]>;
   products: Product[];
   user: User;
@@ -92,4 +93,6 @@ export class CartDetailsComponent implements OnInit {
       CartActions.removeProduct({ product: cartItem.product })
     );
   }
+
+  submitDetails(form) {}
 }
