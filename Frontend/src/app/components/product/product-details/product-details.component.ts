@@ -4,6 +4,7 @@ import { Product } from 'src/app/models/product';
 import { AppState } from 'src/app/store/app.state';
 import * as fromPlatform from '../../../store/platform-state/platform.reducer';
 import * as CartActions from '../../../store/shopping-cart-state/shopping-cart.actions';
+import * as NavigationActions from '../../../store/navigation-state/navigation.actions';
 
 @Component({
   selector: 'app-product-details',
@@ -17,7 +18,27 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  navigateToHome(product: Product) {
+    this.store.dispatch(
+      NavigationActions.navigateTo({
+        route: `/products/category/${product.category.name}`,
+      })
+    );
+  }
+
+  navigateToCart() {
+    this.store.dispatch(
+      NavigationActions.navigateTo({
+        route: `/cart-details`,
+      })
+    );
+  }
+
   addToCart(product: Product) {
-    this.store.dispatch(CartActions.addProduct({ product }));
+    const products = [product, product];
+    console.log('🚀 products', products);
+    this.store.dispatch(
+      CartActions.addMultipleProducts({ products: products })
+    );
   }
 }

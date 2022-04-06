@@ -1,32 +1,44 @@
 <div *ngIf="product$ | async as product" class="pt-5 align-top">
-  <div class="container main-content position-static">
-    <div class="row">
+  <div class="container main-content">
+    <div class="d-flex">
       <img alt="" class="image img-responsive" src="{{ product.image }}" />
-      <span class="pl-5">
-        <h3 class="pt-2">
-          {{ product.name }} | {{ product.price | currency: "USD" }}
-        </h3>
-        <p>✔ Fără zahăr adăugat, conservanți, coloranți.</p>
-        <p>✔ Fără chimicale, valabilitate 20 zile.</p>
-        <p>✔ Fără ambalaje de plastic.</p>
-        <p>✔ Copți cu grijă în laboratorul nostru.</p>
-        <p>✔ Livrare în toată România.</p>
-        <p>✔ 100% ingrediente naturale.</p>
-      </span>
+      <div class="pl-5">
+        <div class="d-flex home-page-link pt-3 m-0">
+          <p
+            class="m-0 home-page-link-redirect"
+            (click)="navigateToHome(product)"
+          >
+            Home Page : {{ product.category.name }}
+          </p>
+          : {{ product.name }}
+        </div>
+        <div class="product-title">
+          {{ product.name }} | {{ product.price }} RON
+        </div>
+        <div class="d-flex mt-4">
+          <div>
+            <p class="m-0">✔ Fără zahăr adăugat, conservanți, coloranți.</p>
+            <p class="m-0">✔ Fără chimicale, valabilitate 20 zile.</p>
+            <p class="m-0">✔ Fără ambalaje de plastic.</p>
+          </div>
+          <div>
+            <p class="m-0">✔ Copți cu grijă în laboratorul nostru.</p>
+            <p class="m-0">✔ Livrare în toată România.</p>
+            <p class="m-0">✔ 100% ingrediente naturale.</p>
+          </div>
+        </div>
+        <div class="d-flex pt-5 mt-3">
+          <div style="width: 380px"></div>
+          <div class="d-flex">
+            <button (click)="navigateToCart()" class="btn-see-cart">
+              SEE TO CART
+            </button>
+            <button (click)="addToCart(product)" class="btn-add-cart ml-2">
+              ADD TO CART
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <button (click)="addToCart(product)" class="position-relative btn-cart">
-      ADD TO CART
-    </button>
-  </div>
-</div>
-
-<div *ngIf="product$ | async as product" class="container">
-  <div class="text-center pt-5">
-    <button
-      class="btn-back"
-      routerLink="/products/category/{{ product.category.name }}"
-    >
-      GO TO PRODUCTS
-    </button>
   </div>
 </div>

@@ -14,24 +14,25 @@ export class ShoppingCartEffects {
 
   addProductToCart$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromCartActions.addProduct),
+      ofType(fromCartActions.addMultipleProducts),
       withLatestFrom(this.store.select(fromCart.getCartItems)),
       map(([action, items]) => {
         let isAlreadyInCart: boolean = false;
-        if (items.length > 0) {
-          items = items.map((item) => {
-            if (item.product.id === action.product.id) {
-              isAlreadyInCart = true;
-              return { ...item, quantity: item.quantity + 1 };
-            }
-            return item;
-          });
-        }
+        action.products.forEach((product) => {
+          if (items.length > 0) {
+            items = items.map((item) => {
+              if (item.product.id === product.id) {
+                isAlreadyInCart = true;
+                return { ...item, quantity: item.quantity + 1 };
+              }
+              return item;
+            });
+          }
 
-        if (!isAlreadyInCart) {
-          items = [...items, new CartItem(action.product)];
-        }
-
+          if (!isAlreadyInCart) {
+            items = [...items, new CartItem(product)];
+          }
+        });
         this.updateComputeCartTotals(items);
         return fromCartActions.changeCartItems({ items });
       })
@@ -70,11 +71,11 @@ export class ShoppingCartEffects {
         const itemIndex = items.findIndex(
           (item) => item.product.id === action.product.id
         );
-        const copyedItems = items.slice();
-        if (itemIndex > -1) copyedItems.splice(itemIndex, 1);
+        const copiedItems = items.slice();
+        if (itemIndex > -1) copiedItems.splice(itemIndex, 1);
 
         this.updateComputeCartTotals(items);
-        return fromCartActions.changeCartItems({ items: copyedItems });
+        return fromCartActions.changeCartItems({ items: copiedItems });
       })
     );
   });
