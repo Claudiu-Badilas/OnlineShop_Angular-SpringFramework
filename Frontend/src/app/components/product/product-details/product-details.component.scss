@@ -11,6 +11,7 @@
   width: 1200px;
   height: 300px;
   padding: 0;
+
   .btn-cart {
     width: 150px;
     height: 50px;
@@ -35,10 +36,17 @@
   p {
     color: #212f49;
   }
+
   .product-title {
     color: #212f49;
     font-size: 31px;
     font-weight: 700;
+  }
+  .product-price {
+    color: #212f49;
+    font-size: 27px;
+    font-weight: 600;
+    padding-left: 15px;
   }
 
   .home-page-link {
@@ -81,5 +89,22 @@
       background-color: #fddd07;
       color: black;
     }
+  }
+
+  .btn-increment,
+  .btn-decrement {
+    width: 40px;
+    height: 40px;
+    color: #ff3c00;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #ff3c00;
+  }
+
+  .quantity {
+    font-size: 31px;
+    font-weight: 600;
+    color: black;
+    padding: 0 20px;
   }
 }

@@ -16,6 +16,8 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(private store: Store<AppState>) {}
 
+  quantity: number = 1;
+
   ngOnInit(): void {}
 
   navigateToHome(product: Product) {
@@ -41,4 +43,8 @@ export class ProductDetailsComponent implements OnInit {
       CartActions.addMultipleProducts({ products: products })
     );
   }
+
+  onIncrement() {}
+
+  onDecrement() {}
 }
