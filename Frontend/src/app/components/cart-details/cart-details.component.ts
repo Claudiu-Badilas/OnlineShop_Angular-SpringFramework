@@ -76,7 +76,9 @@ export class CartDetailsComponent implements OnInit {
   }
 
   incrementQuantity(cartItem: CartItem) {
-    this.store.dispatch(CartActions.addProduct({ product: cartItem.product }));
+    this.store.dispatch(
+      CartActions.addMultipleProducts({ products: [cartItem.product] })
+    );
   }
 
   decrementQuantity(cartItem: CartItem) {

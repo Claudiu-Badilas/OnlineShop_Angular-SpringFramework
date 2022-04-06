@@ -51,7 +51,9 @@ export class ProductListComponent implements OnInit {
   }
 
   onAddToCart(product: Product) {
-    this.store.dispatch(CartActions.addProduct({ product }));
+    this.store.dispatch(
+      CartActions.addMultipleProducts({ products: [product] })
+    );
   }
 
   onEdit(product: Product) {

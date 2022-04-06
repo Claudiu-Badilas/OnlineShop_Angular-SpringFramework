@@ -7,9 +7,9 @@ export const changeCartItems = createAction(
   props<{ items: CartItem[] }>()
 );
 
-export const addProduct = createAction(
-  '[Cart] Add Product',
-  props<{ product: Product }>()
+export const addMultipleProducts = createAction(
+  '[Cart] Add Multiple Products',
+  props<{ products: Product[] }>()
 );
 
 export const decreaseProduct = createAction(
