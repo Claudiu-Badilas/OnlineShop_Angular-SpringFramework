@@ -31,7 +31,6 @@ export class CartDetailsComponent implements OnInit {
 
   //=======post
   orderForm: FormGroup;
-  orderProductsForm: FormGroup;
   detailsForm: FormGroup;
   products$: Observable<Product[]>;
   products: Product[];
@@ -63,26 +62,24 @@ export class CartDetailsComponent implements OnInit {
     });
   }
 
-  saveOrder() {
-    const payload = this.orderForm.value;
-
-    payload.date = moment().toDate();
-    payload.totalPrice = 19;
-    payload.status = 'pending';
-    payload.products = this.products;
-    payload.user = this.user;
+  onSaveOrder() {
+    this.orderForm.value.date = moment().utc();
+    this.orderForm.value.totalPrice = 19;
+    this.orderForm.value.status = 'pending';
+    this.orderForm.value.products = this.products;
+    this.orderForm.value.user = this.user;
 
     console.log(this.orderForm.value);
     this.orderService.saveOrder(this.orderForm.value);
   }
 
-  incrementQuantity(cartItem: CartItem) {
+  onIncrement(cartItem: CartItem) {
     this.store.dispatch(
       CartActions.addMultipleProducts({ products: [cartItem.product] })
     );
   }
 
-  decrementQuantity(cartItem: CartItem) {
+  onDecrement(cartItem: CartItem) {
     this.store.dispatch(
       CartActions.decreaseProduct({ product: cartItem.product })
     );
@@ -92,6 +89,10 @@ export class CartDetailsComponent implements OnInit {
     this.store.dispatch(
       CartActions.removeProduct({ product: cartItem.product })
     );
+  }
+
+  onRemoveCartItems() {
+    this.store.dispatch(CartActions.removeAllCartItems());
   }
 
   submitDetails(form) {}

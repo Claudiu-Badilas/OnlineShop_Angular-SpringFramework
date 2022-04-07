@@ -30,3 +30,5 @@ export const changeComputeCartTotals = createAction(
   '[Cart] Change Computed Cart Totals',
   props<{ price: number; quantity: number }>()
 );
+
+export const removeAllCartItems = createAction('[Cart] Remove All Cart Items');
