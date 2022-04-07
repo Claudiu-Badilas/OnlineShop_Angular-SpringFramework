@@ -1,90 +1,233 @@
 <div class="container align-top">
-  <div class="container-fluid">
-    <div *ngIf="(cartItems$ | async).length !== 0">
-      <table class="table table-bordered">
-        <thead style="background: #212f49; color: white">
-          <tr>
-            <th width="20%">Product Image</th>
-            <th width="50%">Product Detail</th>
-            <th width="30%">Cart Detail</th>
-          </tr>
-        </thead>
-        <tr
-          *ngFor="let item of cartItems$ | async"
-          style="border-bottom: 3px solid white; padding-bottom: 10px"
+  <div
+    *ngIf="(cartItems$ | async).length > 0"
+    class="alert alert-primary"
+    role="alert"
+  >
+    You have free delivery for this order.
+  </div>
+  <div
+    *ngIf="(cartItems$ | async).length == 0"
+    class="alert alert-danger"
+    role="alert"
+  >
+    You cart is empty.
+  </div>
+  <div class="d-flex">
+    <div class="info-card">
+      <div class="title pt-3 pl-2 pb-3">INFORMATION AND THE ADDRESS</div>
+      <div>
+        <form
+          #detailsForm="ngForm"
+          (ngSubmit)="submitDetails(detailsForm.value)"
         >
-          <td>
-            <img
-              class="img-responsive"
-              src="{{ item.product.image }}"
-              width="200px"
+          <div class="d-flex" style="justify-content: space-evenly">
+            <div class="mb-3">
+              <label>Name*</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                placeholder="Name"
+                ngModel
+                #nameInput="ngModel"
+                required
+                [ngClass]="{
+                  'is-invalid': nameInput.invalid && nameInput.touched,
+                  'is-valid':
+                    !(nameInput.invalid && nameInput.touched) && nameInput.valid
+                }"
+              />
+            </div>
+            <div class="mb-3">
+              <label>Phone number*</label>
+              <input
+                type="text"
+                class="form-control"
+                name="phoneNumber"
+                placeholder="Phone number"
+                required
+                ngModel
+                #phoneNumberInput="ngModel"
+                [ngClass]="{
+                  'is-invalid':
+                    phoneNumberInput.invalid && phoneNumberInput.touched,
+                  'is-valid':
+                    !(phoneNumberInput.invalid && phoneNumberInput.touched) &&
+                    phoneNumberInput.valid
+                }"
+              />
+            </div>
+          </div>
+          <div class="d-flex" style="justify-content: space-evenly">
+            <div class="mb-3">
+              <label>City/Town*</label>
+              <input
+                type="text"
+                class="form-control"
+                name="city"
+                placeholder="City/Town"
+                ngModel
+                #cityInput="ngModel"
+                required
+                [ngClass]="{
+                  'is-invalid': cityInput.invalid && cityInput.touched,
+                  'is-valid':
+                    !(cityInput.invalid && cityInput.touched) && cityInput.valid
+                }"
+              />
+            </div>
+            <div class="mb-3">
+              <label>Area*</label>
+              <input
+                type="text"
+                class="form-control"
+                name="area"
+                placeholder="Area"
+                required
+                ngModel
+                #AreaInput="ngModel"
+                [ngClass]="{
+                  'is-invalid': AreaInput.invalid && AreaInput.touched,
+                  'is-valid':
+                    !(AreaInput.invalid && AreaInput.touched) && AreaInput.valid
+                }"
+              />
+            </div>
+          </div>
+          <div class="mb-2 px-2">
+            <label>Address for delivery*</label>
+            <input
+              type="text"
+              class="form-control"
+              name="address"
+              placeholder="Address for delivery"
+              ngModel
+              #addressInput="ngModel"
+              required
+              [ngClass]="{
+                'is-invalid': addressInput.invalid && addressInput.touched,
+                'is-valid':
+                  !(addressInput.invalid && addressInput.touched) &&
+                  addressInput.valid
+              }"
             />
-          </td>
-          <td class="text-center">
-            <p>{{ item.product.name }}</p>
-            <p>{{ item.product.price | currency: "USD" }}</p>
-          </td>
-          <td>
-            <div>
-              <label>Quantity:</label>
-              <div class="row pl-2">
-                <span>
-                  <button
-                    (click)="decrementQuantity(item)"
-                    class="btn btn-decrement"
-                  >
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </span>
-                <span class="pl-5 pr-5">{{ item.quantity }}</span>
-                <span>
-                  <button
-                    (click)="incrementQuantity(item)"
-                    class="btn-increment"
-                  >
-                    <i class="fas fa-plus"></i>
-                  </button>
-                </span>
-                <span class="pl-4">
-                  <button (click)="remove(item)" class="btn-remove">
-                    REMOVE
-                  </button>
-                </span>
+          </div>
+          <hr class="mx-2 my-4" />
+          <div class="mb-2 px-2">
+            <label>Optional Observations</label>
+            <textarea
+              type="text"
+              class="form-control"
+              name="observation"
+              placeholder="Optional Observations"
+              ngModel
+              #observationInput="ngModel"
+              required
+              [ngClass]="{
+                'is-invalid':
+                  observationInput.invalid && observationInput.touched,
+                'is-valid':
+                  !(observationInput.invalid && observationInput.touched) &&
+                  observationInput.valid
+              }"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="order-card ml-5">
+      <div
+        class="d-flex align-items-center pt-3 px-2"
+        style="justify-content: space-between"
+      >
+        <div class="title">ORDER SUMMARY</div>
+        <div class="title-cart" (click)="onRemoveCartItems()">
+          Empty the Cart
+        </div>
+      </div>
+      <div>
+        <div *ngFor="let item of cartItems$ | async">
+          <div
+            class="d-flex justify-content-between align-items-center pt-4 pl-2"
+          >
+            <div class="product-name" id="text">{{ item.product.name }}</div>
+            <div class="d-flex align-items-center pr-2">
+              <div>
+                <button
+                  (click)="onDecrement(item)"
+                  class="btn btn-decrement p-0"
+                >
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+              <div class="quantity px-1" id="text">{{ item.quantity }}</div>
+              <div>
+                <button
+                  (click)="onIncrement(item)"
+                  class="btn-increment text-center"
+                >
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div class="product-price pl-2" id="text">
+                {{ (item.quantity * item.product.price).toFixed(2) }} RON
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="(cartItems$ | async).length > 0">
+        <hr class="mx-2 my-4" />
+        <div>
+          <div
+            class="d-flex justify-content-between align-items-center px-2 pb-2"
+          >
+            <div id="text">Sub-Total</div>
+            <div id="text">{{ (totalPrice$ | async).toFixed(2) }} RON</div>
+          </div>
+          <div
+            class="d-flex justify-content-between align-items-center px-2 pb-2"
+          >
+            <div id="text">Shipping</div>
+            <div id="text">20 RON</div>
+          </div>
+          <div
+            class="d-flex justify-content-between align-items-center px-2 pb-2"
+          >
+            <div class="voucher-info" id="text">Do you have a voucher?</div>
+            <div id="text">-</div>
+          </div>
+          <div
+            class="d-flex justify-content-between align-items-center px-2 pb-3"
+          >
+            <div class="total">TOTAL</div>
+            <div class="total">
+              {{ ((totalPrice$ | async) + 20).toFixed(2) }} RON
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="(cartItems$ | async).length == 0" class="text-center py-4">
+        You don't have any product in cart!
+      </div>
 
-            <p class="">
-              Subtotal:
-              {{ item.quantity * item.product.price | currency: "USD" }}
-            </p>
-          </td>
-          <br />
-        </tr>
-        <tr>
-          <td colspan="2"></td>
-          <td>
-            <p>Total Quantity: {{ totalQuantity$ | async }}</p>
-            <p>Shipping: 15$</p>
-            <p *ngIf="totalPrice$ | async as totalPrice">
-              Total Price: {{ totalPrice | currency: "USD" }}
-            </p>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div *ngIf="(cartItems$ | async).length == 0" class="text-center">
-      <p id="text">Your cart is empty!</p>
-      <p id="text">
-        Go fill with some
-        <a routerLink="/products/category/Ovaz">products!</a>
-      </p>
+      <div class="text-center pb-2">
+        <button
+          class="btn-place-order"
+          [disabled]="!((cartItems$ | async).length > 0)"
+          (click)="onSaveOrder()"
+        >
+          PLACE ORDER:
+          {{
+            ((cartItems$ | async).length > 0
+              ? (totalPrice$ | async) + 20
+              : 0
+            ).toFixed(2)
+          }}
+          RON
+        </button>
+      </div>
     </div>
   </div>
 </div>
-<form (ngSubmit)="saveOrder()" [formGroup]="orderForm">
-  <div *ngIf="(cartItems$ | async).length !== 0" class="container">
-    <div class="text-center">
-      <button class="btn-place-order" type="submit">PLACE ORDER</button>
-    </div>
-  </div>
-</form>

@@ -2,65 +2,121 @@
   margin-top: 65px;
 }
 
-.btn-decrement {
-  width: 40px;
-  height: 40px;
-  background-color: dodgerblue;
+.alert-danger {
   color: white;
-  border-radius: 13px 0px 13px 0px;
-  border: none;
+  background-color: #e2401c;
+  border-color: #e2401c;
 }
 
-.btn-decrement:hover {
-  background-color: #fddd07;
-  color: black;
-}
-
-.btn-increment {
-  width: 40px;
-  height: 40px;
-  border-radius: 0px 13px 0px 13px;
-  background-color: dodgerblue;
+.alert-primary {
   color: white;
-  border: none;
+  background-color: #3d9cd2;
+  border-color: #3d9cd2;
+}
+.title {
+  font-size: 17px;
+  font-weight: 700;
 }
 
-.btn-increment:hover {
-  background-color: #fddd07;
-  color: black;
+.info-card {
+  width: 670px;
+  height: 500px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px 1px;
+  border: 1px solid #ffe1d9;
+
+  input {
+    min-width: 320px;
+    max-width: 655px;
+    border: 2px solid rgb(226, 226, 226);
+  }
+
+  textarea {
+    border: 2px solid rgb(226, 226, 226);
+  }
+
+  hr {
+    border: 1px solid rgb(226, 226, 226);
+  }
+  label {
+    font-size: 15px;
+    font-weight: 600;
+  }
 }
 
-.btn-remove {
-  background: red;
-  height: 40px;
-  width: 100px;
-  color: white;
-  border-radius: 15px 0px 15px 0px;
-  font-size: 13px;
-  border: none;
-}
+.order-card {
+  width: 390px;
+  min-height: 300px !important;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px 1px;
+  border: 1px solid #ffe1d9;
 
-.btn-remove:hover {
-  background-color: #fddd07;
-  color: black;
-}
+  .title-cart {
+    font-size: 17px;
+    font-weight: 600;
+    color: #ff3c00;
+    cursor: pointer;
+    &:hover {
+      color: #fddd07;
+    }
+  }
 
-.btn-place-order {
-  width: 180px;
-  height: 50px;
-  /*border-radius: 15px 0px 15px 0px;*/
-  background-color: #ff3c00;
-  border-radius: 30px;
-  font-size: 15px;
-  color: #ffffff;
-  border: none;
-}
+  .btn-increment,
+  .btn-decrement {
+    width: 30px;
+    height: 30px;
+    color: #ff3c00;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #ff3c00;
 
-.btn-place-order:hover {
-  background-color: #fddd07;
-  color: black;
-}
+    .quantity {
+      font-size: 13px;
+      font-weight: 600;
+      color: black;
+      padding: 0 5px;
+    }
+  }
 
-#text {
-  font-size: 30px;
+  .product-name,
+  .product-price {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .btn-place-order {
+    width: 90%;
+    height: 50px;
+    background-color: #ff3c00;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    border: none;
+
+    &:hover {
+      background-color: #fddd07;
+      color: black;
+    }
+  }
+  .voucher-info {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ff3c00;
+    cursor: pointer;
+    &:hover {
+      color: #fddd07;
+    }
+  }
+
+  .total {
+    font-size: 21px;
+    font-weight: 700;
+    color: black;
+  }
+
+  #text {
+    font-weight: 500;
+  }
 }

@@ -31,6 +31,13 @@ const cartReducer = createReducer(
     ...state,
     price: action.price,
     quantity: action.quantity,
+  })),
+
+  on(CartActions.removeAllCartItems, (state) => ({
+    ...state,
+    items: [],
+    price: 0,
+    quantity: 0,
   }))
 );
 

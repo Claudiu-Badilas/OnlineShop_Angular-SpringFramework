@@ -81,7 +81,7 @@ export class ShoppingCartEffects {
   });
 
   updateComputeCartTotals(items: CartItem[]) {
-    const allPrices = items.map((item) => item.product.price);
+    const allPrices = items.map((item) => item.product.price * item.quantity);
     const totalPrice = allPrices.reduce(
       (previousValue, currentValue) => previousValue + currentValue
     );
