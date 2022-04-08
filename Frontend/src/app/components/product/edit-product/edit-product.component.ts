@@ -18,6 +18,7 @@ import * as PlatformActions from '../../../store/platform-state/platform.actions
 import { Category } from 'src/app/models/category';
 import { NotificationService } from 'src/app/services/notification.service';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
+import { ConfirmService } from 'src/app/services/confirm.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -38,7 +39,8 @@ export class EditProductComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private formBuilder: FormBuilder,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private confirmService: ConfirmService
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +81,16 @@ export class EditProductComponent implements OnInit {
   }
 
   editProduct(originalProduct: Product) {
+    this.confirmService
+      .confirm('Confirm save changes', 'This cannot be undone', 'Save')
+      .subscribe((result) => {
+        if (result) {
+          this.updateProduct(originalProduct);
+        }
+      });
+  }
+
+  updateProduct(originalProduct: Product) {
     const payload: Product = originalProduct;
     payload.image = this.selectedFile;
     payload.category = this.selectedCategory;
