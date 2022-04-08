@@ -43,6 +43,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { CategoryComponent } from './components/category/category.component';
 import { ProductComponent } from './components/product/product/product.component';
 import { DropdownComponent } from './shared/components/dropdown/dropdown.component';
+import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmService } from './services/confirm.service';
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
   show: false,
@@ -73,6 +75,7 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     CategoryComponent,
     ProductComponent,
     DropdownComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +105,7 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     CategoryService,
     AuthenticationGuard,
     NotificationService,
+    ConfirmService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

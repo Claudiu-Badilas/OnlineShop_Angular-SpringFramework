@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from 'src/app/models/product';
+import { ConfirmService } from 'src/app/services/confirm.service';
 import { Role } from 'src/app/shared/enum/role.enum';
 
 @Component({
@@ -15,7 +16,7 @@ export class ProductComponent {
   @Output() editClicked = new EventEmitter<Product>();
   @Output() deleteClicked = new EventEmitter<Product>();
 
-  constructor() {}
+  constructor(private confirmService: ConfirmService) {}
 
   ADMIN = Role.ADMIN;
   page = 1;
@@ -30,7 +31,14 @@ export class ProductComponent {
   onEdit(ev, product: Product) {
     this.editClicked.emit(product);
   }
+
   onDelete(ev, product: Product) {
-    this.deleteClicked.emit(product);
+    this.confirmService
+      .confirm('Confirm delete product', 'This cannot be undone')
+      .subscribe((result) => {
+        if (result) {
+          this.deleteClicked.emit(product);
+        }
+      });
   }
 }
