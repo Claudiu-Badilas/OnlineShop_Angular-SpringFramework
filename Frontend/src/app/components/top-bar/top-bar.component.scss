@@ -1,93 +1,92 @@
-.nav-bar {
+.header-info {
+  position: fixed;
+  top: 0;
+  background-color: black;
+  height: 40px;
+  font-size: 13px;
+  z-index: 1000;
+  width: 100%;
+  color: white;
+
+  .facebook {
+    margin-left: 208px;
+  }
+
+  img {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    padding-right: 5px;
+  }
+  #info {
+    cursor: pointer;
+  }
+}
+
+.header-nav-bar {
   background-color: white;
-  padding: 10px;
+  padding: 15px;
   border: 1px solid #f2e8df;
   width: 100%;
   font-size: 15px;
   font-weight: bold;
   color: black;
   position: fixed;
-  top: 0;
+  top: 40px;
   z-index: 1000;
-  height: 65px;
+  height: 80px;
+
+  .logo {
+    height: 43px;
+  }
+  .dropdown,
+  .dropup {
+    &-menu {
+      .dropdown-item {
+        padding: 5px 25px;
+
+        &:hover {
+          color: #ff3c00 !important;
+        }
+      }
+    }
+
+    &-toggle {
+      cursor: pointer;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
 
   .main-option {
     cursor: pointer;
-    margin: 10px 30px 10px 30px;
-  }
-  .second-option {
-    cursor: pointer;
-    margin: 10px 15px 10px 15px;
-  }
-
-  #main-option:hover {
-    color: #ff3c00;
-  }
-
-  .container-flex {
-    display: flex;
-    align-items: center;
-  }
-
-  .logo {
-    margin-right: 80px;
-    width: 150px;
-    height: 45px;
-  }
-
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    padding: 3px 10px 3px 10px;
-    font-weight: 500;
-    p {
-      padding-left: 10px;
-      cursor: pointer;
-    }
-    p:hover {
-      background-color: "#bfbfbf";
+    font-size: 13px;
+    font-weight: 800;
+    &:hover {
       color: #ff3c00;
     }
   }
 
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-
-  .btn-login {
-    width: 130px;
-    height: 40px;
-    border-radius: 30px;
-    background-color: darkblue;
-    font-size: 15px;
-    color: #ffffff;
-    border: none;
-  }
-
-  .btn-login:hover,
-  .btn-register:hover {
-    background-color: #fddd07;
-    color: black;
-  }
-
   .btn-register {
-    width: 130px;
-    height: 40px;
+    width: 160px;
+    height: 50px;
     background-color: #ff3c00;
     border-radius: 30px;
-    font-size: 15px;
+    font-size: 13px;
+    font-weight: 800;
     color: #ffffff;
     border: none;
+
+    &:hover {
+      background-color: #fddd07;
+      color: black;
+    }
   }
 }
-img {
-  cursor: pointer;
+
+.format-action {
+  font-size: 17px !important;
+  font-weight: 500 !important;
 }

@@ -3,9 +3,9 @@
     *ngFor="
       let product of products | slice: (page - 1) * pageSize:page * pageSize
     "
-    class="product-box col-md-3 p-0"
+    class="product-box p-0"
   >
-    <div class="">
+    <div>
       <app-dropdown
         *ngIf="isUserAdmin"
         class="dropdown-placement"
@@ -32,9 +32,6 @@
     <div
       class="d-flex align-items-center justify-content-between place-row-two"
     >
-      <!-- <button *ngIf="isUserAdmin" class="btn-edit" (click)="onEdit(product)">
-        EDIT
-      </button> -->
       <div class="product-price text-center pl-3">
         <p class="m-0">{{ product.price }} RON</p>
       </div>
