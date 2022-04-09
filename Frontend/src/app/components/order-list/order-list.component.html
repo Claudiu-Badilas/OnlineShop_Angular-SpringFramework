@@ -1,62 +1,58 @@
-<div class="container align-top">
-  <div class="section-content section-content-p30">
-    <div class="container-fluid">
-      <div *ngIf="(orders$ | async).length > 0">
-        <div *ngFor="let order of orders$ | async" class="container order-list">
-          <div *ngIf="order.products.length !== 0">
-            <div class="mt-3">
-              <div class="text-left">
-                <p>Order nr: #{{ order.id }}</p>
-                <p>Order placed on: {{ order.date }}</p>
-                <p>Status: {{ order.status }}</p>
+<div class="container align-top p-0">
+  <div class="pt-3 d-flex">
+    <div class="panel-options col-md-2 p-0">
+      <hr />
+      <div id="option">Control Panel</div>
+      <hr />
+      <div id="option">Orders</div>
+      <hr />
+      <div id="option">Address</div>
+      <hr />
+      <div id="option">Account Details</div>
+      <hr />
+      <div id="option">Log out</div>
+      <hr />
+    </div>
+    <div class="col-md-1 p-0"></div>
+    <div class="orders-list-container col-md-9 p-0 ml-3">
+      <div class="order-list p-3">
+        <table class="w-100">
+          <thead>
+            <tr>
+              <th class="pb-2" width="20%">Order No</th>
+              <th class="pb-2" width="23%">Date</th>
+              <th class="pb-2" width="17%">Status</th>
+              <th class="pb-2" width="35%">Price</th>
+              <th class="pb-2" width="5%">Action</th>
+            </tr>
+          </thead>
 
-                <hr />
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th width="20%">Product Image</th>
-                      <th width="50%">Product Detail</th>
-                      <th width="30%">Price Detail</th>
-                    </tr>
-                  </thead>
-
-                  <tr *ngFor="let tempCartItem of order.products" class="pb-2">
-                    <td>
-                      <img
-                        class="img-responsive"
-                        src="{{ tempCartItem.image }}"
-                        width="100px"
-                      />
-                    </td>
-                    <td class="text-center">
-                      <p>{{ tempCartItem.name }}</p>
-                    </td>
-                    <td class="text-center">
-                      <p>{{ tempCartItem.price | currency: "USD" }}</p>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td colspan="2"></td>
-                    <td class="text-center">
-                      <br />
-                      <p>Subtotal: {{ order.totalPrice | currency: "USD" }}</p>
-                    </td>
-                  </tr>
-                </table>
+          <tr *ngFor="let order of orders$ | async">
+            <td class="pb-1">
+              <div id="order-number">nr. {{ order.id }}</div>
+            </td>
+            <td>
+              <div>
+                {{ order.date.format("DD/MM/YYYY") }}
               </div>
-            </div>
-          </div>
-        </div>
+            </td>
+            <td>
+              <div>
+                {{ order.status }}
+              </div>
+            </td>
+            <td>
+              <div>
+                {{ order.totalPrice.toFixed(2) }} RON for
+                {{ order.products.length }} products
+              </div>
+            </td>
+            <td>
+              <div id="order-number">See</div>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
-</div>
-
-<div class="text-center" *ngIf="(orders$ | async).length === 0">
-  <h3>
-    Your order list is empty!<br />
-    Go fill with some
-    <a routerLink="/products/category/Ovaz">products!</a>
-  </h3>
 </div>
