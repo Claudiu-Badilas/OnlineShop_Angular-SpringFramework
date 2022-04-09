@@ -1,8 +1,11 @@
 <ngx-loading-x [show]="isLoading$ | async"></ngx-loading-x>
 <div class="container p-0 align-top">
-  <div class="title text-center p-3">You eat better, you feel better!</div>
+  <div class="title text-center pt-5 mt-5">
+    You eat better, you feel better!
+  </div>
 
   <app-category
+    class="mx-5 px-2"
     [categories]="categories$ | async"
     [selectedCategory]="selectedCategory$ | async"
     (emittedCategory)="changedCategory($event)"

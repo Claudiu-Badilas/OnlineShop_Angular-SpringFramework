@@ -72,7 +72,13 @@
           <div ngbDropdownToggle class="options-dropdown">MY ACCOUNT</div>
 
           <div ngbDropdownMenu aria-labelledby="options-dropdown">
-            <button ngbDropdownItem class="format-action">My Orders</button>
+            <button
+              ngbDropdownItem
+              class="format-action"
+              (click)="navigateToOrdersList()"
+            >
+              My Orders
+            </button>
             <button
               ngbDropdownItem
               class="format-action"
@@ -103,13 +109,13 @@
         </div>
       </div>
 
-      <div class="main-option">
+      <div class="main-option" (click)="navigateToCartDetails()">
         <div class="d-flex align-items-center">
           <div class="d-flex align-items-center">
             <div>
               {{ totalQuantity$ | async }}
             </div>
-            <div>
+            <div class="px-2">
               <img src="assets/images/svg/add-to-basket-black.svg" />
             </div>
             <div>MY CART</div>
