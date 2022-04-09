@@ -1,81 +1,129 @@
-<div class="nav-bar">
-  <div class="container">
-    <div class="row d-flex">
-      <div class="row d-flex">
+<div class="header-info">
+  <div class="container p-0">
+    <div class="d-flex pt-1">
+      <div
+        class="d-flex align-items-center justify-content-start col-xs-3 p-0 mr-3"
+      >
+        <img
+          class="img-responsive"
+          src="/assets/images/svg/whatsapp-icon.svg"
+        />
+        <div id="info">Phone for orders: 0712345678</div>
+      </div>
+      <div class="d-flex align-items-center justify-content-start p-0">
+        <img class="img-responsive" src="/assets/images/svg/delivery.svg" />
+        <div id="info">Free delivery for orders of 200+ RON</div>
+      </div>
+      <div
+        class="d-flex align-items-center justify-content-end col-lg-3 p-0 facebook"
+      >
+        <img
+          class="img-responsive"
+          src="/assets/images/svg/facebook-icon.svg"
+        />
+        <div id="info">Follow us on Facebook</div>
+      </div>
+      <div class="d-flex align-items-center justify-content-end p-0 ml-3">
+        <img
+          class="img-responsive"
+          src="/assets/images/svg/instagram-icon.svg"
+        />
+        <div id="info">Follow us on Instagram</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="header-nav-bar">
+  <div class="container p-0">
+    <div class="d-flex align-items-center justify-content-between">
+      <div>
         <img
           class="img-responsive logo"
           routerLink="/products/category/Ovaz"
           alt="logo"
-          src="/assets/images/logo.jpg"
+          src="/assets/images/svg/ohvaz-logo.svg"
         />
-        <div class="main-option">
-          <p routerLink="#">HOME</p>
-        </div>
-        <div class="dropdown">
-          <p class="main-option">PRODUCTS</p>
-          <div class="dropdown-content">
-            <p
+      </div>
+      <div class="main-option" routerLink="#">HOME</div>
+      <div class="main-option">
+        <div ngbDropdown class="d-inline-block">
+          <div ngbDropdownToggle class="options-dropdown">PRODUCTS</div>
+
+          <div ngbDropdownMenu aria-labelledby="options-dropdown">
+            <button
+              ngbDropdownItem
               *ngFor="let category of categories$ | async"
+              class="format-action"
               (click)="onChangeCategory(category)"
             >
               {{ category.name }}
-            </p>
+            </button>
           </div>
-        </div>
-        <div class="main-option">
-          <p routerLink="#">CONTACT</p>
-        </div>
-        <div class="main-option">
-          <p routerLink="#">BLOG</p>
         </div>
       </div>
-      <div
-        class="row d-flex"
-        [ngStyle]="{ 'margin-left': !showButtons ? '110px' : '0px' }"
-      >
-        <div class="second-option">
-          <p *ngIf="!showButtons" routerLink="/orders/2">My Orders</p>
-        </div>
 
-        <div class="dropdown second-option">
-          <p *ngIf="!showButtons" routerLink="#">
-            Settings
-            <i class="pl-1 fa fa-cogs"></i>
-          </p>
-          <div class="dropdown-content">
-            <p *ngIf="!showButtons">
-              My Account <i class="pl-2 fas fa-user"></i>
-            </p>
-            <p (click)="initStateForSaveMode()">
-              Add Product<i class="pl-2 fas fa-plus"></i>
-            </p>
-            <p *ngIf="!showButtons" class="" (click)="logOutUser()">
-              Log out <i class="fas fa-sign-out-alt pl-2"></i>
-            </p>
+      <div class="main-option" routerLink="#">STORES</div>
+      <div class="main-option" routerLink="#">CONTACT</div>
+      <div class="main-option" routerLink="#">BLOG</div>
+
+      <div class="main-option">
+        <div ngbDropdown class="d-inline-block">
+          <div ngbDropdownToggle class="options-dropdown">MY ACCOUNT</div>
+
+          <div ngbDropdownMenu aria-labelledby="options-dropdown">
+            <button ngbDropdownItem class="format-action">My Orders</button>
+            <button
+              ngbDropdownItem
+              class="format-action"
+              (click)="initStateForSaveMode()"
+            >
+              Add Product
+            </button>
+            <button
+              ngbDropdownItem
+              class="format-action"
+              (click)="logOutUser()"
+            >
+              Log out
+            </button>
           </div>
         </div>
-        <div class="second-option">
-          <p routerLink="/cart-details">
-            My Cart
-            <i class="fas fa-cart-plus pr-2"> {{ totalQuantity$ | async }}</i>
-          </p>
-        </div>
-        <div>
-          <button
-            *ngIf="showButtons"
-            class="btn-login"
+      </div>
+
+      <div *ngIf="showButtons" class="main-option">
+        <div class="d-flex align-items-center">
+          <img src="assets/images/svg/enter.svg" />
+          <div
+            class="btn-login pl-2"
             (click)="openLoginModal(userAction.LOGIN)"
           >
             LOGIN
-          </button>
-          <button
-            *ngIf="showButtons"
-            class="btn-register ml-2"
-            (click)="openLoginModal(userAction.REGISTER)"
-          >
-            REGISTER
-          </button>
+          </div>
         </div>
+      </div>
+
+      <div class="main-option">
+        <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center">
+            <div>
+              {{ totalQuantity$ | async }}
+            </div>
+            <div>
+              <img src="assets/images/svg/add-to-basket-black.svg" />
+            </div>
+            <div>MY CART</div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="showButtons" class="main-option">
+        <button
+          class="btn-register"
+          (click)="openLoginModal(userAction.REGISTER)"
+        >
+          REGISTER
+        </button>
       </div>
     </div>
   </div>

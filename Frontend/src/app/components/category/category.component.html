@@ -2,14 +2,15 @@
   <table>
     <tr>
       <th *ngFor="let category of categories" class="pl-4 pr-4">
-        <p
+        <div
+          class="category-class py-2"
           [ngClass]="{
             'selected-category': category.name === selectedCategory.name
           }"
           (click)="onCategoryChanged(category)"
         >
           {{ category.name | uppercase }}
-        </p>
+        </div>
       </th>
     </tr>
   </table>

@@ -5,14 +5,19 @@ table {
   border-radius: 35px;
   background-color: white;
 
+  .category-class {
+    cursor: pointer;
+    &:hover {
+      color: #ff3c00;
+      border-bottom: 3px solid #ff3c00 !important;
+    }
+  }
+
   th {
     border-radius: 35px;
     border-top: none;
     font-size: 15px;
-    font-weight: 700;
-    p {
-      padding-top: 15px;
-    }
+    font-weight: 800;
   }
 
   td:first-child,
@@ -23,9 +28,5 @@ table {
   .selected-category {
     color: #ff3c00;
     border-bottom: 3px solid #ff3c00;
-  }
-
-  p {
-    cursor: pointer;
   }
 }
