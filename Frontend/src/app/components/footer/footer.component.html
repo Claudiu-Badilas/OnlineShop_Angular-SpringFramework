@@ -1,24 +1,37 @@
-<div class="footer mt-5 pt-4">
+<div class="footer mt-5">
   <div class="container p-0">
     <div class="pt-5">
       <table class="w-100">
         <tr>
-          <th class="text-left pb-4" width="33%">NAVIGATION</th>
+          <th class="text-left pb-4" width="30%">NAVIGATION</th>
           <th class="text-center pb-4" width="33%">LET'S WORK TOGETHER</th>
-          <th class="text-right pb-4" width="33%">CONTACT US</th>
+          <th class="text-right pb-4" width="30%">CONTACT US</th>
         </tr>
 
         <tr>
           <td class="text-left">
-            <div *ngFor="let category of categories$ | async">
-              <div
-                class="navigation-option py-2"
-                (click)="onChangeCategory(category)"
-              >
-                {{ category.name }}
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="navigation-option py-2">Magazine partenere</div>
+                <div class="navigation-option py-2">Ohvăz în presă</div>
+                <div class="navigation-option py-2">Despre Ohvăz</div>
+                <div class="navigation-option py-2">Termeni și condiții</div>
+                <div class="navigation-option py-2">
+                  Politică de confidențialitate
+                </div>
+                <div class="navigation-option py-2">ANPC</div>
+              </div>
+              <div>
+                <div *ngFor="let category of categories$ | async">
+                  <div
+                    class="navigation-option text-right py-2"
+                    (click)="onChangeCategory(category)"
+                  >
+                    {{ category.name }}
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="navigation-option py-2">Termeni și condiții</div>
           </td>
           <td class="text-center">
             <div>
@@ -37,7 +50,12 @@
               <div class="contact-option-left">Telefon pentru comenzi</div>
               <div class="contact-option">0764.378.979</div>
             </div>
-
+            <div class="d-flex justify-content-between py-2">
+              <div class="contact-option-left">
+                Telefon pentru persoane juridice
+              </div>
+              <div class="contact-option">0764.378.979</div>
+            </div>
             <div class="d-flex justify-content-between py-2">
               <div class="contact-option-left">Ne găsești pe</div>
               <div class="contact-option">Facebook</div>
@@ -62,7 +80,7 @@
     </div>
     <div class="pt-5">
       <hr />
-      <div class="d-flex justify-content-between pt-2 pb-3">
+      <div class="d-flex justify-content-between pt-2 pb-2">
         <div class="source-info">
           Design realizat de Cristian Barin www.expertphotoshop.ro
         </div>
