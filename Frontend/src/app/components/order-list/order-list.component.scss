@@ -1,20 +1,37 @@
-.order-list {
-  margin-bottom: 30px;
-  margin-top: 30px;
-  width: 1200px;
-  border-radius: 15px;
-  background-color: white;
-  box-shadow: 1px 1px 20px 1px;
-  color: #f2e8df;
-  border: 1px solid #ffe1d9;
+.panel-options {
+  color: #ff3c00;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+
+  #option {
+    &:hover {
+      color: #fddd07;
+    }
+  }
 }
 
-thead {
-  background: #f2e8df;
-  color: black;
+.orders-list-container {
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px 10px;
+  color: #f2e8df;
+  border: 1px solid #ffe1d9;
+  width: 100%;
+  min-height: 200px;
+  .order-list {
+    color: black;
+    font-size: 15px;
 
-  tr {
-    border-bottom: 3px solid #f2e8df;
+    #order-number {
+      color: #ff3c00;
+      font-weight: 600;
+      cursor: pointer;
+      &:hover {
+        color: #fddd07;
+      }
+    }
   }
 }
 
