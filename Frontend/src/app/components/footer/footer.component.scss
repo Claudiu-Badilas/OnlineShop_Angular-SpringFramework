@@ -1,0 +1,70 @@
+.footer {
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px 1px;
+  border: 1px solid #ffe1d9;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+  .navigation-option {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ff3c00;
+    cursor: pointer;
+    &:hover {
+      color: #fddd07;
+    }
+  }
+
+  .contact-option {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ff3c00;
+    cursor: pointer;
+    &:hover {
+      color: #fddd07;
+    }
+  }
+  .contact-option-left {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .source-info {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .btn-promotion {
+    width: 290px;
+    height: 60px;
+    background-color: #ff3c00;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    border: none;
+
+    &:hover {
+      background-color: #fddd07;
+      color: black;
+    }
+  }
+
+  .btn-companies {
+    width: 290px;
+    height: 60px;
+    background-color: #002b82;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    border: none;
+
+    &:hover {
+      background-color: #fddd07;
+      color: black;
+    }
+  }
+}
