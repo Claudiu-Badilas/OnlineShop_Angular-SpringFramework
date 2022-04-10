@@ -86,6 +86,7 @@
               Delivery Address Details
             </button>
             <button
+              *ngIf="isAdminUser$ | async"
               ngbDropdownItem
               class="format-action"
               (click)="initStateForSaveMode()"

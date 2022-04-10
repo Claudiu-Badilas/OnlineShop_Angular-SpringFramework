@@ -21,10 +21,10 @@ import { RegisterComponent } from '../register/register.component';
   styleUrls: ['./top-bar.component.scss'],
 })
 export class TopBarComponent implements OnInit, OnChanges {
-  user$ = this.store.select(fromPlatform.getUser);
   categories$ = this.store.select(fromPlatform.getAllCategories);
   totalQuantity$ = this.store.select(fromCart.getCartQuantity);
   cartItems$ = this.store.select(fromCart.getCartItems);
+  isAdminUser$ = this.store.select(fromPlatform.getIsAdminUser);
 
   showButtons: boolean = true;
   bsModalRef: BsModalRef;
