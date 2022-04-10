@@ -6,7 +6,7 @@ import { ProductDetailsComponent } from './components/product/product-details/pr
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { AddProductComponent } from './components/product/add-product/add-product.component';
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
-import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrderListComponent } from './components/user-dashboard/order-list/order-list.component';
 import { AuthenticationGuard } from './authentication/guard/authentication.guard';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 

@@ -17,7 +17,7 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LogInComponent } from './components/log-in/log-in.component';
-import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrderListComponent } from './components/user-dashboard/order-list/order-list.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { ProductService } from './services/product.service';
 import { CategoryService } from './services/category.service';
