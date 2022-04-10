@@ -75,11 +75,18 @@
             <button
               ngbDropdownItem
               class="format-action"
-              (click)="navigateToOrdersList()"
+              (click)="navigateToOrders()"
             >
-              My Orders
+              Orders Details
+            </button>
+            <button ngbDropdownItem class="format-action">
+              Account Details
+            </button>
+            <button ngbDropdownItem class="format-action">
+              Delivery Address Details
             </button>
             <button
+              *ngIf="isAdminUser$ | async"
               ngbDropdownItem
               class="format-action"
               (click)="initStateForSaveMode()"

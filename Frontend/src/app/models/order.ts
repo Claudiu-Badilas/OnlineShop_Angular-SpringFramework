@@ -13,7 +13,7 @@ export class Order {
   constructor(res: Order) {
     this.id = res.id;
     this.date = moment.utc(res.date);
-    this.totalPrice = res.id;
+    this.totalPrice = res.totalPrice;
     this.status = res.status;
     this.user = res.user;
     this.products = res.products;

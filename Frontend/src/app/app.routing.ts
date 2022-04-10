@@ -8,6 +8,7 @@ import { AddProductComponent } from './components/product/add-product/add-produc
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { AuthenticationGuard } from './authentication/guard/authentication.guard';
+import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 
 const routes: Routes = [
   { path: 'products/category/:categoryName', component: ProductListComponent },
@@ -15,12 +16,8 @@ const routes: Routes = [
     path: 'product/:productName/:productId',
     component: ProductDetailsComponent,
   },
-  { path: 'cart-details', component: CartDetailsComponent, children: [] },
-  {
-    path: 'orders/:id',
-    component: OrderListComponent,
-    canActivate: [AuthenticationGuard],
-  },
+  { path: 'cart-details', component: CartDetailsComponent },
+
   {
     path: 'add-product',
     component: AddProductComponent,
@@ -30,6 +27,18 @@ const routes: Routes = [
     path: 'edit-mode/:actionType/:productId',
     component: EditProductComponent,
     canActivate: [AuthenticationGuard],
+  },
+  {
+    path: 'my-account',
+    component: UserDashboardComponent,
+    canActivate: [AuthenticationGuard],
+    children: [
+      {
+        path: 'orders',
+        component: OrderListComponent,
+        canActivate: [AuthenticationGuard],
+      },
+    ],
   },
   { path: '', redirectTo: 'products/category/Ovaz', pathMatch: 'full' },
   { path: '**', redirectTo: 'products/category/Ovaz', pathMatch: 'full' },

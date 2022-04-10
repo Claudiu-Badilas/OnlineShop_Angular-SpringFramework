@@ -1,6 +1,5 @@
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import * as fromPlatform from '../../store/platform-state/platform.reducer';
@@ -22,10 +21,10 @@ import { RegisterComponent } from '../register/register.component';
   styleUrls: ['./top-bar.component.scss'],
 })
 export class TopBarComponent implements OnInit, OnChanges {
-  user$ = this.store.select(fromPlatform.getUser);
   categories$ = this.store.select(fromPlatform.getAllCategories);
   totalQuantity$ = this.store.select(fromCart.getCartQuantity);
   cartItems$ = this.store.select(fromCart.getCartItems);
+  isAdminUser$ = this.store.select(fromPlatform.getIsAdminUser);
 
   showButtons: boolean = true;
   bsModalRef: BsModalRef;
@@ -67,10 +66,10 @@ export class TopBarComponent implements OnInit, OnChanges {
     );
   }
 
-  navigateToOrdersList() {
+  navigateToOrders() {
     this.store.dispatch(
       NavigationActions.navigateTo({
-        route: `orders/2`,
+        route: `my-account/orders`,
       })
     );
   }

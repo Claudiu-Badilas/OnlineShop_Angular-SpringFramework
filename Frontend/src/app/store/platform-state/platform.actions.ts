@@ -10,9 +10,9 @@ export const loadUser = createAction(
   props<{ user: User }>()
 );
 
-export const isUserAdmin = createAction(
+export const isAdminUser = createAction(
   '[Platform] Is User Admin',
-  props<{ isUserAdmin: boolean }>()
+  props<{ isAdminUser: boolean }>()
 );
 
 export const loadProducts = createAction(

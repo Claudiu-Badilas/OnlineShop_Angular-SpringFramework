@@ -14,7 +14,7 @@ import * as PlatformActions from './platform.actions';
 
 export interface PlatformState {
   user: User;
-  isUserAdmin: boolean;
+  isAdminUser: boolean;
   products: Product[];
   selectedProduct: Product;
   typeAction: ProductTypeAction;
@@ -26,7 +26,7 @@ export interface PlatformState {
 
 const initialState: PlatformState = {
   user: null,
-  isUserAdmin: false,
+  isAdminUser: false,
   products: [],
   selectedProduct: null,
   typeAction: ProductTypeAction.SAVE,
@@ -43,9 +43,9 @@ const userReducer = createReducer(
     user: action.user,
   })),
 
-  on(PlatformActions.isUserAdmin, (state, action) => ({
+  on(PlatformActions.isAdminUser, (state, action) => ({
     ...state,
-    isUserAdmin: action.isUserAdmin,
+    isAdminUser: action.isAdminUser,
   })),
 
   on(PlatformActions.loadProducts, (state, action) => ({
@@ -113,9 +113,9 @@ export const getUser = createSelector(
   getPlatformFeatureState,
   (state) => state.user
 );
-export const getIsUserAdmin = createSelector(
+export const getIsAdminUser = createSelector(
   getPlatformFeatureState,
-  (state) => state.isUserAdmin
+  (state) => state.isAdminUser
 );
 
 export const getAllProducts = createSelector(

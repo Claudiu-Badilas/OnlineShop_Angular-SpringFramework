@@ -1,17 +1,3 @@
-.panel-options {
-  color: #ff3c00;
-  font-size: 15px;
-  font-weight: 600;
-  width: 100%;
-  cursor: pointer;
-
-  #option {
-    &:hover {
-      color: #fddd07;
-    }
-  }
-}
-
 .orders-list-container {
   border-radius: 15px;
   background-color: white;
@@ -33,8 +19,4 @@
       }
     }
   }
-}
-
-.align-top {
-  margin-top: 100px;
 }

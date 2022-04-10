@@ -1,58 +1,40 @@
-<div class="container align-top p-0">
-  <div class="pt-3 d-flex">
-    <div class="panel-options col-md-2 p-0">
-      <hr />
-      <div id="option">Control Panel</div>
-      <hr />
-      <div id="option">Orders</div>
-      <hr />
-      <div id="option">Address</div>
-      <hr />
-      <div id="option">Account Details</div>
-      <hr />
-      <div id="option">Log out</div>
-      <hr />
-    </div>
-    <div class="col-md-1 p-0"></div>
-    <div class="orders-list-container col-md-9 p-0 ml-3">
-      <div class="order-list p-3">
-        <table class="w-100">
-          <thead>
-            <tr>
-              <th class="pb-2" width="20%">Order No</th>
-              <th class="pb-2" width="23%">Date</th>
-              <th class="pb-2" width="17%">Status</th>
-              <th class="pb-2" width="35%">Price</th>
-              <th class="pb-2" width="5%">Action</th>
-            </tr>
-          </thead>
+<div class="orders-list-container p-0 ml-3">
+  <div class="order-list p-3">
+    <table class="w-100">
+      <thead>
+        <tr>
+          <th class="pb-2" width="20%">Order No</th>
+          <th class="pb-2" width="23%">Date</th>
+          <th class="pb-2" width="17%">Status</th>
+          <th class="pb-2" width="35%">Price</th>
+          <th class="pb-2" width="5%">Action</th>
+        </tr>
+      </thead>
 
-          <tr *ngFor="let order of orders$ | async">
-            <td class="pb-1">
-              <div id="order-number">nr. {{ order.id }}</div>
-            </td>
-            <td>
-              <div>
-                {{ order.date.format("DD/MM/YYYY") }}
-              </div>
-            </td>
-            <td>
-              <div>
-                {{ order.status }}
-              </div>
-            </td>
-            <td>
-              <div>
-                {{ order.totalPrice.toFixed(2) }} RON for
-                {{ order.products.length }} products
-              </div>
-            </td>
-            <td>
-              <div id="order-number">See</div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
+      <tr *ngFor="let order of orders$ | async">
+        <td class="pb-1">
+          <div id="order-number">nr. {{ order.id }}</div>
+        </td>
+        <td>
+          <div>
+            {{ order.date.format("DD/MM/YYYY") }}
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ order.status }}
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ order.totalPrice.toFixed(2) }} RON for
+            {{ order.products.length }} products
+          </div>
+        </td>
+        <td>
+          <div id="order-number">See</div>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>
