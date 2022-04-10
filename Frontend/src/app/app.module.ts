@@ -46,6 +46,7 @@ import { DropdownComponent } from './shared/components/dropdown/dropdown.compone
 import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmService } from './services/confirm.service';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
+import { EditAccountDetailsComponent } from './components/user-dashboard/edit-account-details/edit-account-details.component';
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
   show: false,
@@ -78,6 +79,7 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     DropdownComponent,
     ConfirmDialogComponent,
     UserDashboardComponent,
+    EditAccountDetailsComponent,
   ],
   imports: [
     BrowserModule,
