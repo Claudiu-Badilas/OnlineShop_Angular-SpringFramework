@@ -78,6 +78,7 @@ export class PlatformEffects {
       filter(([, products]) => products.length === 0),
       mergeMap(([,]) => {
         return this._productService.getProducts().pipe(
+          skipWhile((p) => p === null),
           first(),
           map((products) => {
             return PlatformActions.loadProducts({ products });
@@ -141,6 +142,8 @@ export class PlatformEffects {
       filter(([, , categories]) => categories.length === 0),
       mergeMap(([, params]) =>
         this._categoryService.getCategories().pipe(
+          skipWhile((c) => c === null),
+          first(),
           map((categories) => {
             const category = categories.find(
               (c) => c.name === params['categoryName']
