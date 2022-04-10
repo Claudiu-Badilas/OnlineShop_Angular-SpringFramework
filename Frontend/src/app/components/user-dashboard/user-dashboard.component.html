@@ -1,0 +1,21 @@
+<div class="container align-top p-0">
+  <div class="pt-3 d-flex">
+    <div class="panel-options col-md-2 p-0">
+      <hr />
+      <div id="option">Control Panel</div>
+      <hr />
+      <div id="option" (click)="navigateToOrders()">Orders</div>
+      <hr />
+      <div id="option">Address</div>
+      <hr />
+      <div id="option">Account Details</div>
+      <hr />
+      <div id="option">Log out</div>
+      <hr />
+    </div>
+    <div class="col-md-1 p-0"></div>
+    <div class="col-md-9 pt-3">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

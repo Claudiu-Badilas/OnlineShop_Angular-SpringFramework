@@ -1,6 +1,5 @@
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import * as fromPlatform from '../../store/platform-state/platform.reducer';
@@ -67,10 +66,10 @@ export class TopBarComponent implements OnInit, OnChanges {
     );
   }
 
-  navigateToOrdersList() {
+  navigateToOrders() {
     this.store.dispatch(
       NavigationActions.navigateTo({
-        route: `orders/2`,
+        route: `my-account/orders`,
       })
     );
   }

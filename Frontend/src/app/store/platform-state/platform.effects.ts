@@ -264,7 +264,7 @@ export class PlatformEffects {
     ]).pipe(
       debounceTime(500),
       filter(([url]) => {
-        return url.startsWith('/orders');
+        return url.includes('/orders');
       }),
       mergeMap(([, user]) =>
         this._orderService.getOrdersByUserId(+user.id).pipe(

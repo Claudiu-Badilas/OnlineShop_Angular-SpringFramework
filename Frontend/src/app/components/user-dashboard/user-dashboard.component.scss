@@ -1,0 +1,16 @@
+.align-top {
+  margin-top: 100px;
+  .panel-options {
+    color: #ff3c00;
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+
+    #option {
+      &:hover {
+        color: #fddd07;
+      }
+    }
+  }
+}
