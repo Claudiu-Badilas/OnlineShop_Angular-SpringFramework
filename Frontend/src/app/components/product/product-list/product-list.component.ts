@@ -22,9 +22,7 @@ export class ProductListComponent implements OnInit {
   categories$ = this.store.select(fromPlatform.getAllCategories);
   selectedCategory$ = this.store.select(fromPlatform.getSelectedCategory);
   isLoading$ = this.store.select(fromPlatform.getSpinnerLoading);
-  isUserAdmin$ = this.store.select(fromPlatform.getIsUserAdmin);
-
-  ADMIN = Role.ADMIN;
+  isAdminUser$ = this.store.select(fromPlatform.getIsAdminUser);
 
   constructor(private store: Store<AppState>) {}
 

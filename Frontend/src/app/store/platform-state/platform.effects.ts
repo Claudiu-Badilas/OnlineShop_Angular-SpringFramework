@@ -26,6 +26,8 @@ import { ProductTypeAction } from 'src/app/components/product/utils/product-type
 import { Role } from 'src/app/shared/enum/role.enum';
 import { OrderService } from 'src/app/services/order.service';
 import { Product } from 'src/app/models/product';
+
+const ERROR_MSG = 'Some problems occurred, please refresh the page!';
 @Injectable()
 export class PlatformEffects {
   constructor(
@@ -50,18 +52,16 @@ export class PlatformEffects {
           first(),
           skipWhile((user) => !user),
           map((user) => {
-            if (user.role === Role.ADMIN) {
-              this.store.dispatch(
-                PlatformActions.isUserAdmin({ isUserAdmin: true })
-              );
-            }
+            this.store.dispatch(
+              PlatformActions.isAdminUser({
+                isAdminUser: user.role === Role.ADMIN,
+              })
+            );
+
             return PlatformActions.loadUser({ user });
           }),
           catchError(() => {
-            this._notificationService.notify(
-              NotificationType.ERROR,
-              'Some problems occurred, please refresh the page!'
-            );
+            this._notificationService.notify(NotificationType.ERROR, ERROR_MSG);
             return EMPTY;
           })
         );
@@ -84,10 +84,7 @@ export class PlatformEffects {
             return PlatformActions.loadProducts({ products });
           }),
           catchError(() => {
-            this._notificationService.notify(
-              NotificationType.ERROR,
-              'Some problems occurred, please refresh the page!'
-            );
+            this._notificationService.notify(NotificationType.ERROR, ERROR_MSG);
             return EMPTY;
           })
         );
@@ -121,10 +118,7 @@ export class PlatformEffects {
             })
           ),
           catchError(() => {
-            this._notificationService.notify(
-              NotificationType.ERROR,
-              'Some problems occurred, please refresh the page!'
-            );
+            this._notificationService.notify(NotificationType.ERROR, ERROR_MSG);
             return EMPTY;
           })
         );
@@ -157,10 +151,7 @@ export class PlatformEffects {
             return PlatformActions.loadCategories({ categories });
           }),
           catchError(() => {
-            this._notificationService.notify(
-              NotificationType.ERROR,
-              'Some problems occurred, please refresh the page!'
-            );
+            this._notificationService.notify(NotificationType.ERROR, ERROR_MSG);
             return EMPTY;
           })
         )
@@ -270,10 +261,7 @@ export class PlatformEffects {
         this._orderService.getOrdersByUserId(+user.id).pipe(
           map((orders) => PlatformActions.loadOrders({ orders })),
           catchError(() => {
-            this._notificationService.notify(
-              NotificationType.ERROR,
-              'Some problems occurred, please refresh the page!'
-            );
+            this._notificationService.notify(NotificationType.ERROR, ERROR_MSG);
             return EMPTY;
           })
         )

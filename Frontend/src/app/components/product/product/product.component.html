@@ -7,7 +7,7 @@
   >
     <div>
       <app-dropdown
-        *ngIf="isUserAdmin"
+        *ngIf="isAdminUser"
         class="dropdown-placement"
         (editClicked)="onEdit($event, product)"
         (deleteClicked)="onDelete($event, product)"

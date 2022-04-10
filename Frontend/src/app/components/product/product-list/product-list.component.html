@@ -14,7 +14,7 @@
 
   <app-product
     [products]="products$ | async"
-    [isUserAdmin]="isUserAdmin$ | async"
+    [isAdminUser]="isAdminUser$ | async"
     (viewDetailsClicked)="onViewDetails($event)"
     (addToCartClicked)="onAddToCart($event)"
     (editClicked)="onEdit($event)"

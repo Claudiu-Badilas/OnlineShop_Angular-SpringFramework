@@ -10,7 +10,7 @@ import { Role } from 'src/app/shared/enum/role.enum';
 })
 export class ProductComponent {
   @Input() products: Product[];
-  @Input() isUserAdmin: boolean;
+  @Input() isAdminUser: boolean;
   @Output() viewDetailsClicked = new EventEmitter<Product>();
   @Output() addToCartClicked = new EventEmitter<Product>();
   @Output() editClicked = new EventEmitter<Product>();
@@ -18,7 +18,6 @@ export class ProductComponent {
 
   constructor(private confirmService: ConfirmService) {}
 
-  ADMIN = Role.ADMIN;
   page = 1;
   pageSize = 9;
 
