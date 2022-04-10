@@ -9,6 +9,7 @@ import { EditProductComponent } from './components/product/edit-product/edit-pro
 import { OrderListComponent } from './components/user-dashboard/order-list/order-list.component';
 import { AuthenticationGuard } from './authentication/guard/authentication.guard';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
+import { EditAccountDetailsComponent } from './components/user-dashboard/edit-account-details/edit-account-details.component';
 
 const routes: Routes = [
   { path: 'products/category/:categoryName', component: ProductListComponent },
@@ -36,6 +37,11 @@ const routes: Routes = [
       {
         path: 'orders',
         component: OrderListComponent,
+        canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'edit-account',
+        component: EditAccountDetailsComponent,
         canActivate: [AuthenticationGuard],
       },
     ],

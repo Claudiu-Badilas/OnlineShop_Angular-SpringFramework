@@ -74,6 +74,14 @@ export class TopBarComponent implements OnInit, OnChanges {
     );
   }
 
+  navigateToAccountDetails() {
+    this.store.dispatch(
+      NavigationActions.navigateTo({
+        route: `my-account/edit-account`,
+      })
+    );
+  }
+
   checkIsUserLoggedIn() {
     if (this.authenticationService.isUserLoggedIn()) {
       this.showButtons = !this.showButtons;
