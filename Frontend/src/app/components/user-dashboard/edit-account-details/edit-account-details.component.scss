@@ -1,0 +1,64 @@
+.info-card {
+  width: 100%;
+
+  input {
+    min-width: 400px;
+    max-width: 655px;
+    border: 2px solid rgb(226, 226, 226);
+  }
+
+  textarea {
+    border: 2px solid rgb(226, 226, 226);
+  }
+
+  hr {
+    border: 1px solid rgb(226, 226, 226);
+  }
+  label {
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+
+.btn-save {
+  width: 160px;
+  height: 40px;
+  background-color: #ff3c00;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  border: none;
+
+  &:hover {
+    background-color: #fddd07;
+    color: black;
+  }
+}
+
+.change-password-card {
+  width: 670px;
+  height: 500px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px 1px;
+  border: 1px solid #ffe1d9;
+
+  input {
+    min-width: 320px;
+    max-width: 655px;
+    border: 2px solid rgb(226, 226, 226);
+  }
+
+  textarea {
+    border: 2px solid rgb(226, 226, 226);
+  }
+
+  hr {
+    border: 1px solid rgb(226, 226, 226);
+  }
+  label {
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
