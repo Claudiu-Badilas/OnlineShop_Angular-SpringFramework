@@ -35,30 +35,28 @@
     color: black;
   }
 }
+.password-info {
+  .change-password-card {
+    width: 100%;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px 1px;
+    border: 1px solid #ffe1d9;
 
-.change-password-card {
-  width: 670px;
-  height: 500px;
-  border-radius: 15px;
-  background-color: white;
-  box-shadow: 1px 1px 1px 1px 1px;
-  border: 1px solid #ffe1d9;
+    .title {
+      font-size: 21px;
+      font-weight: 700;
+    }
 
-  input {
-    min-width: 320px;
-    max-width: 655px;
-    border: 2px solid rgb(226, 226, 226);
-  }
+    input {
+      min-width: 320px;
+      max-width: 900px;
+      border: 2px solid rgb(226, 226, 226);
+    }
 
-  textarea {
-    border: 2px solid rgb(226, 226, 226);
-  }
-
-  hr {
-    border: 1px solid rgb(226, 226, 226);
-  }
-  label {
-    font-size: 15px;
-    font-weight: 600;
+    label {
+      font-size: 15px;
+      font-weight: 600;
+    }
   }
 }
