@@ -80,9 +80,7 @@ export class PlatformEffects {
         return this._productService.getProducts().pipe(
           skipWhile((p) => p === null),
           first(),
-          map((products) => {
-            return PlatformActions.loadProducts({ products });
-          }),
+          map((products) => PlatformActions.loadProducts({ products })),
           catchError(() => {
             this._notificationService.notify(NotificationType.ERROR, ERROR_MSG);
             return EMPTY;
@@ -172,12 +170,13 @@ export class PlatformEffects {
           url.startsWith(`/products`) &&
           selectedCategory &&
           params &&
+          params['name'] !== null &&
           params['name'] !== selectedCategory.name
         );
       }),
       map(([, params, categories]) => {
         const category = categories.find(
-          (c) => c.name === params['categoryName']
+          (c) => c !== null && c.name === params['categoryName']
         );
 
         return PlatformActions.changeSelectedCategory({

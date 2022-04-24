@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromPlatform from '../../store/platform-state/platform.reducer';
-import * as PlatformActions from '../../store/platform-state/platform.actions';
+import * as fromPlatform from '../../../store/platform-state/platform.reducer';
+import * as PlatformActions from '../../../store/platform-state/platform.actions';
 import { AppState } from 'src/app/store/app.state';
 
 @Component({

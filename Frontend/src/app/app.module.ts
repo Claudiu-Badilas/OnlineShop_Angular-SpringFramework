@@ -17,7 +17,7 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LogInComponent } from './components/log-in/log-in.component';
-import { OrderListComponent } from './components/order-list/order-list.component';
+import { OrderListComponent } from './components/user-dashboard/order-list/order-list.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { ProductService } from './services/product.service';
 import { CategoryService } from './services/category.service';
@@ -46,6 +46,7 @@ import { DropdownComponent } from './shared/components/dropdown/dropdown.compone
 import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmService } from './services/confirm.service';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
+import { EditAccountDetailsComponent } from './components/user-dashboard/edit-account-details/edit-account-details.component';
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
   show: false,
@@ -78,6 +79,7 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     DropdownComponent,
     ConfirmDialogComponent,
     UserDashboardComponent,
+    EditAccountDetailsComponent,
   ],
   imports: [
     BrowserModule,

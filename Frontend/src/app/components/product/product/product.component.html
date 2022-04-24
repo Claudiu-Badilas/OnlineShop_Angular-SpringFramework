@@ -8,7 +8,6 @@
     <div>
       <app-dropdown
         *ngIf="isAdminUser"
-        class="dropdown-placement"
         (editClicked)="onEdit($event, product)"
         (deleteClicked)="onDelete($event, product)"
       ></app-dropdown>

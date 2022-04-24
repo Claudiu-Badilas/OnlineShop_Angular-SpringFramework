@@ -134,10 +134,13 @@ export const getSelectedCategory = createSelector(
 );
 
 export const getAllProductsByCategory = createSelector(
-  getPlatformFeatureState,
+  getAllProducts,
   getSelectedCategory,
-  (state, selectedCategory) =>
-    state.products.filter((p) => p.category.name === selectedCategory.name)
+  (products, selectedCategory) =>
+    products.filter(
+      (p) =>
+        selectedCategory !== null && p.category.name === selectedCategory.name
+    )
 );
 
 export const getSelectedProduct = createSelector(

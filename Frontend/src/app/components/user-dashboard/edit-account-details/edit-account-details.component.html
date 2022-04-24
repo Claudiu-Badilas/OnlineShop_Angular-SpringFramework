@@ -1,0 +1,123 @@
+<div class="container align-top">
+  <div *ngIf="false" class="alert alert-success" role="alert">
+    You have free delivery for this order.
+  </div>
+
+  <div class="d-flex">
+    <div class="info-card">
+      <form
+        [formGroup]="accountDetailsForm"
+        (ngSubmit)="submitChanges(accountDetailsForm.value)"
+      >
+        <div class="d-flex" style="justify-content: space-evenly">
+          <div class="mb-3">
+            <label for="userNameId">Name*</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              placeholder="Name"
+              [(ngModel)]="name"
+              id="userNameId"
+              [ngClass]="{
+                'is-invalid':
+                  (accountDetailsForm.get('name').touched ||
+                    accountDetailsForm.get('name').dirty) &&
+                  !accountDetailsForm.get('name').valid
+              }"
+              (blur)="blur()"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="userEmailId">Email Address*</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="email"
+              placeholder="email@address.com"
+              [(ngModel)]="email"
+              id="userEmailId"
+              [ngClass]="{
+                'is-invalid':
+                  (accountDetailsForm.get('email').touched ||
+                    accountDetailsForm.get('email').dirty) &&
+                  !accountDetailsForm.get('email').valid
+              }"
+              (blur)="blur()"
+            />
+          </div>
+        </div>
+        <div class="password-info pt-3">
+          <div class="change-password-card">
+            <div class="m-4">
+              <div class="title pb-3">Change Password</div>
+              <form #detailsForm="ngForm">
+                <div class="mb-3">
+                  <label
+                    >Current Password (leave blank to remain unchanged)</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    placeholder="Name"
+                    ngModel
+                    #nameInput="ngModel"
+                    required
+                    [ngClass]="{
+                      'is-invalid': nameInput.invalid && nameInput.touched,
+                      'is-valid':
+                        !(nameInput.invalid && nameInput.touched) &&
+                        nameInput.valid
+                    }"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label>New Password (leave blank to remain unchanged)</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="phoneNumber"
+                    placeholder="Phone number"
+                    required
+                    ngModel
+                    #phoneNumberInput="ngModel"
+                    [ngClass]="{
+                      'is-invalid':
+                        phoneNumberInput.invalid && phoneNumberInput.touched,
+                      'is-valid':
+                        !(
+                          phoneNumberInput.invalid && phoneNumberInput.touched
+                        ) && phoneNumberInput.valid
+                    }"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label>Confirm Password*</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="phoneNumber"
+                    placeholder="Phone number"
+                    required
+                    ngModel
+                    #phoneNumberInput="ngModel"
+                    [ngClass]="{
+                      'is-invalid':
+                        phoneNumberInput.invalid && phoneNumberInput.touched,
+                      'is-valid':
+                        !(
+                          phoneNumberInput.invalid && phoneNumberInput.touched
+                        ) && phoneNumberInput.valid
+                    }"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <button class="btn-save mt-3" type="submit">SAVE CHANGES</button>
+      </form>
+    </div>
+  </div>
+</div>

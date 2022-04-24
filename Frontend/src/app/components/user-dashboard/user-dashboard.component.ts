@@ -25,6 +25,14 @@ export class UserDashboardComponent implements OnInit {
     );
   }
 
+  navigateToAccountDetails() {
+    this.store.dispatch(
+      NavigationActions.navigateTo({
+        route: `my-account/edit-account`,
+      })
+    );
+  }
+
   logOutUser() {
     this.authenticationService.logOut();
     window.location.reload();
